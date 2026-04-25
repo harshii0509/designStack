@@ -53,15 +53,6 @@ Show this as a friendly summary — not a technical list:
 **To share your work:**
 - `/dstack:share` — I'll get you a link to show someone
 
-**To set the direction:**
-- `/dstack:vibe` — Tell me how it should feel, I'll generate three directions to pick from
-- `/dstack:brand` — Is this still on brand after all those changes?
-
-**To make it great:**
-- `/dstack:polish` — Pre-ship checklist, 11 areas, plain English results
-- `/dstack:animate` — Add motion that feels natural, not flashy
-- `/dstack:delight` — Add joy to the moments that matter most
-
 ## Where to start
 
 If this is your first time: run `/dstack:context` — it takes 5 minutes and makes every other skill smarter.
