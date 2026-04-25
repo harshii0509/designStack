@@ -8,13 +8,52 @@
 
 I kept watching the same thing happen.
 
-A designer or founder gets access to Claude Code, excited to finally build their own product without depending on a developer. They open it up. It asks them to type a command. They type something. Claude responds with a wall of text — file paths, function names, a "refactoring plan" they don't understand. They click yes. Something breaks. They ask Claude to fix it. Something else breaks. They close the laptop.
+A designer or founder gets access to Claude Code, excited to finally build their own product without depending on a developer. They open it up. Claude responds with a wall of text — file paths, function names, a "refactoring plan" they don't understand. They click yes. Something breaks. They ask Claude to fix it. Something else breaks. They close the laptop.
 
 **The tools are incredible. But they're built for people who already know how to use them.**
 
-designStack fixes that. It's a set of 9 slash commands built specifically for designers, no-code builders, and non-technical founders. Every command speaks plain English. Every error message tells you exactly what to do next. Nothing is hidden behind jargon.
+designStack fixes that. Nine slash commands built specifically for designers, no-code builders, and non-technical founders. Every command speaks plain English. Every error tells you exactly what to do next.
 
-You don't need to know what a pull request is. You don't need to understand git. You just need to know what you're trying to build.
+You don't need to know what a pull request is. You just need to know what you're trying to build.
+
+---
+
+## The four principles
+
+Before the commands, the mindset. designStack is built around four principles for working with AI as a designer. Read them once — they'll change how every session goes.
+
+| Principle | The short version |
+|-----------|------------------|
+| **Think in references, not descriptions** | "Make it modern" is useless. Show Claude what you mean. |
+| **Write the Bible once** | Stop re-explaining your brand every session. Run `/ds:context` once. |
+| **Read before you say yes** | Don't approve a plan you can't read. Run `/ds:plain` first. |
+| **Save before you fly** | `/ds:save` before every session that touches your code. |
+
+[Read the full principles →](PRINCIPLES.md)
+
+---
+
+## Without it vs. with it
+
+**Without designStack:**
+
+> "Make the hero section look better"  
+> *Claude rewrites the whole layout. It's not what you meant. You spend 20 minutes trying to explain the difference.*
+
+> "Fix the button"  
+> *Claude writes a plan full of file names and function calls. You don't understand it. You click yes. Something unrelated breaks.*
+
+> Every new session: re-explain your brand colors, fonts, what "minimal" means to you.
+
+**With designStack:**
+
+> `/ds:look` → "Hero heading is 48px on mobile — your Design Bible says max 32px. Fix it?"  
+> One clear problem. One fix to approve. Done.
+
+> `/ds:plain` → "Claude wants to change how your button looks by editing one CSS class. It will only affect the checkout page."  
+> You understand it. You say yes.
+
+> `/ds:context` → Brand Bible written once. Claude knows your colors, fonts, and rules in every future session. You never explain them again.
 
 ---
 
@@ -143,11 +182,10 @@ designStack also writes a compact version of your rules into your project's `CLA
 > gstack is for builders who can read a code review.  
 > designStack is for builders who can't — and shouldn't have to.
 
-Three rules everything here is built around:
-
-- **Show, don't tell** — screenshots and plain English, not terminal output
-- **Translate, don't assume** — every error message tells you what to do next, not just what went wrong
-- **Save constantly** — every command that touches your project asks you to save first
+- **Show, don't describe** — a reference beats a thousand adjectives
+- **Translate, don't assume** — every error tells you what to do next, not just what went wrong
+- **Save before you fly** — every command that touches your project saves first
+- **Read before you click yes** — if you can't understand the plan, you're not ready to approve it
 
 ---
 
