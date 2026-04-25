@@ -20,7 +20,6 @@ First release.
 **Key features:**
 - Design Bible (`design/DESIGN-BIBLE.md`) — living brand file every skill reads from
 - CLAUDE.md auto-injection — design rules in every Claude session, not just skill runs
-- gstack coexistence — reads gstack's design file automatically if you use both
 - curl one-liner install — `curl -fsSL [url] | bash` with plain-English error messages
 - Progressive disclosure — verdict first, full report on request
 - Server-not-running recovery — plain-English message when local server is off

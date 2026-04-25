@@ -20,15 +20,10 @@ _HAS_BIBLE="no"
 [ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"
 _B=""
-[ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
-# Also check for gstack's polish skill as an underlying engine
-_POLISH=""
-[ -f "$HOME/.agents/skills/polish/SKILL.md" ] && _POLISH="$HOME/.agents/skills/polish/SKILL.md"
+[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
 echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "DESIGN_BIBLE: $_HAS_BIBLE"
 echo "BROWSE: ${_B:-NOT_FOUND}"
-echo "UNDERLYING_POLISH: ${_POLISH:-not found}"
 ```
 
 ## What this skill does

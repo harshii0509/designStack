@@ -20,8 +20,7 @@ _HAS_BIBLE="no"
 [ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"
 _B=""
-[ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
+[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
 echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "DESIGN_BIBLE: $_HAS_BIBLE"
 echo "BROWSE: ${_B:-NOT_FOUND}"
@@ -109,9 +108,7 @@ $B snapshot -i -a -o /tmp/dstack-a11y-annotated.png
 ## Step 4 — If browse is NOT available
 
 If `BROWSE` is `NOT_FOUND`:
-> "I can't run the automated accessibility check without the visual browser. I'll check your code manually for common accessibility issues instead.
->
-> For a full grade with annotated screenshots, install gstack: https://github.com/garrytan/gstack"
+> "I can't run the automated accessibility check without the visual browser. I'll check your code manually for common accessibility issues instead."
 
 Check the codebase for:
 - `<img>` tags missing `alt` attribute

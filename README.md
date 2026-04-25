@@ -147,8 +147,6 @@ npx skills add harshii0509/designStack
 
 **Using another agent (Cursor, Cline, Windsurf)?** designStack follows the [Agent Skills](https://agentskills.io) open standard. Install via `npx skills add harshii0509/designStack` and the skills work across any compatible agent.
 
-**Optional:** Install [gstack](https://github.com/garrytan/gstack) for screenshot and annotation features. Not required — every command works in text-only mode without it.
-
 ---
 
 ## Works with
@@ -241,16 +239,11 @@ You build it once with `/ds:start`. You never have to explain your brand to Clau
 
 designStack also writes a compact version of your rules into your project's `CLAUDE.md` — so even outside of designStack skill runs, Claude knows your brand colors and fonts in every session.
 
-**Already using DesignBrain.md** (from [@heysolacy](https://heysolacy.com))? designStack reads it automatically and extends it. Compatible from day one.
-
 **Using shadcn, Tailwind, or Blend?** `/ds:context` reads your existing design tokens and pre-fills your Design Bible automatically. No manual entry.
 
 ---
 
 ## Philosophy
-
-> gstack is for builders who can read a code review.  
-> designStack is for builders who can't — and shouldn't have to.
 
 - **Show, don't describe** — a reference beats a thousand adjectives
 - **Translate, don't assume** — every error tells you what to do next, not just what went wrong
@@ -293,17 +286,11 @@ Drop it in Discussions. We want to see what you're making.
 **Do I need to know how to code?**
 No. designStack is built for people who don't code and don't want to learn. Every command is in plain English. Every error message tells you exactly what to do.
 
-**Do I need gstack?**
-No. Visual features (screenshots, annotated images) use gstack's browser if installed — but every command works in text mode without it. designStack will say "I'll describe what I found instead of showing a screenshot" when it can't take one.
-
 **Is my code sent anywhere?**
 designStack runs entirely on your machine. Your code stays local. Claude processes your descriptions and answers your questions — your files are only read when you explicitly ask it to check something.
 
 **What's a Design Bible?**
 A file designStack creates at `design/DESIGN-BIBLE.md` in your project. It holds your brand rules — colors, fonts, spacing, and how your components should look. Every designStack skill reads from it automatically. Run `/ds:start` once and Claude knows your brand in every future session.
-
-**Can I use designStack alongside gstack?**
-Yes. They're designed to coexist. If you have a `gstack/DESIGN.md` file, designStack reads it and builds your Design Bible from it. If you use gstack's browse tool, designStack uses it automatically for screenshots.
 
 **Does designStack work on an existing project?**
 Yes. Run `/ds:start` in any project folder — new or existing. If you already have design tokens (shadcn, Tailwind, Blend), designStack reads them automatically.

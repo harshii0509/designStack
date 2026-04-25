@@ -20,8 +20,7 @@ _HAS_BIBLE="no"
 [ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"
 _B=""
-[ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
+[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
 # Last git commit info for undo reference
 _LAST_COMMIT=$(git log -1 --pretty=format:"%h %s" 2>/dev/null || echo "no git history")
 _LAST_COMMIT_TIME=$(git log -1 --pretty=format:"%ar" 2>/dev/null || echo "unknown")

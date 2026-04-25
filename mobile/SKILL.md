@@ -20,8 +20,7 @@ _HAS_BIBLE="no"
 [ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"
 _B=""
-[ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
+[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
 echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "DESIGN_BIBLE: $_HAS_BIBLE"
 echo "BROWSE: ${_B:-NOT_FOUND}"
@@ -42,11 +41,7 @@ If the URL was already mentioned in the conversation, confirm it:
 ## Step 2 — Check browse availability
 
 If `BROWSE` is `NOT_FOUND`:
-> "I can't take screenshots without the visual browser. I'll check your code for mobile problems instead.
->
-> To get side-by-side screenshots, install gstack: https://github.com/garrytan/gstack
->
-> In the meantime, let me look at the code for common mobile issues like fixed widths, text that's too small, and buttons that are too small to tap."
+> "I can't take screenshots without the visual browser. I'll check your code for mobile problems instead — fixed widths, text that's too small, and buttons that are too small to tap."
 
 Then proceed to Step 5 (code-only check).
 

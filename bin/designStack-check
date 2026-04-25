@@ -7,13 +7,10 @@ echo "designStack v$DESIGNSTACK_VER"
 echo ""
 
 # Browse binary
-if [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ]; then
-  echo "✓ Browse: gstack browse found — visual features enabled"
-elif [ -x "$DESIGNSTACK_DIR/browse/dist/browse" ]; then
-  echo "✓ Browse: dstack browse found"
+if [ -x "$DESIGNSTACK_DIR/browse/dist/browse" ]; then
+  echo "✓ Browse: found — visual features enabled"
 else
   echo "⚠ Browse: not found — visual skills will use text descriptions"
-  echo "  Fix: install gstack → https://github.com/garrytan/gstack"
 fi
 
 # Claude Code

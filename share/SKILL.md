@@ -17,8 +17,7 @@ _HAS_NODE=$(command -v node 2>/dev/null && echo "yes" || echo "no")
 _PKG=""
 [ -f "$_ROOT/package.json" ] && _PKG=$(node -e "const p=require('$_ROOT/package.json'); console.log(p.scripts?.build ? 'has-build' : 'no-build'); console.log(p.dependencies?.next ? 'next' : p.dependencies?.['react-scripts'] ? 'cra' : p.devDependencies?.vite ? 'vite' : p.devDependencies?.['@sveltejs/kit'] ? 'svelte' : 'unknown')" 2>/dev/null || echo "")
 _B=""
-[ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
+[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
 echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "GIT_ROOT: $_ROOT"
 echo "BRANCH: $_BRANCH"

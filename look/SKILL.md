@@ -20,8 +20,7 @@ _HAS_BIBLE="no"
 [ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes" && _BIBLE="$_ROOT/DesignBrain.md"
 _B=""
-[ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
+[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
 _LAST_COMMIT=$(git log -1 --pretty=format:"%h — %s" 2>/dev/null || echo "no history yet")
 echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "DESIGN_BIBLE: $_HAS_BIBLE | path: ${_BIBLE}"
@@ -90,7 +89,7 @@ Show the screenshot to the user via the Read tool immediately:
 [show screenshot]
 
 If `BROWSE` is `NOT_FOUND`:
-> "I can't take a screenshot — the visual browser isn't installed. I'll still check your code for design rule violations. For annotated screenshots, install gstack: https://github.com/garrytan/gstack"
+> "I can't take a screenshot — the visual browser isn't installed. I'll still check your code for design rule violations."
 
 Ask the user to paste any relevant code or describe what they're seeing instead.
 

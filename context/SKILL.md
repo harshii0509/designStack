@@ -21,11 +21,9 @@ _BIBLE_SOURCE=""
 [ -f "$_BIBLE" ]              && _HAS_BIBLE="yes"  && _BIBLE_SOURCE="design/DESIGN-BIBLE.md"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ]  && _HAS_BIBLE="extend" && _BIBLE_SOURCE="DesignBrain.md"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/ICP-CONTEXT.md" ]  && _HAS_BIBLE="extend" && _BIBLE_SOURCE="ICP-CONTEXT.md"
-[ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/gstack/DESIGN.md" ] && _HAS_BIBLE="extend" && _BIBLE_SOURCE="gstack/DESIGN.md"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DESIGN.md" ]       && _HAS_BIBLE="extend" && _BIBLE_SOURCE="DESIGN.md"
 _B=""
-[ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
+[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
 # npm design system token detection
 _NPM_TOKENS="none"
 _PKG="$_ROOT/package.json"
@@ -113,13 +111,6 @@ Use these values to pre-fill Q1 and Q2 in Step 3. Do not ask about things alread
 
 ## Step 1 — Check for existing design files
 
-**If `DESIGN_BIBLE` is `extend` and `BIBLE_SOURCE` is `gstack/DESIGN.md`:**
-Read `gstack/DESIGN.md` fully. Tell the user:
-> "I found gstack's design file. I'll read it and build your Design Bible from it, adding the deeper brand rules that gstack doesn't track. Everything stays compatible."
-Use its values to pre-fill L1–L4. Add a note at the top of the new Bible:
-```
-> Source: Extended from gstack/DESIGN.md on [date]
-```
 
 **If `DESIGN_BIBLE` is `extend` (other sources):** Read the existing file (`BIBLE_SOURCE`) fully. Note everything — colors, fonts, spacing, component rules. You will extend, not replace it. Tell the user:
 > "I found your [file name]. I'll read it and build your Design Bible from it, adding anything that's missing."
