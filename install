@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+# dStack installer — curl -fsSL https://raw.githubusercontent.com/harshii0509/designStack/main/install | bash
+set -e
+
+DSTACK_REPO="https://github.com/harshii0509/designStack.git"
+DSTACK_DIR="$HOME/.claude/skills/dstack"
+
+echo ""
+echo "  Installing dStack..."
+echo ""
+
+# ── Check Claude Code ─────────────────────────────────────────────────────────
+if ! command -v claude >/dev/null 2>&1; then
+  echo "  ✗ Claude Code not found."
+  echo ""
+  echo "  Install Claude Code first: https://claude.ai/download"
+  echo "  Then re-run this installer."
+  echo ""
+  exit 1
+fi
+echo "  ✓ Claude Code found"
+
+# ── Check git ─────────────────────────────────────────────────────────────────
+if ! command -v git >/dev/null 2>&1; then
+  echo "  ✗ git not found."
+  echo ""
+  echo "  Install git first, then re-run this installer."
+  if [[ "$(uname -s)" == "Darwin" ]]; then
+    echo ""
+    echo "  Mac install: https://git-scm.com/download/mac"
+    echo "  (Takes 2 minutes — click Next through the installer)"
+  fi
+  echo ""
+  exit 1
+fi
+echo "  ✓ git found"
+
+# ── Check for existing install ────────────────────────────────────────────────
+if [ -d "$DSTACK_DIR" ]; then
+  echo "  ✓ dStack already installed at $DSTACK_DIR"
+  echo ""
+  echo "  To update: open Claude Code and type /dstack:update"
+  echo "  To reinstall: rm -rf $DSTACK_DIR and run this installer again"
+  echo ""
+  exit 0
+fi
+
+# ── Clone ─────────────────────────────────────────────────────────────────────
+echo "  Downloading dStack..."
+mkdir -p "$HOME/.claude/skills"
+git clone --quiet "$DSTACK_REPO" "$DSTACK_DIR" 2>/dev/null || {
+  echo "  ✗ Download failed. Check your internet connection and try again."
+  echo ""
+  exit 1
+}
+echo "  ✓ Downloaded"
+
+# ── Run setup ─────────────────────────────────────────────────────────────────
+"$DSTACK_DIR/setup" --quiet
+
+echo ""
+echo "  ✓ dStack installed!"
+echo ""
+echo "  ┌─────────────────────────────────────────┐"
+echo "  │  Open Claude Code and type:             │"
+echo "  │                                         │"
+echo "  │  /dstack:start                          │"
+echo "  │                                         │"
+echo "  │  Takes 5 minutes. Run once per project. │"
+echo "  └─────────────────────────────────────────┘"
+echo ""

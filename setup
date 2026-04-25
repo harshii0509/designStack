@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+# dStack setup — installs dStack skills into Claude Code
+set -e
+
+DSTACK_DIR="$HOME/.claude/skills/dstack"
+DSTACK_VER=$(cat "$DSTACK_DIR/VERSION" 2>/dev/null || echo "0.1.0")
+_QUIET="no"
+_PREFIX="namespaced"
+
+# ── Flag parsing ───────────────────────────────────────────────────────────────
+for arg in "$@"; do
+  [ "$arg" = "--quiet" ] || [ "$arg" = "-q" ] && _QUIET="yes"
+  [ "$arg" = "--flat" ] && _PREFIX="flat"
+done
+
+log() { [ "$_QUIET" = "no" ] && echo "$@"; }
+
+# ── OS check ──────────────────────────────────────────────────────────────────
+_OS=$(uname -s 2>/dev/null || echo "unknown")
+if [ "$_OS" != "Darwin" ] && [ "$_OS" != "Linux" ]; then
+  echo "  dStack requires Mac or Linux."
+  echo "  Windows support via WSL — see docs/windows.md for a step-by-step guide."
+  echo ""
+  exit 1
+fi
+
+log ""
+log "  ██████╗ ███████╗████████╗ █████╗  ██████╗██╗  ██╗"
+log "  ██╔══██╗██╔════╝╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝"
+log "  ██║  ██║███████╗   ██║   ███████║██║     █████╔╝ "
+log "  ██║  ██║╚════██║   ██║   ██╔══██║██║     ██╔═██╗ "
+log "  ██████╔╝███████║   ██║   ██║  ██║╚██████╗██║  ██╗"
+log "  ╚═════╝ ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝"
+log ""
+log "  v$DSTACK_VER — Claude Code for designers"
+log ""
+
+# ── Check Claude Code is installed ────────────────────────────────────────────
+if ! command -v claude >/dev/null 2>&1; then
+  echo "  ✗ Claude Code not found."
+  echo "    Install it from: https://claude.ai/download"
+  echo ""
+  exit 1
+fi
+log "  ✓ Claude Code found"
+
+# ── Version migration ─────────────────────────────────────────────────────────
+_INSTALLED_VER_FILE="$DSTACK_DIR/.installed-version"
+_PREV_VER=""
+[ -f "$_INSTALLED_VER_FILE" ] && _PREV_VER=$(cat "$_INSTALLED_VER_FILE")
+echo "$DSTACK_VER" > "$_INSTALLED_VER_FILE"
+if [ -n "$_PREV_VER" ] && [ "$_PREV_VER" != "$DSTACK_VER" ]; then
+  log "  ✓ Upgraded from v$_PREV_VER → v$DSTACK_VER"
+fi
+
+# ── Check for gstack browse binary (optional, enables visual features) ────────
+if [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ]; then
+  log "  ✓ gstack found — visual features enabled"
+else
+  log "  ⚠  gstack not found — /look, /mobile, /a11y, and /unstuck will describe"
+  log "     issues in plain English instead of showing screenshots."
+  log "     Install gstack for full visual features: https://github.com/garrytan/gstack"
+fi
+
+# ── Flat mode: create symlinks without /dstack: prefix ───────────────────────
+if [ "$_PREFIX" = "flat" ]; then
+  _SKILLS_DIR="$HOME/.claude/skills"
+  for skill in start context plain unstuck look mobile a11y save share; do
+    _TARGET="$DSTACK_DIR/$skill/SKILL.md"
+    _LINK_DIR="$_SKILLS_DIR/$skill"
+    if [ -d "$_TARGET" ] || [ -f "$_TARGET" ]; then
+      mkdir -p "$_LINK_DIR"
+      ln -sf "$_TARGET" "$_LINK_DIR/SKILL.md" 2>/dev/null || true
+    fi
+  done
+  log "  ✓ Flat mode: skills available as /start, /context, /plain, /unstuck, etc."
+fi
+
+# ── Add dStack to global CLAUDE.md ────────────────────────────────────────────
+GLOBAL_CLAUDE="$HOME/.claude/CLAUDE.md"
+
+if [ -f "$GLOBAL_CLAUDE" ] && grep -q "dstack:start" "$GLOBAL_CLAUDE" 2>/dev/null; then
+  log "  ✓ dStack already in global CLAUDE.md"
+else
+  cat >> "$GLOBAL_CLAUDE" << 'EOF'
+
+# dStack
+- **dStack** is installed. Use dStack skills for design rules, visual QA, accessibility, and error recovery.
+- `/dstack:start` — First session wizard. Run this once per project.
+- `/dstack:context` — Refresh your Design Bible when your brand changes.
+- `/dstack:plain` — Translate any Claude plan into plain English before you accept it.
+- `/dstack:unstuck` — Something broke. Get a plain-English diagnosis.
+- `/dstack:look` — Does it look right? Visual check against your brand rules.
+- `/dstack:mobile` — Check it on phone, tablet, and desktop.
+- `/dstack:a11y` — Accessibility grade A–D with every problem marked.
+- `/dstack:save` — Save your progress with a human-readable description.
+- `/dstack:share` — Deploy and get a shareable link.
+EOF
+  log "  ✓ Added dStack to global CLAUDE.md"
+fi
+
+# ── Done ──────────────────────────────────────────────────────────────────────
+log ""
+log "  ┌─────────────────────────────────────────────────────────────┐"
+log "  │  dStack v$DSTACK_VER installed!                                    │"
+log "  │                                                             │"
+log "  │  Open Claude Code and type:                                 │"
+log "  │                                                             │"
+log "  │    /dstack:start                                            │"
+log "  │                                                             │"
+log "  │  That's it. The wizard takes 5 minutes and sets everything  │"
+log "  │  up. Every other skill works automatically after that.      │"
+log "  │                                                             │"
+log "  │  All commands:                                              │"
+log "  │    /dstack:start     First-session setup wizard             │"
+log "  │    /dstack:context   Refresh your Design Bible              │"
+log "  │    /dstack:plain     Translate plans to plain English        │"
+log "  │    /dstack:unstuck   Debug broken things                    │"
+log "  │    /dstack:look      Visual check against brand rules       │"
+log "  │    /dstack:mobile    Phone + tablet + desktop side-by-side  │"
+log "  │    /dstack:a11y      Accessibility grade with problem map   │"
+log "  │    /dstack:save      Save progress with a description       │"
+log "  │    /dstack:share     Deploy and get a shareable link        │"
+log "  │                                                             │"
+log "  │  Questions? https://github.com/harshii0509/designStack/discussions │"
+log "  └─────────────────────────────────────────────────────────────┘"
+log ""
