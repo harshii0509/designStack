@@ -51,10 +51,16 @@ Claude will clone dStack, run setup, update your global settings, and ask if you
 **Prefer Terminal?** If you're comfortable with the command line:
 
 ```bash
+# Via curl
 curl -fsSL https://raw.githubusercontent.com/harshii0509/designStack/main/install | bash
+
+# Via npx skills (Agent Skills ecosystem)
+npx skills add harshii0509/designStack
 ```
 
 **On Windows** — works via WSL. [Step-by-step guide here](docs/windows.md). Native Windows support coming in v0.2.
+
+**Using another agent (Cursor, Cline, Windsurf)?** dStack follows the [Agent Skills](https://agentskills.io) open standard. Install via `npx skills add harshii0509/designStack` and the skills work across any compatible agent.
 
 **Optional:** Install [gstack](https://github.com/garrytan/gstack) for screenshot and annotation features. Not required — every command works in text-only mode without it.
 

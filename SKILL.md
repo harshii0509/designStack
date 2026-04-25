@@ -2,6 +2,7 @@
 name: dstack
 version: 0.1.0
 description: Designer-first Claude Code skills for non-technical vibe coders. Plain English throughout, screenshots always, saves constantly. Run this for an overview or to get started.
+license: MIT
 ---
 
 ## Preamble
