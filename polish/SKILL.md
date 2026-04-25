@@ -1,5 +1,5 @@
 ---
-name: designStack:polish
+name: ds:polish
 version: 0.1.0
 description: Final check before you share your work. Runs 11 quality checks across your whole UI — layout, colors, fonts, accessibility, mobile — and gives you a prioritized list of what to fix before launch.
 ---
@@ -15,7 +15,7 @@ _HAS_BIBLE="no"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"
 _B=""
 [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/designStack/browse/dist/browse" ] && _B="$HOME/.claude/skills/designStack/browse/dist/browse"
+[ -z "$_B" ] && [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
 # Also check for gstack's polish skill as an underlying engine
 _POLISH=""
 [ -f "$HOME/.agents/skills/polish/SKILL.md" ] && _POLISH="$HOME/.agents/skills/polish/SKILL.md"

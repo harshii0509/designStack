@@ -1,5 +1,5 @@
 ---
-name: designStack:delight
+name: ds:delight
 version: 0.1.0
 description: Add moments of joy to your product. Find the two moments where users succeed or arrive for the first time — and make those moments feel special. Subtle, intentional, on-brand.
 ---
@@ -15,7 +15,7 @@ _HAS_BIBLE="no"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"
 _B=""
 [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/designStack/browse/dist/browse" ] && _B="$HOME/.claude/skills/designStack/browse/dist/browse"
+[ -z "$_B" ] && [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
 # Check for gstack's delight skill
 _DELIGHT=""
 [ -f "$HOME/.agents/skills/delight/SKILL.md" ] && _DELIGHT="$HOME/.agents/skills/delight/SKILL.md"

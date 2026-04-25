@@ -3,7 +3,7 @@
 set -e
 
 DESIGNSTACK_REPO="https://github.com/harshii0509/designStack.git"
-DESIGNSTACK_DIR="$HOME/.claude/skills/designStack"
+DESIGNSTACK_DIR="$HOME/.claude/skills/ds"
 
 echo ""
 echo "  Installing designStack..."
@@ -39,7 +39,7 @@ echo "  ✓ git found"
 if [ -d "$DESIGNSTACK_DIR" ]; then
   echo "  ✓ designStack already installed at $DESIGNSTACK_DIR"
   echo ""
-  echo "  To update: open Claude Code and type /designStack:update"
+  echo "  To update: open Claude Code and type /ds:update"
   echo "  To reinstall: rm -rf $DESIGNSTACK_DIR and run this installer again"
   echo ""
   exit 0
@@ -64,7 +64,7 @@ echo ""
 echo "  ┌─────────────────────────────────────────┐"
 echo "  │  Open Claude Code and type:             │"
 echo "  │                                         │"
-echo "  │  /designStack:start                          │"
+echo "  │  /ds:start                          │"
 echo "  │                                         │"
 echo "  │  Takes 5 minutes. Run once per project. │"
 echo "  └─────────────────────────────────────────┘"

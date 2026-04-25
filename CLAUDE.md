@@ -24,23 +24,23 @@ When the user's request matches one of these, invoke the skill FIRST — before 
 
 ## Available designStack skills
 
-- `/designStack:context` — Build the Design Bible (run once per project)
-- `/designStack:plain` — Translate plans to plain English
-- `/designStack:unstuck` — Diagnose errors visually
-- `/designStack:look` — Visual QA against design rules
-- `/designStack:mobile` — Responsive check (3 breakpoints)
-- `/designStack:a11y` — Accessibility audit with letter grade
-- `/designStack:save` — Git checkpoint with human-readable message
-- `/designStack:share` — Deploy and get a shareable link
-- `/designStack:vibe` — Set aesthetic direction from feeling words
-- `/designStack:brand` — Brand consistency scan
-- `/designStack:polish` — Pre-ship quality check (11 dimensions)
-- `/designStack:animate` — Add purposeful motion
-- `/designStack:delight` — Add joy moments
+- `/ds:context` — Build the Design Bible (run once per project)
+- `/ds:plain` — Translate plans to plain English
+- `/ds:unstuck` — Diagnose errors visually
+- `/ds:look` — Visual QA against design rules
+- `/ds:mobile` — Responsive check (3 breakpoints)
+- `/ds:a11y` — Accessibility audit with letter grade
+- `/ds:save` — Git checkpoint with human-readable message
+- `/ds:share` — Deploy and get a shareable link
+- `/ds:vibe` — Set aesthetic direction from feeling words
+- `/ds:brand` — Brand consistency scan
+- `/ds:polish` — Pre-ship quality check (11 dimensions)
+- `/ds:animate` — Add purposeful motion
+- `/ds:delight` — Add joy moments
 
 ## Design Bible
 
-designStack maintains `dstack/DESIGN-BIBLE.md` in the project root. Every skill reads from it. If it doesn't exist, suggest running `/designStack:context` first.
+designStack maintains `dstack/DESIGN-BIBLE.md` in the project root. Every skill reads from it. If it doesn't exist, suggest running `/ds:context` first.
 
 If a `DesignBrain.md` or `ICP-CONTEXT.md` exists in the project, treat it as the Design Bible source of truth and read it before any design-related skill.
 

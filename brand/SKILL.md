@@ -1,5 +1,5 @@
 ---
-name: designStack:brand
+name: ds:brand
 version: 0.1.0
 description: Is your site still on brand? Scan every page against your Design Bible rules — colors, fonts, spacing — and flag anything that's drifted. Get an annotated screenshot of the problems.
 ---
@@ -16,7 +16,7 @@ _BIBLE_SOURCE=""
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes" && _BIBLE_SOURCE="DesignBrain.md"
 _B=""
 [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/designStack/browse/dist/browse" ] && _B="$HOME/.claude/skills/designStack/browse/dist/browse"
+[ -z "$_B" ] && [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
 _LAST_COMMIT=$(git log -1 --pretty=format:"%h — %s" 2>/dev/null || echo "no history")
 echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "DESIGN_BIBLE: $_HAS_BIBLE | source: ${_BIBLE_SOURCE:-none}"
@@ -28,14 +28,14 @@ echo "LAST_COMMIT: $_LAST_COMMIT"
 
 Check if everything still looks like it belongs to the same product. As you build over time, small things drift — a button becomes the wrong shade, a font switches, padding gets inconsistent. This scan catches all of that and shows you exactly where, so you can decide what to fix.
 
-**Requires a Design Bible.** If none exists, run `/designStack:context` first.
+**Requires a Design Bible.** If none exists, run `/ds:context` first.
 
 ## Step 1 — Check for Design Bible
 
 If `DESIGN_BIBLE` is `no`:
 > "I need your Design Bible to run a brand check — it's the set of rules I compare everything against. You haven't set one up for this project yet.
 >
-> Run `/designStack:context` first — it takes about 5 minutes to set up. After that, `/designStack:brand` will know exactly what to look for."
+> Run `/ds:context` first — it takes about 5 minutes to set up. After that, `/ds:brand` will know exactly what to look for."
 
 Stop here if no Bible.
 

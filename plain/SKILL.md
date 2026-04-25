@@ -1,5 +1,5 @@
 ---
-name: designStack:plain
+name: ds:plain
 version: 0.1.0
 description: Translate any Claude plan into plain English before you say yes. Shows what changes, what gets deleted, what's new, and how risky it is. Always ask before running this skill.
 ---
@@ -61,7 +61,7 @@ What we're building / changing:
 [Pick one:]
 - Small tweak — quick to do, easy to undo
 - Medium change — takes a few minutes, easy to undo if needed
-- Big change — about 15 minutes to complete, harder to undo. Run `/designStack:save` first.
+- Big change — about 15 minutes to complete, harder to undo. Run `/ds:save` first.
 
 ---
 
@@ -109,4 +109,4 @@ If user says C: explain that specific part in more detail without any jargon.
 
 If the change is "Big", add this note before the confirmation:
 
-> ⚠️ This is a bigger change — harder to undo once it starts. I'd recommend running `/designStack:save` first to create a restore point you can come back to if anything goes wrong.
+> ⚠️ This is a bigger change — harder to undo once it starts. I'd recommend running `/ds:save` first to create a restore point you can come back to if anything goes wrong.

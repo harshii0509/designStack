@@ -1,5 +1,5 @@
 ---
-name: designStack:save
+name: ds:save
 version: 0.1.0
 description: Save your progress with a human-readable description. Creates a restore point you can always come back to. Run this before any risky change.
 ---
@@ -41,7 +41,7 @@ Tell the user: "Done — saving is now turned on. I'll create your first snapsho
 Then continue.
 
 If no:
-> "OK, I won't set it up right now. Just know that without saving enabled, there's no undo if something goes wrong. You can always run `/designStack:save` again later to set it up."
+> "OK, I won't set it up right now. Just know that without saving enabled, there's no undo if something goes wrong. You can always run `/ds:save` again later to set it up."
 Stop here.
 
 ## Step 2 — First-time explanation (if no git history)
@@ -107,7 +107,7 @@ After committing, show:
 > **When:** right now
 > **On branch:** [branch name in plain terms, e.g. "main" or just the branch name]
 >
-> Tip: run `/designStack:save` before any big change. That way, if something goes wrong, you can always get back here.
+> Tip: run `/ds:save` before any big change. That way, if something goes wrong, you can always get back here.
 
 ## Step 7 — Update Design Bible if it was changed
 

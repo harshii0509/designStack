@@ -5,7 +5,7 @@ labels: language, good first issue
 ---
 
 **Which skill?**
-(e.g. `/designStack:context`, `/designStack:look`)
+(e.g. `/ds:context`, `/ds:look`)
 
 **What part is unclear?**
 (Quote the exact text that confused you)

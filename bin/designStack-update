@@ -2,7 +2,7 @@
 # designStack-update — update designStack to the latest version
 set -e
 
-DESIGNSTACK_DIR="$HOME/.claude/skills/designStack"
+DESIGNSTACK_DIR="$HOME/.claude/skills/ds"
 PREV_VER=$(cat "$DESIGNSTACK_DIR/VERSION" 2>/dev/null || echo "unknown")
 
 echo ""

@@ -4,15 +4,15 @@
 
 ## Which skill(s) does it touch?
 
-- [ ] `/designStack:context`
-- [ ] `/designStack:look`
-- [ ] `/designStack:mobile`
-- [ ] `/designStack:a11y`
-- [ ] `/designStack:plain`
-- [ ] `/designStack:unstuck`
-- [ ] `/designStack:save`
-- [ ] `/designStack:share`
-- [ ] `/designStack:start`
+- [ ] `/ds:context`
+- [ ] `/ds:look`
+- [ ] `/ds:mobile`
+- [ ] `/ds:a11y`
+- [ ] `/ds:plain`
+- [ ] `/ds:unstuck`
+- [ ] `/ds:save`
+- [ ] `/ds:share`
+- [ ] `/ds:start`
 - [ ] `setup` / `install` scripts
 - [ ] Other: ___
 

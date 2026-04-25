@@ -2,7 +2,7 @@
 # designStack setup — installs designStack skills into Claude Code
 set -e
 
-DESIGNSTACK_DIR="$HOME/.claude/skills/designStack"
+DESIGNSTACK_DIR="$HOME/.claude/skills/ds"
 DESIGNSTACK_VER=$(cat "$DESIGNSTACK_DIR/VERSION" 2>/dev/null || echo "0.1.0")
 _QUIET="no"
 _PREFIX="namespaced"
@@ -62,7 +62,7 @@ else
   log "     Install gstack for full visual features: https://github.com/garrytan/gstack"
 fi
 
-# ── Flat mode: create symlinks without /designStack: prefix ───────────────────────
+# ── Flat mode: create symlinks without /ds: prefix ───────────────────────
 if [ "$_PREFIX" = "flat" ]; then
   _SKILLS_DIR="$HOME/.claude/skills"
   for skill in start context plain unstuck look mobile a11y save share; do
@@ -86,15 +86,15 @@ else
 
 # designStack
 - **designStack** is installed. Use designStack skills for design rules, visual QA, accessibility, and error recovery.
-- `/designStack:start` — First session wizard. Run this once per project.
-- `/designStack:context` — Refresh your Design Bible when your brand changes.
-- `/designStack:plain` — Translate any Claude plan into plain English before you accept it.
-- `/designStack:unstuck` — Something broke. Get a plain-English diagnosis.
-- `/designStack:look` — Does it look right? Visual check against your brand rules.
-- `/designStack:mobile` — Check it on phone, tablet, and desktop.
-- `/designStack:a11y` — Accessibility grade A–D with every problem marked.
-- `/designStack:save` — Save your progress with a human-readable description.
-- `/designStack:share` — Deploy and get a shareable link.
+- `/ds:start` — First session wizard. Run this once per project.
+- `/ds:context` — Refresh your Design Bible when your brand changes.
+- `/ds:plain` — Translate any Claude plan into plain English before you accept it.
+- `/ds:unstuck` — Something broke. Get a plain-English diagnosis.
+- `/ds:look` — Does it look right? Visual check against your brand rules.
+- `/ds:mobile` — Check it on phone, tablet, and desktop.
+- `/ds:a11y` — Accessibility grade A–D with every problem marked.
+- `/ds:save` — Save your progress with a human-readable description.
+- `/ds:share` — Deploy and get a shareable link.
 EOF
   log "  ✓ Added designStack to global CLAUDE.md"
 fi
@@ -106,21 +106,21 @@ log "  │  designStack v$DESIGNSTACK_VER installed!                            
 log "  │                                                             │"
 log "  │  Open Claude Code and type:                                 │"
 log "  │                                                             │"
-log "  │    /designStack:start                                            │"
+log "  │    /ds:start                                            │"
 log "  │                                                             │"
 log "  │  That's it. The wizard takes 5 minutes and sets everything  │"
 log "  │  up. Every other skill works automatically after that.      │"
 log "  │                                                             │"
 log "  │  All commands:                                              │"
-log "  │    /designStack:start     First-session setup wizard             │"
-log "  │    /designStack:context   Refresh your Design Bible              │"
-log "  │    /designStack:plain     Translate plans to plain English        │"
-log "  │    /designStack:unstuck   Debug broken things                    │"
-log "  │    /designStack:look      Visual check against brand rules       │"
-log "  │    /designStack:mobile    Phone + tablet + desktop side-by-side  │"
-log "  │    /designStack:a11y      Accessibility grade with problem map   │"
-log "  │    /designStack:save      Save progress with a description       │"
-log "  │    /designStack:share     Deploy and get a shareable link        │"
+log "  │    /ds:start     First-session setup wizard             │"
+log "  │    /ds:context   Refresh your Design Bible              │"
+log "  │    /ds:plain     Translate plans to plain English        │"
+log "  │    /ds:unstuck   Debug broken things                    │"
+log "  │    /ds:look      Visual check against brand rules       │"
+log "  │    /ds:mobile    Phone + tablet + desktop side-by-side  │"
+log "  │    /ds:a11y      Accessibility grade with problem map   │"
+log "  │    /ds:save      Save progress with a description       │"
+log "  │    /ds:share     Deploy and get a shareable link        │"
 log "  │                                                             │"
 log "  │  Questions? https://github.com/harshii0509/designStack/discussions │"
 log "  └─────────────────────────────────────────────────────────────┘"

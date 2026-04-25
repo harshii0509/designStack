@@ -1,5 +1,5 @@
 ---
-name: designStack:animate
+name: ds:animate
 version: 0.1.0
 description: Add motion to your product. Tell me what feels too static — buttons, page transitions, loading states — and I'll add animations that feel natural, not showy. Before/after screenshots included.
 ---
@@ -15,7 +15,7 @@ _HAS_BIBLE="no"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"
 _B=""
 [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/designStack/browse/dist/browse" ] && _B="$HOME/.claude/skills/designStack/browse/dist/browse"
+[ -z "$_B" ] && [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
 # Check for gstack's animate skill as underlying engine
 _ANIMATE=""
 [ -f "$HOME/.agents/skills/animate/SKILL.md" ] && _ANIMATE="$HOME/.agents/skills/animate/SKILL.md"

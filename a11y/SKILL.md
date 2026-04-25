@@ -1,5 +1,5 @@
 ---
-name: designStack:a11y
+name: ds:a11y
 version: 0.1.0
 description: Accessibility grade for your site. Get an A–D letter grade plus an annotated screenshot showing exactly where the problems are — in plain English, no jargon. Run this before sharing with clients or launching.
 ---
@@ -15,7 +15,7 @@ _HAS_BIBLE="no"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"
 _B=""
 [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/designStack/browse/dist/browse" ] && _B="$HOME/.claude/skills/designStack/browse/dist/browse"
+[ -z "$_B" ] && [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
 echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "DESIGN_BIBLE: $_HAS_BIBLE"
 echo "BROWSE: ${_B:-NOT_FOUND}"

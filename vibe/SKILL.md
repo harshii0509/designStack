@@ -1,5 +1,5 @@
 ---
-name: designStack:vibe
+name: ds:vibe
 version: 0.1.0
 description: Set the look and feel of your product from feeling words. Describe what you want it to feel like — "calm like Notion", "bold like Stripe", "warm and playful" — and get three visual directions to choose from.
 ---
@@ -16,7 +16,7 @@ _BIBLE_SOURCE=""
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes" && _BIBLE_SOURCE="DesignBrain.md"
 _B=""
 [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/designStack/browse/dist/browse" ] && _B="$HOME/.claude/skills/designStack/browse/dist/browse"
+[ -z "$_B" ] && [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
 echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "DESIGN_BIBLE: $_HAS_BIBLE | source: ${_BIBLE_SOURCE:-none}"
 echo "BROWSE: ${_B:-NOT_FOUND}"
@@ -196,13 +196,13 @@ If the user had an existing Design Bible and the new direction changes things si
 > - Font: was [old], now [new]
 > - Radius: was [old], now [new]
 >
-> Anything that was built before will need a pass to match the new direction. Want to run `/designStack:look` on your existing pages to see what needs updating?"
+> Anything that was built before will need a pass to match the new direction. Want to run `/ds:look` on your existing pages to see what needs updating?"
 
 ## Step 7 — Next step suggestion
 
 After updating the Bible:
 > "Your Design Bible now has your new look captured. Here's what I'd suggest next:
 >
-> 1. Run `/designStack:look` on your main page to see how it compares to the new direction
-> 2. Run `/designStack:brand` to scan for anything that's drifted from the new rules
+> 1. Run `/ds:look` on your main page to see how it compares to the new direction
+> 2. Run `/ds:brand` to scan for anything that's drifted from the new rules
 > 3. Or just keep building — every new thing I create will automatically follow the new direction"

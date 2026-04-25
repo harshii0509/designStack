@@ -29,7 +29,7 @@ Describe:
 
 ### Improving skill language
 
-Skills live in `~/.claude/skills/designStack/<skill-name>/SKILL.md`. Each one is a markdown file with instructions for Claude to follow.
+Skills live in `~/.claude/skills/ds/<skill-name>/SKILL.md`. Each one is a markdown file with instructions for Claude to follow.
 
 If something reads as too technical, too confusing, or just unclear — open a PR. Skill language improvements are the highest-leverage changes in this repo.
 

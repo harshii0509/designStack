@@ -1,5 +1,5 @@
 ---
-name: designStack:look
+name: ds:look
 version: 0.1.0
 description: Does this look right? Screenshot your site, compare it against your Design Bible rules, and get an annotated visual with plain-English issues labeled. Run after any UI change.
 ---
@@ -15,7 +15,7 @@ _HAS_BIBLE="no"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes" && _BIBLE="$_ROOT/DesignBrain.md"
 _B=""
 [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/designStack/browse/dist/browse" ] && _B="$HOME/.claude/skills/designStack/browse/dist/browse"
+[ -z "$_B" ] && [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
 _LAST_COMMIT=$(git log -1 --pretty=format:"%h — %s" 2>/dev/null || echo "no history yet")
 echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "DESIGN_BIBLE: $_HAS_BIBLE | path: ${_BIBLE}"
@@ -40,7 +40,7 @@ If `DESIGN_BIBLE` is `yes`, read the Bible file fully. Extract:
 - Memory Log (recent changes, known intentional decisions)
 
 If `DESIGN_BIBLE` is `no`:
-> "I don't have your design rules yet, so I can't check for brand drift. I'll still look for layout issues and obvious problems. Want me to set up your Design Bible first? Run `/designStack:context` — it takes 5 minutes and makes every future check much smarter."
+> "I don't have your design rules yet, so I can't check for brand drift. I'll still look for layout issues and obvious problems. Want me to set up your Design Bible first? Run `/ds:context` — it takes 5 minutes and makes every future check much smarter."
 
 Continue the check either way.
 
