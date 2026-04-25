@@ -22,7 +22,7 @@ Example:
 
 ## 3. Read the Design Bible before touching visuals
 
-If `dstack/DESIGN-BIBLE.md` exists in this project, **read it before making any visual change**. Apply its color, font, spacing, and component rules. If a value you're about to use isn't in the Bible, say so.
+If `design/DESIGN-BIBLE.md` exists in this project, **read it before making any visual change**. Apply its color, font, spacing, and component rules. If a value you're about to use isn't in the Bible, say so.
 
 If the Bible doesn't exist, mention it once:
 > "I don't see a Design Bible for this project. Run `/ds:context` in Claude Code to set one up — it makes every future session design-aware."
@@ -33,4 +33,4 @@ If you notice a value that doesn't match the Design Bible (wrong color, off-bran
 
 ---
 
-*These rules are from [designStack](https://github.com/harshii0509/designStack) — the AI design companion for non-technical builders.*
+*These rules are from [designStack](https://github.com/harshii0509/designStack) — the AI design companion for designers building their own products.*

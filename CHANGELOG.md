@@ -18,7 +18,7 @@ First release.
 - `/ds:share` — Deploy and get a shareable link for feedback or going live.
 
 **Key features:**
-- Design Bible (`dstack/DESIGN-BIBLE.md`) — living brand file every skill reads from
+- Design Bible (`design/DESIGN-BIBLE.md`) — living brand file every skill reads from
 - CLAUDE.md auto-injection — design rules in every Claude session, not just skill runs
 - gstack coexistence — reads gstack's design file automatically if you use both
 - curl one-liner install — `curl -fsSL [url] | bash` with plain-English error messages

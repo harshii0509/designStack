@@ -9,10 +9,16 @@ description: Set the look and feel of your product from feeling words. Describe 
 ```bash
 _DESIGNSTACK_VER="0.1.0"
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-_BIBLE="$_ROOT/dstack/DESIGN-BIBLE.md"
+# Migrate Bible from dstack/ to design/ (one-time)
+if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
+  mkdir -p "$_ROOT/design"
+  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
+  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
+fi
+_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
 _HAS_BIBLE="no"
 _BIBLE_SOURCE=""
-[ -f "$_BIBLE" ] && _HAS_BIBLE="yes" && _BIBLE_SOURCE="dstack/DESIGN-BIBLE.md"
+[ -f "$_BIBLE" ] && _HAS_BIBLE="yes" && _BIBLE_SOURCE="design/DESIGN-BIBLE.md"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes" && _BIBLE_SOURCE="DesignBrain.md"
 _B=""
 [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
@@ -173,7 +179,7 @@ Then generate three new directions based on the refined description.
 
 ## Step 6 — Update the Design Bible
 
-After the user confirms a direction, update `dstack/DESIGN-BIBLE.md`:
+After the user confirms a direction, update `design/DESIGN-BIBLE.md`:
 
 If the Bible doesn't exist yet, create it first with just the chosen direction's values.
 

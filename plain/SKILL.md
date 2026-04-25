@@ -59,8 +59,8 @@ What we're building / changing:
 
 **How big is this change?**
 [Pick one:]
-- Small tweak — quick to do, easy to undo
-- Medium change — takes a few minutes, easy to undo if needed
+- Small tweak — quick to do, easy to undo if anything goes wrong
+- Medium change — takes a few minutes, worth running `/ds:save` before starting
 - Big change — about 15 minutes to complete, harder to undo. Run `/ds:save` first.
 
 ---

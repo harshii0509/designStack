@@ -9,7 +9,13 @@ description: Add motion to your product. Tell me what feels too static — butto
 ```bash
 _DESIGNSTACK_VER="0.1.0"
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-_BIBLE="$_ROOT/dstack/DESIGN-BIBLE.md"
+# Migrate Bible from dstack/ to design/ (one-time)
+if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
+  mkdir -p "$_ROOT/design"
+  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
+  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
+fi
+_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
 _HAS_BIBLE="no"
 [ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"

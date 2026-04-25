@@ -9,10 +9,16 @@ description: Build the Design Bible for this project. Captures brand rules, colo
 ```bash
 _DESIGNSTACK_VER="0.1.0"
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-_BIBLE="$_ROOT/dstack/DESIGN-BIBLE.md"
+# Migrate Bible from dstack/ to design/ (one-time)
+if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
+  mkdir -p "$_ROOT/design"
+  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
+  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
+fi
+_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
 _HAS_BIBLE="no"
 _BIBLE_SOURCE=""
-[ -f "$_BIBLE" ]              && _HAS_BIBLE="yes"  && _BIBLE_SOURCE="dstack/DESIGN-BIBLE.md"
+[ -f "$_BIBLE" ]              && _HAS_BIBLE="yes"  && _BIBLE_SOURCE="design/DESIGN-BIBLE.md"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ]  && _HAS_BIBLE="extend" && _BIBLE_SOURCE="DesignBrain.md"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/ICP-CONTEXT.md" ]  && _HAS_BIBLE="extend" && _BIBLE_SOURCE="ICP-CONTEXT.md"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/gstack/DESIGN.md" ] && _HAS_BIBLE="extend" && _BIBLE_SOURCE="gstack/DESIGN.md"
@@ -63,7 +69,7 @@ Do not continue past this point if ROOT is `.`.
 
 ## What this skill does
 
-You're building the Design Bible — a living file at `dstack/DESIGN-BIBLE.md` that holds everything about how this project looks and feels. Every other designStack skill reads from it. Once it exists, you never have to explain your brand again.
+You're building the Design Bible — a living file at `design/DESIGN-BIBLE.md` that holds everything about how this project looks and feels. Every other designStack skill reads from it. Once it exists, you never have to explain your brand again.
 
 This takes about 5 minutes.
 
@@ -209,7 +215,7 @@ Also narrate progress during this step:
 Before touching the filesystem, show the user exactly where you're about to write and ask them to confirm:
 
 > "I'll write your Design Bible to:
-> `[ROOT]/dstack/DESIGN-BIBLE.md`
+> `[ROOT]/design/DESIGN-BIBLE.md`
 >
 > Is that the right project folder?"
 
@@ -221,10 +227,10 @@ Wait for confirmation. If they say no, ask: "Which folder should I use instead?"
 
 Create the directory and file:
 ```bash
-mkdir -p "$_ROOT/dstack"
+mkdir -p "$_ROOT/design"
 ```
 
-Write `dstack/DESIGN-BIBLE.md` with this structure. Fill every section from what you gathered in Steps 1–3. Use real values — not placeholders. If a value is unknown, write `unknown — update me` rather than leaving a blank.
+Write `design/DESIGN-BIBLE.md` with this structure. Fill every section from what you gathered in Steps 1–3. Use real values — not placeholders. If a value is unknown, write `unknown — update me` rather than leaving a blank.
 
 ```markdown
 # Design Bible
@@ -340,7 +346,7 @@ Brand color: [hex]  |  Background: [hex]  |  Accent: [hex]
 Body font: [family] [size]px  |  Heading font: [family] [weight]
 Spacing unit: [px]  |  Border radius: [px]
 Primary button: [bg] background, [text] text, [radius]px radius
-Source: dstack/DESIGN-BIBLE.md — run /ds:context to refresh
+Source: design/DESIGN-BIBLE.md — run /ds:context to refresh
 <!-- dstack:design-rules:end -->
 ```
 
@@ -363,7 +369,7 @@ Brand color: [hex]  |  Background: [hex]  |  Accent: [hex]
 Body font: [family] [size]px  |  Heading font: [family] [weight]
 Spacing unit: [px]  |  Border radius: [px]
 Primary button: [bg] background, [text] text, [radius]px radius
-Source: dstack/DESIGN-BIBLE.md — run /ds:context to refresh
+Source: design/DESIGN-BIBLE.md — run /ds:context to refresh
 <!-- ds:design-rules:end -->
 ```
 

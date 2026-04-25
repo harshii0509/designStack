@@ -19,7 +19,7 @@
 ## Did you test it?
 
 - [ ] I ran the skill in Claude Code and went through the full flow
-- [ ] The skill speaks plain English throughout — no jargon a non-technical person wouldn't understand
+- [ ] The skill speaks plain English throughout — no jargon a designer building their own product wouldn't understand
 - [ ] If it writes files, it confirmed the path before writing
 - [ ] If it's a new skill, it follows the [skill checklist in CONTRIBUTING.md](../CONTRIBUTING.md)
 

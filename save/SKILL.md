@@ -111,7 +111,7 @@ After committing, show:
 
 ## Step 7 — Update Design Bible if it was changed
 
-If `dstack/DESIGN-BIBLE.md` was among the saved files, append to the Memory Log:
+If `design/DESIGN-BIBLE.md` was among the saved files, append to the Memory Log:
 ```
 [date]: Design Bible saved as part of: [the human sentence]
 ```

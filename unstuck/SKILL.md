@@ -9,7 +9,13 @@ description: Something broke and you don't know why. Get a plain-English diagnos
 ```bash
 _DESIGNSTACK_VER="0.1.0"
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-_BIBLE="$_ROOT/dstack/DESIGN-BIBLE.md"
+# Migrate Bible from dstack/ to design/ (one-time)
+if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
+  mkdir -p "$_ROOT/design"
+  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
+  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
+fi
+_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
 _HAS_BIBLE="no"
 [ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"
@@ -87,7 +93,7 @@ Show the annotated screenshot via Read tool. Point to the specific element with 
 
 ## Step 4 — Check the Design Bible
 
-If `DESIGN_BIBLE` is yes, read `dstack/DESIGN-BIBLE.md`. Ask: was this a design rule being ignored (e.g. wrong color, missing component) or a pure code error?
+If `DESIGN_BIBLE` is yes, read `design/DESIGN-BIBLE.md`. Ask: was this a design rule being ignored (e.g. wrong color, missing component) or a pure code error?
 
 If it's a design drift issue, note it: "This also drifted from your brand rules — the [X] should be [Y] according to your Design Bible."
 

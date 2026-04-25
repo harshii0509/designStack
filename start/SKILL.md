@@ -1,7 +1,7 @@
 ---
 name: ds:start
 version: 0.1.0
-description: First-session setup wizard for designStack. Run once when you first install. Guides non-technical users through building their Design Bible in about 5 minutes.
+description: First-session setup wizard for designStack. Run once when you first install. Guides designers through building their Design Bible in about 5 minutes.
 ---
 
 ## Preamble
@@ -9,11 +9,17 @@ description: First-session setup wizard for designStack. Run once when you first
 ```bash
 _DESIGNSTACK_VER="0.1.0"
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-_BIBLE="$_ROOT/dstack/DESIGN-BIBLE.md"
+# Migrate Bible from dstack/ to design/ (one-time)
+if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
+  mkdir -p "$_ROOT/design"
+  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
+  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
+fi
+_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
 _HAS_BIBLE="no"
 [ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
 _HAS_VIBE="no"
-[ -f "$_ROOT/dstack/.vibe-set" ] && _HAS_VIBE="yes"
+[ -f "$_ROOT/design/.vibe-set" ] && _HAS_VIBE="yes"
 echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "HAS_BIBLE: $_HAS_BIBLE"
 echo "HAS_VIBE: $_HAS_VIBE"
@@ -55,7 +61,7 @@ Continue to Step 2.
 ## Step 2 — The welcome
 
 Tell the user:
-> "Welcome to designStack. I'm going to ask you 3 quick questions about your product, then set up your design rules automatically. Takes about 5 minutes — no technical knowledge needed.
+> "Welcome to designStack. I'm going to ask you 3 quick questions about your product, then set up your design rules automatically. Takes about 5 minutes — no engineering background needed.
 >
 > Ready?"
 
@@ -76,7 +82,7 @@ Ask these one at a time. Friendly, conversational tone. Not a form — a chat.
 **Q2:**
 > "Nice! Now: if your product had a personality, how would you describe it? Pick 3 words — like 'calm, trustworthy, clean' or 'bold, playful, energetic.'"
 
-Narrate: "Got it, I love that..."
+After Q2, respond with the vibe words woven into one sentence: "[3 vibe words] — I can work with that. That shapes everything from font choices to how buttons feel in the hand."
 
 **Q3:**
 > "Last one: do you have a main brand color? Give me a hex code if you know it, or just describe it — like 'a deep navy blue' or 'warm orange'. If you're not sure, just say so and I'll figure it out from your project."

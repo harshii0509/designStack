@@ -1,6 +1,6 @@
 # designStack
 
-Designer-first Claude Code skills for non-technical vibe coders. Speak plain English, show screenshots, save constantly.
+Designer-first Claude Code skills for designers building their own products. Speak plain English, show screenshots, save constantly.
 
 ## Skill routing
 
@@ -40,7 +40,7 @@ When the user's request matches one of these, invoke the skill FIRST — before 
 
 ## Design Bible
 
-designStack maintains `dstack/DESIGN-BIBLE.md` in the project root. Every skill reads from it. If it doesn't exist, suggest running `/ds:context` first.
+designStack maintains `design/DESIGN-BIBLE.md` in the project root. Every skill reads from it. If it doesn't exist, suggest running `/ds:context` first.
 
 If a `DesignBrain.md` or `ICP-CONTEXT.md` exists in the project, treat it as the Design Bible source of truth and read it before any design-related skill.
 

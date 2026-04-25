@@ -1,20 +1,24 @@
-# designStack — Claude Code for people who think in pixels, not pull requests.
+# designStack — Claude Code for designers building their own products.
 
-> Built by a designer who got tired of asking engineers for help.
+> Built for designers who are tired of asking engineers for help.
 
 ---
 
 ## Why this exists
 
-I kept watching the same thing happen.
-
-A designer or founder gets access to Claude Code, excited to finally build their own product without depending on a developer. They open it up. Claude responds with a wall of text — file paths, function names, a "refactoring plan" they don't understand. They click yes. Something breaks. They ask Claude to fix it. Something else breaks. They close the laptop.
-
 **The tools are incredible. But they're built for people who already know how to use them.**
 
-designStack fixes that. Nine slash commands built specifically for designers, no-code builders, and non-technical founders. Every command speaks plain English. Every error tells you exactly what to do next.
+You're a designer. You know exactly what you want to build. You open Claude Code, describe what you need, and Claude writes a plan. You don't understand half the words in it. You click yes.
 
-You don't need to know what a pull request is. You just need to know what you're trying to build.
+Something breaks.
+
+You ask Claude to fix it. Something else breaks. You close the laptop.
+
+designStack fixes the moment before you click yes.
+
+It translates any Claude plan into plain English before a line of code changes. It saves your brand colors, fonts, and design rules so every session starts with full context. It gives you a restore point before anything risky — and tells you exactly what to do when something breaks.
+
+No engineering background needed. Just your design sense and the product you're building.
 
 ---
 
@@ -57,16 +61,58 @@ Before the commands, the mindset. designStack is built around four principles fo
 
 ---
 
+## What it looks like
+
+```
+Running /ds:plain on the current plan...
+
+────────────────────────────────────────────
+Here's what's about to happen, in plain English:
+
+What we're changing:
+The checkout button will move to a fixed position at the bottom of
+the screen so it's always visible while users scroll.
+
+What will CHANGE:
+• The "Buy Now" button position — from the middle of the page
+  to a bar that sticks to the bottom of the browser window
+
+What will be ADDED:
+• A thin shadow above the sticky bar to show it's floating
+
+What will be REMOVED:
+• Nothing is being deleted in this step.
+
+How big is this change?
+Small tweak — quick to do, easy to undo if anything goes wrong.
+
+Does this match what you had in mind?
+A) Yes, go ahead
+B) No, let me describe what I actually want
+C) Wait — tell me more about the sticky bar
+────────────────────────────────────────────
+```
+
+---
+
 ## What it does
 
-| Problem you've had | What designStack does |
-|--------------------|-----------------|
-| Claude writes a plan in tech-speak. You say yes. It builds the wrong thing. | `/ds:plain` translates any plan into plain English before you accept it |
-| Something breaks. You ask Claude to fix it. New error. You give up. | `/ds:unstuck` gives you a one-sentence diagnosis and one fix to approve |
-| Your site slowly stops looking like your design. Nobody tells you. | `/ds:look` compares your live site to your brand rules and shows you what drifted |
-| Every Claude session, it forgets your brand colors and fonts. | `/ds:context` builds a Design Bible — Claude reads it every session automatically |
-| A client asks if your site is accessible. You have no idea. | `/ds:a11y` gives you an A–D grade and shows every problem on a screenshot |
-| You want to share your work but deployment is scary. | `/ds:share` gets you a shareable link in under 2 minutes |
+| Command | What it does |
+|---------|--------------|
+| `/ds:start` | First-session wizard — 3 questions, sets up everything in 5 minutes |
+| `/ds:plain` | Translates any plan to plain English before you say yes |
+| `/ds:unstuck` | Diagnoses what broke in one sentence — then one fix to approve |
+| `/ds:save` | Restore point before any risky change — like hitting Save in a game |
+| `/ds:look` | Checks your live site against your brand rules and flags what drifted |
+| `/ds:mobile` | Checks your site on phone, tablet, and desktop side-by-side |
+| `/ds:a11y` | Accessibility grade A–D — every problem shown in plain English |
+| `/ds:context` | Builds your Design Bible once — Claude knows your brand in every future session |
+| `/ds:share` | Shareable link in under 2 minutes |
+| `/ds:vibe` | Set the look and feel from feeling words — get three directions to choose from |
+| `/ds:brand` | Drift check across your whole site — flags what stopped matching your rules |
+| `/ds:polish` | Pre-ship quality check — 11 areas, plain English results |
+| `/ds:animate` | Add purposeful motion that feels natural, not flashy |
+| `/ds:delight` | Add joy to the moments that matter most |
 
 ---
 
@@ -78,7 +124,7 @@ Before the commands, the mindset. designStack is built around four principles fo
 ### Step 2 — Paste this. Claude does the rest.
 
 ```
-Install designStack: run `git clone https://github.com/harshii0509/designStack.git ~/.claude/skills/ds` and then run `~/.claude/skills/ds/setup --quiet`. Then add a "designStack" section to ~/.claude/CLAUDE.md listing all 9 skills with plain-English descriptions. Then ask: "Would you also like to add designStack to this project's CLAUDE.md so it's ready for anyone who works on it?" If yes, append the designStack section to ./CLAUDE.md in the current directory (create it if missing). Then tell them to type /ds:start.
+Install designStack: run `git clone https://github.com/harshii0509/designStack.git ~/.claude/skills/ds` and then run `~/.claude/skills/ds/setup --quiet`. Then add a "designStack" section to ~/.claude/CLAUDE.md listing all 14 skills with plain-English descriptions. Then ask: "Would you also like to add designStack to this project's CLAUDE.md so it's ready for anyone who works on it?" If yes, append the designStack section to ./CLAUDE.md in the current directory (create it if missing). Then tell them to type /ds:start.
 ```
 
 Claude will clone designStack, run setup, update your global settings, and ask if you want to add it to your current project too. You never need to open Terminal.
@@ -152,6 +198,19 @@ You never have to explain your brand again.
 | `/ds:mobile` | See your site on phone, tablet, and desktop side-by-side. Every broken thing flagged. |
 | `/ds:a11y` | Accessibility grade A–D. Every problem shown on an annotated screenshot, in plain English. |
 
+### Set the direction
+| Command | What it does |
+|---------|--------------|
+| `/ds:vibe` | Describe how it should feel — get three visual directions to choose from. |
+| `/ds:brand` | Full-site drift check. Flags everything that stopped matching your rules. |
+
+### Make it great
+| Command | What it does |
+|---------|--------------|
+| `/ds:polish` | Pre-ship quality check — 11 areas, plain English results. |
+| `/ds:animate` | Add purposeful motion without writing animation code. |
+| `/ds:delight` | Add joy to the moments that matter most. |
+
 ### Share your work
 | Command | What it does |
 |---------|--------------|
@@ -166,7 +225,7 @@ You never have to explain your brand again.
 
 ## The Design Bible
 
-Every designStack project gets a file at `dstack/DESIGN-BIBLE.md`. It holds everything about your product's look and feel:
+Every designStack project gets a file at `design/DESIGN-BIBLE.md`. It holds everything about your product's look and feel:
 
 ```
 - Your brand colors (exact hex codes)
@@ -202,11 +261,6 @@ designStack also writes a compact version of your rules into your project's `CLA
 
 ## What's coming in v0.2
 
-- `/ds:vibe` — Set your brand personality in 2 minutes
-- `/ds:brand` — Drift check across your whole site at once
-- `/ds:polish` — Final quality pass before sharing with a client
-- `/ds:animate` — Add purposeful motion without writing animation code
-- `/ds:delight` — Micro-interactions and personality touches
 - Native Windows support (no WSL required)
 
 ---
@@ -246,7 +300,7 @@ No. Visual features (screenshots, annotated images) use gstack's browser if inst
 designStack runs entirely on your machine. Your code stays local. Claude processes your descriptions and answers your questions — your files are only read when you explicitly ask it to check something.
 
 **What's a Design Bible?**
-A file designStack creates at `dstack/DESIGN-BIBLE.md` in your project. It holds your brand rules — colors, fonts, spacing, and how your components should look. Every designStack skill reads from it automatically. Run `/ds:start` once and Claude knows your brand in every future session.
+A file designStack creates at `design/DESIGN-BIBLE.md` in your project. It holds your brand rules — colors, fonts, spacing, and how your components should look. Every designStack skill reads from it automatically. Run `/ds:start` once and Claude knows your brand in every future session.
 
 **Can I use designStack alongside gstack?**
 Yes. They're designed to coexist. If you have a `gstack/DESIGN.md` file, designStack reads it and builds your Design Bible from it. If you use gstack's browse tool, designStack uses it automatically for screenshots.

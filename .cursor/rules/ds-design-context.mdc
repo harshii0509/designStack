@@ -5,7 +5,7 @@ globs: ["**/*.css", "**/*.tsx", "**/*.jsx", "**/*.ts", "**/*.js", "**/*.html", "
 
 # designStack — Design Bible Context
 
-**Read `dstack/DESIGN-BIBLE.md` before making any changes to files matched by this rule.**
+**Read `design/DESIGN-BIBLE.md` before making any changes to files matched by this rule.**
 
 The Design Bible contains:
 - Your exact brand colors (hex codes)

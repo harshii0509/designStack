@@ -1,7 +1,7 @@
 ---
-name: dstack
+name: ds
 version: 0.1.0
-description: Designer-first Claude Code skills for non-technical vibe coders. Plain English throughout, screenshots always, saves constantly. Run this for an overview or to get started.
+description: Designer-first Claude Code skills for designers building their own products. Plain English throughout, screenshots always, saves constantly. Run this for an overview or to get started.
 license: MIT
 ---
 
@@ -10,7 +10,13 @@ license: MIT
 ```bash
 _DESIGNSTACK_VER="0.1.0"
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-_BIBLE="$_ROOT/dstack/DESIGN-BIBLE.md"
+# Migrate Bible from dstack/ to design/ (one-time)
+if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
+  mkdir -p "$_ROOT/design"
+  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
+  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
+fi
+_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
 _HAS_BIBLE="no"
 [ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
 # Also check for compatible files from @heysolacy
@@ -42,6 +48,11 @@ If this skill was invoked with an argument — look for `ARGUMENTS:` in the skil
 | `a11y` | `~/.claude/skills/ds/a11y/SKILL.md` |
 | `save` | `~/.claude/skills/ds/save/SKILL.md` |
 | `share` | `~/.claude/skills/ds/share/SKILL.md` |
+| `vibe` | `~/.claude/skills/ds/vibe/SKILL.md` |
+| `brand` | `~/.claude/skills/ds/brand/SKILL.md` |
+| `polish` | `~/.claude/skills/ds/polish/SKILL.md` |
+| `animate` | `~/.claude/skills/ds/animate/SKILL.md` |
+| `delight` | `~/.claude/skills/ds/delight/SKILL.md` |
 
 If no argument is present, or the argument doesn't match any of the above, continue to the welcome screen below.
 
@@ -49,7 +60,7 @@ If no argument is present, or the argument doesn't match any of the above, conti
 
 ## Welcome to designStack
 
-You're a companion for designers and non-technical builders using Claude Code.
+You're a companion for designers building their own products with Claude Code.
 
 **Read the preamble output, then:**
 
@@ -72,6 +83,15 @@ Show this as a friendly summary — not a technical list:
 - `/ds:look` — Does this match what you had in your head?
 - `/ds:mobile` — Does it hold up on a phone?
 - `/ds:a11y` — Can everyone use this? (I'll give you a grade with a picture of every issue)
+
+**To set the direction:**
+- `/ds:vibe` — Tell me how it should feel, I'll generate three directions to pick from
+- `/ds:brand` — Is this still on brand after all those changes?
+
+**To make it great:**
+- `/ds:polish` — Pre-ship checklist, 11 areas, plain English results
+- `/ds:animate` — Add motion that feels natural, not flashy
+- `/ds:delight` — Add joy to the moments that matter most
 
 **To share your work:**
 - `/ds:share` — I'll get you a link to show someone

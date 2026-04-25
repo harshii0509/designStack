@@ -32,8 +32,8 @@ fi
 
 # Design Bible (project-specific, check CWD)
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-if [ -f "$ROOT/dstack/DESIGN-BIBLE.md" ]; then
-  echo "✓ Design Bible: found at dstack/DESIGN-BIBLE.md"
+if [ -f "$ROOT/design/DESIGN-BIBLE.md" ]; then
+  echo "✓ Design Bible: found at design/DESIGN-BIBLE.md"
 elif [ -f "$ROOT/DesignBrain.md" ]; then
   echo "✓ Design Bible: DesignBrain.md found (compatible)"
 elif [ -f "$ROOT/DESIGN.md" ]; then
