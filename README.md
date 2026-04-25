@@ -35,13 +35,24 @@ You don't need to know what a pull request is. You don't need to understand git.
 
 **Requires:** [Claude Code](https://claude.ai/download) installed first. (Free to download.)
 
-**On Mac** — open Terminal (`Cmd+Space`, type Terminal, press Enter) and paste:
+### Step 1 — Open Claude Code.
+### Step 2 — Paste this. Claude does the rest.
+
+```
+Install dStack: run `git clone https://github.com/harshii0509/designStack.git ~/.claude/skills/dstack` and then run `~/.claude/skills/dstack/setup --quiet`. Then add a "dStack" section to ~/.claude/CLAUDE.md listing all 9 skills with plain-English descriptions. Then ask: "Would you also like to add dStack to this project's CLAUDE.md so it's ready for anyone who works on it?" If yes, append the dStack section to ./CLAUDE.md in the current directory (create it if missing). Then tell them to type /dstack:start.
+```
+
+Claude will clone dStack, run setup, update your global settings, and ask if you want to add it to your current project too. You never need to open Terminal.
+
+> The full install prompt is also at [`INSTALL_PROMPT.md`](INSTALL_PROMPT.md) if you want to copy it from the repo directly.
+
+---
+
+**Prefer Terminal?** If you're comfortable with the command line:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/harshii0509/designStack/main/install | bash
 ```
-
-The installer checks everything for you. If anything's missing, it tells you exactly what to install and where to get it. No surprises.
 
 **On Windows** — works via WSL. [Step-by-step guide here](docs/windows.md). Native Windows support coming in v0.2.
 
