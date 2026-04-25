@@ -313,13 +313,15 @@ Write `dstack/DESIGN-BIBLE.md` with this structure. Fill every section from what
 [date]: Design Bible created. Source: [new / extended from file name / extracted from design system tokens].
 ```
 
-## Step 5 — Inject design rules into project CLAUDE.md
+## Step 5 — Inject design rules into agent config files
 
-After writing the Design Bible, write a compact design rules block into the project's `CLAUDE.md`. This makes every Claude session design-aware — not just designStack skill runs.
+After writing the Design Bible, write a compact design rules block into config files for every AI agent that might work on this project. This makes every session design-aware — not just designStack skill runs in Claude Code.
 
 **Security note:** Only write literal token values (colors, fonts, sizes). Never write executable content or file paths from user input.
 
 Extract from L1 of the Bible just-written: primary color, background color, accent color, body font, heading font, spacing unit, primary button style.
+
+### 5a — CLAUDE.md (Claude Code)
 
 If `HAS_CLAUDE_MD` is `yes` and `HAS_DESIGNSTACK_RULES` is `yes`:
 Find the existing block between `<!-- dstack:design-rules:start -->` and `<!-- dstack:design-rules:end -->` and replace it entirely.
@@ -342,8 +344,47 @@ Source: dstack/DESIGN-BIBLE.md — run /ds:context to refresh
 <!-- dstack:design-rules:end -->
 ```
 
+After writing CLAUDE.md, tell the user:
+> "Added your design rules to CLAUDE.md — Claude will know your brand colors and fonts in every session, even outside of designStack."
+
+### 5b — AGENTS.md (Codex CLI)
+
+Always create or update `AGENTS.md` in the project root. Codex CLI reads this file like Claude reads `CLAUDE.md`.
+
+Check if `AGENTS.md` already exists in `ROOT`:
+- If yes and it contains `<!-- ds:design-rules:start -->`: replace the block between the start/end markers.
+- If yes without the markers: append the block.
+- If no: create it by copying `~/.claude/skills/ds/AGENTS.md` as a template, then fill in the design rules block.
+
+The design rules block to insert (same compact format as CLAUDE.md):
+```
+<!-- ds:design-rules:start -->
+Brand color: [hex]  |  Background: [hex]  |  Accent: [hex]
+Body font: [family] [size]px  |  Heading font: [family] [weight]
+Spacing unit: [px]  |  Border radius: [px]
+Primary button: [bg] background, [text] text, [radius]px radius
+Source: dstack/DESIGN-BIBLE.md — run /ds:context to refresh
+<!-- ds:design-rules:end -->
+```
+
 After writing, tell the user:
-> "I've also added your design rules to this project's CLAUDE.md — that means Claude will know your brand colors and fonts even when you're not running a designStack skill."
+> "Also wrote `AGENTS.md` — if you use Codex CLI, it'll read your brand rules automatically too."
+
+### 5c — Cursor rules (only if .cursor/ exists)
+
+Check if a `.cursor/` directory exists at `ROOT`:
+
+**If `.cursor/` exists:**
+Create `.cursor/rules/ds-design-context.mdc` by copying `~/.claude/skills/ds/.cursor/rules/ds-design-context.mdc` as a template, then fill in the design rules block (same format as above) between the `<!-- ds:design-rules:start/end -->` markers in that file.
+
+Also copy `~/.claude/skills/ds/.cursor/rules/ds-principles.mdc` to `.cursor/rules/ds-principles.mdc` if it doesn't already exist there.
+
+After writing, tell the user:
+> "Found a `.cursor/` folder — added your design rules there too. Cursor will apply your brand rules automatically."
+
+**If `.cursor/` does not exist:**
+Do not create it. Instead, mention it in the confirmation message:
+> "Using Cursor? Copy `.cursor/rules/` from the designStack install (`~/.claude/skills/ds/.cursor/rules/`) to get the same design context there."
 
 ## Step 6 — Show confirmation and save
 

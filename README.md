@@ -105,6 +105,17 @@ npx skills add harshii0509/designStack
 
 ---
 
+## Works with
+
+| Agent | How to use |
+|-------|-----------|
+| **Claude Code** | Install via the paste prompt above. Full `/ds:*` skill commands. |
+| **Cursor** | Copy `.cursor/rules/` from this repo to your project. Or run `/ds:context` in Claude Code — it adds Cursor rules automatically if you have a `.cursor/` folder. |
+| **Codex CLI** | `AGENTS.md` is written to your project when you run `/ds:context`. Or copy `AGENTS.md` from this repo directly. |
+| **Cline / Continue / Windsurf** | `npx skills add harshii0509/designStack` — the Agent Skills spec is supported natively. |
+
+---
+
 ## Your first 5 minutes
 
 After installing, open Claude Code in your project folder and type:
