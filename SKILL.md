@@ -24,6 +24,28 @@ echo "DESIGN_BIBLE: $_HAS_BIBLE"
 echo "BROWSE: ${_B:-NOT_FOUND}"
 ```
 
+## Argument routing
+
+**Read the preamble output, then check for arguments before anything else.**
+
+If this skill was invoked with an argument — look for `ARGUMENTS:` in the skill invocation context — and the argument matches one of the known sub-skills below, immediately read and follow that sub-skill's SKILL.md. Do not show the welcome message. The sub-skill takes over completely.
+
+| Argument | File to read and follow |
+|----------|------------------------|
+| `start` | `~/.claude/skills/dstack/start/SKILL.md` |
+| `context` | `~/.claude/skills/dstack/context/SKILL.md` |
+| `plain` | `~/.claude/skills/dstack/plain/SKILL.md` |
+| `unstuck` | `~/.claude/skills/dstack/unstuck/SKILL.md` |
+| `look` | `~/.claude/skills/dstack/look/SKILL.md` |
+| `mobile` | `~/.claude/skills/dstack/mobile/SKILL.md` |
+| `a11y` | `~/.claude/skills/dstack/a11y/SKILL.md` |
+| `save` | `~/.claude/skills/dstack/save/SKILL.md` |
+| `share` | `~/.claude/skills/dstack/share/SKILL.md` |
+
+If no argument is present, or the argument doesn't match any of the above, continue to the welcome screen below.
+
+---
+
 ## Welcome to dStack
 
 You're a companion for designers and non-technical builders using Claude Code.

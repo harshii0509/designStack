@@ -47,6 +47,16 @@ echo "NPM_TOKENS: shadcn=${_HAS_SHADCN:-no} | tailwind=${_HAS_TAILWIND:-no} | bl
 echo "CLAUDE_MD: $_HAS_CLAUDE_MD | has_rules: $_HAS_DSTACK_RULES"
 ```
 
+## Guard: not a git repo
+
+If `ROOT` is `.` (meaning git could not find a project root), stop immediately and say:
+
+> "I don't see a project here. Make sure you open Claude Code from your project folder — the one that has your `src/` or `package.json`. Then run `/dstack:context` again."
+
+Do not continue past this point if ROOT is `.`.
+
+---
+
 ## Opening line (always show this, never the raw preamble output)
 
 "Looking at your project..."
@@ -56,6 +66,44 @@ echo "CLAUDE_MD: $_HAS_CLAUDE_MD | has_rules: $_HAS_DSTACK_RULES"
 You're building the Design Bible — a living file at `dstack/DESIGN-BIBLE.md` that holds everything about how this project looks and feels. Every other dStack skill reads from it. Once it exists, you never have to explain your brand again.
 
 This takes about 5 minutes.
+
+## Step 0 — Auto-scan code files
+
+Before asking the user anything, read these files silently (do not show the raw contents to the user):
+
+1. **CSS custom properties** — look for the first file that exists:
+   - `src/app/globals.css`
+   - `app/globals.css`
+   - `src/index.css`
+   - `src/styles/globals.css`
+   Read it and extract every `--variable: value` pair from the `:root` block. Note colors, fonts, spacing tokens.
+
+2. **Font imports** — look for the first file that exists:
+   - `src/app/layout.tsx` / `layout.jsx` / `layout.js`
+   - `app/layout.tsx` / `layout.jsx` / `layout.js`
+   - `pages/_app.tsx` / `_app.jsx` / `_app.js`
+   Read it and extract all font family names (from `import`, `localFont`, `next/font/google`, or `@import url()`).
+
+3. **Tailwind config** — look for:
+   - `tailwind.config.js` / `tailwind.config.ts`
+   Read it and extract `theme.colors`, `theme.extend.colors`, `theme.fontFamily`, `theme.extend.fontFamily`.
+
+After reading, note what was found:
+- `_AUTO_COLORS` — any hex values or color variable names extracted (e.g. `--background: #000000`)
+- `_AUTO_FONTS` — any font family names extracted (e.g. `Geist Mono`, `Departure Mono`)
+
+Tell the user:
+> "Scanning your project files..."
+
+Then if colors were found:
+> "Found your color tokens in [filename]."
+
+If fonts were found:
+> "Found your fonts in [filename]."
+
+Use these values to pre-fill Q1 and Q2 in Step 3. Do not ask about things already found from code.
+
+---
 
 ## Step 1 — Check for existing design files
 
@@ -133,12 +181,14 @@ If tokens were extracted, pre-fill the interview questions with the extracted va
 Ask these via AskUserQuestion, one at a time. If tokens were extracted in Step 2.5, pre-fill the relevant answers and ask the user to confirm or adjust.
 
 **Q1 — Brand color:**
+If `_AUTO_COLORS` was found in Step 0: skip this question. Use the extracted values directly.
+If not found:
 > "What's your main brand color? Give me a hex code or describe it (e.g. 'deep navy blue', 'warm coral')."
-[If extracted: "I found [#hex] from your [design system]. Is that your main brand color?"]
 
 **Q2 — Fonts:**
+If `_AUTO_FONTS` was found in Step 0: skip this question. Use the extracted values directly.
+If not found:
 > "What font does your product use? If you're not sure, just describe the feeling — 'clean and minimal', 'bold and editorial', 'warm and approachable'."
-[If extracted: "I found [font name] in your config. Is that right?"]
 
 **Q3 — Who is this for:**
 > "Who uses this product? Describe them in one sentence. (e.g. 'small business owners who aren't tech-savvy', 'designers at large companies')"
@@ -153,6 +203,19 @@ Also narrate progress during this step:
 - Before Q1: "Looking at your colors..."
 - Before Q2: "Checking your fonts..."
 - Before Q3: "Almost done..."
+
+## Step 3.5 — Confirm project before writing
+
+Before touching the filesystem, show the user exactly where you're about to write and ask them to confirm:
+
+> "I'll write your Design Bible to:
+> `[ROOT]/dstack/DESIGN-BIBLE.md`
+>
+> Is that the right project folder?"
+
+Wait for confirmation. If they say no, ask: "Which folder should I use instead?" and adjust `ROOT` to their answer. Do not write any files until this is confirmed.
+
+---
 
 ## Step 4 — Generate the Design Bible
 
