@@ -1,12 +1,12 @@
-# Contributing to dStack
+# Contributing to designStack
 
-dStack is open source and contributions are welcome. You don't need to be a technical expert to help — improving skill language, writing clearer plain-English messages, and filing bugs are just as valuable as writing code.
+designStack is open source and contributions are welcome. You don't need to be a technical expert to help — improving skill language, writing clearer plain-English messages, and filing bugs are just as valuable as writing code.
 
 ---
 
 ## What we're building
 
-dStack is for people who have never written code. Every design decision should be evaluated through that lens: **would someone with zero tech background understand this?**
+designStack is for people who have never written code. Every design decision should be evaluated through that lens: **would someone with zero tech background understand this?**
 
 The three rules from the README apply here too:
 - **Show, don't tell** — screenshots over code dumps
@@ -29,7 +29,7 @@ Describe:
 
 ### Improving skill language
 
-Skills live in `~/.claude/skills/dstack/<skill-name>/SKILL.md`. Each one is a markdown file with instructions for Claude to follow.
+Skills live in `~/.claude/skills/designStack/<skill-name>/SKILL.md`. Each one is a markdown file with instructions for Claude to follow.
 
 If something reads as too technical, too confusing, or just unclear — open a PR. Skill language improvements are the highest-leverage changes in this repo.
 

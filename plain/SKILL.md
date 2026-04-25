@@ -1,5 +1,5 @@
 ---
-name: dstack:plain
+name: designStack:plain
 version: 0.1.0
 description: Translate any Claude plan into plain English before you say yes. Shows what changes, what gets deleted, what's new, and how risky it is. Always ask before running this skill.
 ---
@@ -7,12 +7,12 @@ description: Translate any Claude plan into plain English before you say yes. Sh
 ## Preamble
 
 ```bash
-_DSTACK_VER="0.1.0"
+_DESIGNSTACK_VER="0.1.0"
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
 # Count files that would be touched (rough signal for change size)
 _CHANGED=$(git diff --name-only 2>/dev/null | wc -l | tr -d ' ')
 _STAGED=$(git diff --cached --name-only 2>/dev/null | wc -l | tr -d ' ')
-echo "DSTACK: $_DSTACK_VER"
+echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "CHANGED_FILES: $_CHANGED"
 echo "STAGED_FILES: $_STAGED"
 ```
@@ -61,7 +61,7 @@ What we're building / changing:
 [Pick one:]
 - Small tweak — quick to do, easy to undo
 - Medium change — takes a few minutes, easy to undo if needed
-- Big change — about 15 minutes to complete, harder to undo. Run `/dstack:save` first.
+- Big change — about 15 minutes to complete, harder to undo. Run `/designStack:save` first.
 
 ---
 
@@ -109,4 +109,4 @@ If user says C: explain that specific part in more detail without any jargon.
 
 If the change is "Big", add this note before the confirmation:
 
-> ⚠️ This is a bigger change — harder to undo once it starts. I'd recommend running `/dstack:save` first to create a restore point you can come back to if anything goes wrong.
+> ⚠️ This is a bigger change — harder to undo once it starts. I'd recommend running `/designStack:save` first to create a restore point you can come back to if anything goes wrong.

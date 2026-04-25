@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# dstack-check — health check for dStack installation
-DSTACK_DIR="$HOME/.claude/skills/dstack"
-DSTACK_VER=$(cat "$DSTACK_DIR/VERSION" 2>/dev/null || echo "unknown")
+# designStack-check — health check for designStack installation
+DESIGNSTACK_DIR="$HOME/.claude/skills/designStack"
+DESIGNSTACK_VER=$(cat "$DESIGNSTACK_DIR/VERSION" 2>/dev/null || echo "unknown")
 
-echo "dStack v$DSTACK_VER"
+echo "designStack v$DESIGNSTACK_VER"
 echo ""
 
 # Browse binary
 if [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ]; then
   echo "✓ Browse: gstack browse found — visual features enabled"
-elif [ -x "$DSTACK_DIR/browse/dist/browse" ]; then
+elif [ -x "$DESIGNSTACK_DIR/browse/dist/browse" ]; then
   echo "✓ Browse: dstack browse found"
 else
   echo "⚠ Browse: not found — visual skills will use text descriptions"
@@ -40,7 +40,7 @@ elif [ -f "$ROOT/DESIGN.md" ]; then
   echo "✓ Design Bible: DESIGN.md found (will extend)"
 else
   echo "⚠ Design Bible: not set up for this project"
-  echo "  Fix: run /dstack:context"
+  echo "  Fix: run /designStack:context"
 fi
 
 echo ""

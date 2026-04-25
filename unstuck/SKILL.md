@@ -1,5 +1,5 @@
 ---
-name: dstack:unstuck
+name: designStack:unstuck
 version: 0.1.0
 description: Something broke and you don't know why. Get a plain-English diagnosis with an annotated screenshot showing exactly where the problem is — before any code is touched.
 ---
@@ -7,7 +7,7 @@ description: Something broke and you don't know why. Get a plain-English diagnos
 ## Preamble
 
 ```bash
-_DSTACK_VER="0.1.0"
+_DESIGNSTACK_VER="0.1.0"
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
 _BIBLE="$_ROOT/dstack/DESIGN-BIBLE.md"
 _HAS_BIBLE="no"
@@ -15,11 +15,11 @@ _HAS_BIBLE="no"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"
 _B=""
 [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/dstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/dstack/browse/dist/browse"
+[ -z "$_B" ] && [ -x "$HOME/.claude/skills/designStack/browse/dist/browse" ] && _B="$HOME/.claude/skills/designStack/browse/dist/browse"
 # Last git commit info for undo reference
 _LAST_COMMIT=$(git log -1 --pretty=format:"%h %s" 2>/dev/null || echo "no git history")
 _LAST_COMMIT_TIME=$(git log -1 --pretty=format:"%ar" 2>/dev/null || echo "unknown")
-echo "DSTACK: $_DSTACK_VER"
+echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "DESIGN_BIBLE: $_HAS_BIBLE"
 echo "BROWSE: ${_B:-NOT_FOUND}"
 echo "LAST_COMMIT: $_LAST_COMMIT"

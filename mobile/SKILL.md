@@ -1,5 +1,5 @@
 ---
-name: dstack:mobile
+name: designStack:mobile
 version: 0.1.0
 description: Check how your site looks on phones and tablets. Shows three side-by-side screenshots at phone, tablet, and desktop sizes with plain-English flags for anything that's broken or hard to use.
 ---
@@ -7,7 +7,7 @@ description: Check how your site looks on phones and tablets. Shows three side-b
 ## Preamble
 
 ```bash
-_DSTACK_VER="0.1.0"
+_DESIGNSTACK_VER="0.1.0"
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
 _BIBLE="$_ROOT/dstack/DESIGN-BIBLE.md"
 _HAS_BIBLE="no"
@@ -15,8 +15,8 @@ _HAS_BIBLE="no"
 [ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"
 _B=""
 [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/dstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/dstack/browse/dist/browse"
-echo "DSTACK: $_DSTACK_VER"
+[ -z "$_B" ] && [ -x "$HOME/.claude/skills/designStack/browse/dist/browse" ] && _B="$HOME/.claude/skills/designStack/browse/dist/browse"
+echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "DESIGN_BIBLE: $_HAS_BIBLE"
 echo "BROWSE: ${_B:-NOT_FOUND}"
 ```

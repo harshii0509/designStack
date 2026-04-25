@@ -1,27 +1,27 @@
 #!/usr/bin/env bash
-# dstack-update — update dStack to the latest version
+# designStack-update — update designStack to the latest version
 set -e
 
-DSTACK_DIR="$HOME/.claude/skills/dstack"
-PREV_VER=$(cat "$DSTACK_DIR/VERSION" 2>/dev/null || echo "unknown")
+DESIGNSTACK_DIR="$HOME/.claude/skills/designStack"
+PREV_VER=$(cat "$DESIGNSTACK_DIR/VERSION" 2>/dev/null || echo "unknown")
 
 echo ""
-echo "  Updating dStack..."
+echo "  Updating designStack..."
 echo ""
 
 # Pull the latest version
-cd "$DSTACK_DIR"
+cd "$DESIGNSTACK_DIR"
 if ! git pull --ff-only 2>/dev/null; then
   echo "  ✗ Update failed — check your internet connection and try again."
-  echo "    If the problem persists: rm -rf $DSTACK_DIR and reinstall."
+  echo "    If the problem persists: rm -rf $DESIGNSTACK_DIR and reinstall."
   echo ""
   exit 1
 fi
 
-NEW_VER=$(cat "$DSTACK_DIR/VERSION" 2>/dev/null || echo "unknown")
+NEW_VER=$(cat "$DESIGNSTACK_DIR/VERSION" 2>/dev/null || echo "unknown")
 
 if [ "$PREV_VER" = "$NEW_VER" ]; then
-  echo "  ✓ dStack is already up to date (v$NEW_VER)"
+  echo "  ✓ designStack is already up to date (v$NEW_VER)"
   echo ""
   exit 0
 fi
@@ -30,7 +30,7 @@ echo "  ✓ Updated v$PREV_VER → v$NEW_VER"
 echo ""
 
 # Show what's new if CHANGELOG exists
-CHANGELOG="$DSTACK_DIR/CHANGELOG.md"
+CHANGELOG="$DESIGNSTACK_DIR/CHANGELOG.md"
 if [ -f "$CHANGELOG" ]; then
   echo "  What's new in v$NEW_VER:"
   # Extract the section for the new version and show it
@@ -39,9 +39,9 @@ if [ -f "$CHANGELOG" ]; then
 fi
 
 # Re-run setup to refresh CLAUDE.md entry and links
-"$DSTACK_DIR/setup" --quiet
+"$DESIGNSTACK_DIR/setup" --quiet
 
-echo "  ✓ dStack v$NEW_VER installed!"
+echo "  ✓ designStack v$NEW_VER installed!"
 echo ""
 echo "  Open Claude Code and continue — all your Design Bibles are untouched."
 echo ""

@@ -5,7 +5,7 @@ labels: bug
 ---
 
 **What did you type?**
-(e.g. `/dstack:look` or `/dstack:unstuck`)
+(e.g. `/designStack:look` or `/designStack:unstuck`)
 
 **What did you expect to happen?**
 
@@ -18,4 +18,4 @@ labels: bug
 **Your setup:**
 - OS: (Mac / Windows WSL / Linux)
 - Claude Code version: (run `claude --version` to find it)
-- dStack version: (check `~/.claude/skills/dstack/VERSION`)
+- designStack version: (check `~/.claude/skills/designStack/VERSION`)

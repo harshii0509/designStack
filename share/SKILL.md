@@ -1,5 +1,5 @@
 ---
-name: dstack:share
+name: designStack:share
 version: 0.1.0
 description: Get a link to share your project. Preview link for feedback, or make it live for real. Step-by-step in plain language — no deployment experience needed.
 ---
@@ -7,7 +7,7 @@ description: Get a link to share your project. Preview link for feedback, or mak
 ## Preamble
 
 ```bash
-_DSTACK_VER="0.1.0"
+_DESIGNSTACK_VER="0.1.0"
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo "NOT_A_GIT_REPO")
 _BRANCH=$(git branch --show-current 2>/dev/null || echo "unknown")
 _LAST_COMMIT=$(git log -1 --pretty=format:"%h — %s" 2>/dev/null || echo "no commits yet")
@@ -18,8 +18,8 @@ _PKG=""
 [ -f "$_ROOT/package.json" ] && _PKG=$(node -e "const p=require('$_ROOT/package.json'); console.log(p.scripts?.build ? 'has-build' : 'no-build'); console.log(p.dependencies?.next ? 'next' : p.dependencies?.['react-scripts'] ? 'cra' : p.devDependencies?.vite ? 'vite' : p.devDependencies?.['@sveltejs/kit'] ? 'svelte' : 'unknown')" 2>/dev/null || echo "")
 _B=""
 [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/gstack/browse/dist/browse"
-[ -z "$_B" ] && [ -x "$HOME/.claude/skills/dstack/browse/dist/browse" ] && _B="$HOME/.claude/skills/dstack/browse/dist/browse"
-echo "DSTACK: $_DSTACK_VER"
+[ -z "$_B" ] && [ -x "$HOME/.claude/skills/designStack/browse/dist/browse" ] && _B="$HOME/.claude/skills/designStack/browse/dist/browse"
+echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "GIT_ROOT: $_ROOT"
 echo "BRANCH: $_BRANCH"
 echo "LAST_COMMIT: $_LAST_COMMIT"
@@ -57,7 +57,7 @@ Then route to A or B accordingly.
 
 If `GIT_ROOT` is `NOT_A_GIT_REPO` or `LAST_COMMIT` is `no commits yet`:
 > "Before I can create a preview link, your project needs at least one save. Let me set that up."
-Then guide through git init + first commit (same flow as `/dstack:save`).
+Then guide through git init + first commit (same flow as `/designStack:save`).
 
 ### Check for unsaved changes
 
@@ -67,7 +67,7 @@ git status --short
 
 If there are uncommitted changes:
 > "You have changes that haven't been saved yet. If I share right now, those changes won't be included in the preview. Want me to save them first?"
-If yes, run the `/dstack:save` flow. If no, continue.
+If yes, run the `/designStack:save` flow. If no, continue.
 
 ### Deploy preview
 
@@ -81,7 +81,7 @@ Parse the output for the preview URL. Show it to the user:
 > "✓ Your preview link is ready:
 > 👉 [URL]
 >
-> Anyone with this link can see your project. It's temporary — it won't automatically update when you make changes. Run `/dstack:share` again to get a fresh link after your next round of edits."
+> Anyone with this link can see your project. It's temporary — it won't automatically update when you make changes. Run `/designStack:share` again to get a fresh link after your next round of edits."
 
 If browse available, take a screenshot to confirm it loaded:
 ```bash
@@ -155,7 +155,7 @@ If the build fails, tell the user what went wrong in plain English:
 > "The build failed before we could go live. Here's what went wrong:
 > [plain English translation of the error]
 >
-> Want me to fix it? Or run `/dstack:unstuck` for a full diagnosis."
+> Want me to fix it? Or run `/designStack:unstuck` for a full diagnosis."
 
 ### Sub-step 3: Deploy
 
@@ -204,9 +204,9 @@ Show the screenshot:
 > [screenshot]
 >
 > Here's what you should know:
-> - **From now on**, every time you want to update it, run `/dstack:share` again and choose 'go live'
-> - **If something breaks**, run `/dstack:unstuck` and I'll help diagnose it
-> - **Save regularly** with `/dstack:save` — this makes it easy to roll back if anything goes wrong"
+> - **From now on**, every time you want to update it, run `/designStack:share` again and choose 'go live'
+> - **If something breaks**, run `/designStack:unstuck` and I'll help diagnose it
+> - **Save regularly** with `/designStack:save` — this makes it easy to roll back if anything goes wrong"
 
 ## Step 3 — Environment variables (if the build needs them)
 

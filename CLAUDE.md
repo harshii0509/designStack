@@ -1,4 +1,4 @@
-# dStack
+# designStack
 
 Designer-first Claude Code skills for non-technical vibe coders. Speak plain English, show screenshots, save constantly.
 
@@ -22,31 +22,31 @@ When the user's request matches one of these, invoke the skill FIRST — before 
 | "add delight", "make it fun", "success state", "empty state" | `dstack:delight` |
 | "set up design rules", "build design bible", "capture my brand", first-time setup | `dstack:context` |
 
-## Available dStack skills
+## Available designStack skills
 
-- `/dstack:context` — Build the Design Bible (run once per project)
-- `/dstack:plain` — Translate plans to plain English
-- `/dstack:unstuck` — Diagnose errors visually
-- `/dstack:look` — Visual QA against design rules
-- `/dstack:mobile` — Responsive check (3 breakpoints)
-- `/dstack:a11y` — Accessibility audit with letter grade
-- `/dstack:save` — Git checkpoint with human-readable message
-- `/dstack:share` — Deploy and get a shareable link
-- `/dstack:vibe` — Set aesthetic direction from feeling words
-- `/dstack:brand` — Brand consistency scan
-- `/dstack:polish` — Pre-ship quality check (11 dimensions)
-- `/dstack:animate` — Add purposeful motion
-- `/dstack:delight` — Add joy moments
+- `/designStack:context` — Build the Design Bible (run once per project)
+- `/designStack:plain` — Translate plans to plain English
+- `/designStack:unstuck` — Diagnose errors visually
+- `/designStack:look` — Visual QA against design rules
+- `/designStack:mobile` — Responsive check (3 breakpoints)
+- `/designStack:a11y` — Accessibility audit with letter grade
+- `/designStack:save` — Git checkpoint with human-readable message
+- `/designStack:share` — Deploy and get a shareable link
+- `/designStack:vibe` — Set aesthetic direction from feeling words
+- `/designStack:brand` — Brand consistency scan
+- `/designStack:polish` — Pre-ship quality check (11 dimensions)
+- `/designStack:animate` — Add purposeful motion
+- `/designStack:delight` — Add joy moments
 
 ## Design Bible
 
-dStack maintains `dstack/DESIGN-BIBLE.md` in the project root. Every skill reads from it. If it doesn't exist, suggest running `/dstack:context` first.
+designStack maintains `dstack/DESIGN-BIBLE.md` in the project root. Every skill reads from it. If it doesn't exist, suggest running `/designStack:context` first.
 
 If a `DesignBrain.md` or `ICP-CONTEXT.md` exists in the project, treat it as the Design Bible source of truth and read it before any design-related skill.
 
 ## Voice rules
 
-All dStack output must be in plain English:
+All designStack output must be in plain English:
 - No unexplained jargon ("component" → "piece of the page", "refactor" → "reorganize")
 - Always show screenshots before describing issues
 - Always describe what will be DELETED, not just what's added

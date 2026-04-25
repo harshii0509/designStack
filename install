@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# dStack installer — curl -fsSL https://raw.githubusercontent.com/harshii0509/designStack/main/install | bash
+# designStack installer — curl -fsSL https://raw.githubusercontent.com/harshii0509/designStack/main/install | bash
 set -e
 
-DSTACK_REPO="https://github.com/harshii0509/designStack.git"
-DSTACK_DIR="$HOME/.claude/skills/dstack"
+DESIGNSTACK_REPO="https://github.com/harshii0509/designStack.git"
+DESIGNSTACK_DIR="$HOME/.claude/skills/designStack"
 
 echo ""
-echo "  Installing dStack..."
+echo "  Installing designStack..."
 echo ""
 
 # ── Check Claude Code ─────────────────────────────────────────────────────────
@@ -36,19 +36,19 @@ fi
 echo "  ✓ git found"
 
 # ── Check for existing install ────────────────────────────────────────────────
-if [ -d "$DSTACK_DIR" ]; then
-  echo "  ✓ dStack already installed at $DSTACK_DIR"
+if [ -d "$DESIGNSTACK_DIR" ]; then
+  echo "  ✓ designStack already installed at $DESIGNSTACK_DIR"
   echo ""
-  echo "  To update: open Claude Code and type /dstack:update"
-  echo "  To reinstall: rm -rf $DSTACK_DIR and run this installer again"
+  echo "  To update: open Claude Code and type /designStack:update"
+  echo "  To reinstall: rm -rf $DESIGNSTACK_DIR and run this installer again"
   echo ""
   exit 0
 fi
 
 # ── Clone ─────────────────────────────────────────────────────────────────────
-echo "  Downloading dStack..."
+echo "  Downloading designStack..."
 mkdir -p "$HOME/.claude/skills"
-git clone --quiet "$DSTACK_REPO" "$DSTACK_DIR" 2>/dev/null || {
+git clone --quiet "$DESIGNSTACK_REPO" "$DESIGNSTACK_DIR" 2>/dev/null || {
   echo "  ✗ Download failed. Check your internet connection and try again."
   echo ""
   exit 1
@@ -56,15 +56,15 @@ git clone --quiet "$DSTACK_REPO" "$DSTACK_DIR" 2>/dev/null || {
 echo "  ✓ Downloaded"
 
 # ── Run setup ─────────────────────────────────────────────────────────────────
-"$DSTACK_DIR/setup" --quiet
+"$DESIGNSTACK_DIR/setup" --quiet
 
 echo ""
-echo "  ✓ dStack installed!"
+echo "  ✓ designStack installed!"
 echo ""
 echo "  ┌─────────────────────────────────────────┐"
 echo "  │  Open Claude Code and type:             │"
 echo "  │                                         │"
-echo "  │  /dstack:start                          │"
+echo "  │  /designStack:start                          │"
 echo "  │                                         │"
 echo "  │  Takes 5 minutes. Run once per project. │"
 echo "  └─────────────────────────────────────────┘"

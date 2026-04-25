@@ -1,21 +1,21 @@
 # Changelog
 
-All notable changes to dStack are documented here. Written for humans, not engineers.
+All notable changes to designStack are documented here. Written for humans, not engineers.
 
 ## v0.1.0 — April 2026
 
 First release.
 
 **9 skills:**
-- `/dstack:start` — First-session wizard. Ask 3 questions, builds your Design Bible automatically.
-- `/dstack:context` — Build or refresh your Design Bible. Reads shadcn, Tailwind, and Blend tokens automatically.
-- `/dstack:plain` — Translate any Claude plan into plain English before you say yes.
-- `/dstack:unstuck` — Something broke? Get a plain-English diagnosis before any code is touched.
-- `/dstack:look` — Visual check against your brand rules. Score out of 10 with annotated screenshot.
-- `/dstack:mobile` — Phone, tablet, desktop side-by-side. Flags anything broken or hard to tap.
-- `/dstack:a11y` — Accessibility grade A–D with every problem marked on a screenshot.
-- `/dstack:save` — Save your progress with a human-readable description.
-- `/dstack:share` — Deploy and get a shareable link for feedback or going live.
+- `/designStack:start` — First-session wizard. Ask 3 questions, builds your Design Bible automatically.
+- `/designStack:context` — Build or refresh your Design Bible. Reads shadcn, Tailwind, and Blend tokens automatically.
+- `/designStack:plain` — Translate any Claude plan into plain English before you say yes.
+- `/designStack:unstuck` — Something broke? Get a plain-English diagnosis before any code is touched.
+- `/designStack:look` — Visual check against your brand rules. Score out of 10 with annotated screenshot.
+- `/designStack:mobile` — Phone, tablet, desktop side-by-side. Flags anything broken or hard to tap.
+- `/designStack:a11y` — Accessibility grade A–D with every problem marked on a screenshot.
+- `/designStack:save` — Save your progress with a human-readable description.
+- `/designStack:share` — Deploy and get a shareable link for feedback or going live.
 
 **Key features:**
 - Design Bible (`dstack/DESIGN-BIBLE.md`) — living brand file every skill reads from
@@ -29,9 +29,9 @@ First release.
 
 ## What's coming in v0.2
 
-- `/dstack:vibe` — Set your brand personality in 2 minutes
-- `/dstack:brand` — Brand drift check across your whole site
-- `/dstack:polish` — Final quality pass before launch
-- `/dstack:animate` — Add purposeful motion to your UI
-- `/dstack:delight` — Moments of joy — micro-interactions and personality touches
+- `/designStack:vibe` — Set your brand personality in 2 minutes
+- `/designStack:brand` — Brand drift check across your whole site
+- `/designStack:polish` — Final quality pass before launch
+- `/designStack:animate` — Add purposeful motion to your UI
+- `/designStack:delight` — Moments of joy — micro-interactions and personality touches
 - Native Windows support (no WSL required)
