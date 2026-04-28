@@ -24,6 +24,11 @@ echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "HAS_BIBLE: $_HAS_BIBLE"
 echo "HAS_VIBE: $_HAS_VIBE"
 echo "ROOT: $_ROOT"
+_TEL_START=$(date +%s)
+_SESSION_ID="$$-$(date +%s)"
+mkdir -p "$HOME/.dstack/analytics"
+"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
+  '{"skill":"start","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
 ```
 
 ## Opening line (always show this, never the raw preamble output)
@@ -126,6 +131,22 @@ After /context completes and the Design Bible is written, tell the user:
 
 **If the Design Bible has any `unknown — update me` fields**, point them out:
 > "I left [X] as unknown. If you want to fill that in later, just tell me and I'll update it."
+
+## Completion
+
+Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
+
+```bash
+_TEL_END=$(date +%s)
+_TEL_DUR=$(( _TEL_END - _TEL_START ))
+"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
+  '{"skill":"start","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
+"$HOME/.claude/skills/ds/bin/ds-telemetry-log" \
+  --skill "start" --duration "$_TEL_DUR" --outcome "OUTCOME" \
+  --session "$_SESSION_ID" 2>/dev/null || true
+```
+
+Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**
 
 ## Error handling
 

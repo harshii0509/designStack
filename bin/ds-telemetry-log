@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Usage: ds-telemetry-log --skill look --duration 45 --outcome success --session 123
+_SKILL="" _DUR="" _OUTCOME="" _SESSION="" _BROWSE="false"
+while [ $# -gt 0 ]; do
+  case $1 in
+    --skill)    _SKILL="$2";   shift 2 ;;
+    --duration) _DUR="$2";    shift 2 ;;
+    --outcome)  _OUTCOME="$2"; shift 2 ;;
+    --session)  _SESSION="$2"; shift 2 ;;
+    --browse)   _BROWSE="$2";  shift 2 ;;
+    *) shift ;;
+  esac
+done
+[ -z "$_SKILL" ] && exit 0
+# Check telemetry preference
+_TEL=$(grep "^telemetry=" "$HOME/.dstack/config" 2>/dev/null | cut -d= -f2 || echo "on")
+[ "$_TEL" = "off" ] && exit 0
+mkdir -p "$HOME/.dstack/analytics" 2>/dev/null || exit 0
+_TS=$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo "")
+printf '{"skill":"%s","duration_s":%s,"outcome":"%s","browse":%s,"session":"%s","ts":"%s"}\n' \
+  "$_SKILL" "${_DUR:-0}" "${_OUTCOME:-unknown}" "$_BROWSE" "$_SESSION" "$_TS" \
+  >> "$HOME/.dstack/analytics/skill-usage.jsonl"

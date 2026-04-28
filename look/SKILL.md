@@ -26,6 +26,11 @@ echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "DESIGN_BIBLE: $_HAS_BIBLE | path: ${_BIBLE}"
 echo "BROWSE: ${_B:-NOT_FOUND}"
 echo "LAST_COMMIT: $_LAST_COMMIT"
+_TEL_START=$(date +%s)
+_SESSION_ID="$$-$(date +%s)"
+mkdir -p "$HOME/.dstack/analytics"
+"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
+  '{"skill":"look","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
 ```
 
 ## What this skill does
@@ -232,4 +237,21 @@ And update the relevant L1–L4 section in the Design Bible to reflect the confi
 ## Step 11 — Proactive gap surfacing
 
 If during the check you noticed screens or components that appeared on the page but aren't in the Design Bible yet (e.g. a modal, a data table, a sidebar), mention them:
+
 > "By the way — I saw a [component/screen] on this page that isn't in your Design Bible yet. Want me to add rules for it so future checks can include it?"
+
+## Completion
+
+Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
+
+```bash
+_TEL_END=$(date +%s)
+_TEL_DUR=$(( _TEL_END - _TEL_START ))
+"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
+  '{"skill":"look","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
+"$HOME/.claude/skills/ds/bin/ds-telemetry-log" \
+  --skill "look" --duration "$_TEL_DUR" --outcome "OUTCOME" \
+  --session "$_SESSION_ID" 2>/dev/null || true
+```
+
+Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

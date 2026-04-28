@@ -52,6 +52,7 @@ If this skill was invoked with an argument — look for `ARGUMENTS:` in the skil
 | `polish` | `~/.claude/skills/ds/polish/SKILL.md` |
 | `animate` | `~/.claude/skills/ds/animate/SKILL.md` |
 | `delight` | `~/.claude/skills/ds/delight/SKILL.md` |
+| `stats` | `~/.claude/skills/ds/stats/SKILL.md` |
 
 If no argument is present, or the argument doesn't match any of the above, continue to the welcome screen below.
 
@@ -94,6 +95,9 @@ Show this as a friendly summary — not a technical list:
 
 **To share your work:**
 - `/ds:share` — I'll get you a link to show someone
+
+**To see your usage:**
+- `/ds:stats` — How much have you used designStack? Success rates and history.
 
 ## Where to start
 

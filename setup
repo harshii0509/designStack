@@ -62,6 +62,34 @@ else
   log "     Install gstack for full visual features: https://github.com/garrytan/gstack"
 fi
 
+# ── Telemetry consent ─────────────────────────────────────────────────────────
+_TEL_FILE="$HOME/.dstack/config"
+mkdir -p "$HOME/.dstack/analytics" 2>/dev/null || true
+
+if [ ! -f "$_TEL_FILE" ]; then
+  if [ "$_QUIET" = "no" ]; then
+    echo ""
+    echo "  designStack can track which skills you use and whether they succeed."
+    echo "  This data stays on your machine — never sent anywhere."
+    echo ""
+    echo "  This helps us understand what's working and improve over time."
+    echo ""
+    printf "  Allow local analytics? [Y/n]: "
+    read -r _TEL_CHOICE </dev/tty || _TEL_CHOICE="y"
+    case "$_TEL_CHOICE" in
+      [nN]*) echo "telemetry=off" > "$_TEL_FILE"
+             log "  ✓ Analytics: off" ;;
+          *) echo "telemetry=on"  > "$_TEL_FILE"
+             log "  ✓ Analytics: on (local only, ~/.dstack/analytics/)" ;;
+    esac
+  else
+    echo "telemetry=on" > "$_TEL_FILE"
+  fi
+else
+  _CURRENT=$(grep "^telemetry=" "$_TEL_FILE" 2>/dev/null | cut -d= -f2 || echo "on")
+  log "  ✓ Analytics: $_CURRENT (edit ~/.dstack/config to change)"
+fi
+
 # ── Flat mode: create symlinks without /ds: prefix ───────────────────────
 if [ "$_PREFIX" = "flat" ]; then
   _SKILLS_DIR="$HOME/.claude/skills"
@@ -79,7 +107,7 @@ fi
 # ── Add designStack to global CLAUDE.md ────────────────────────────────────────────
 GLOBAL_CLAUDE="$HOME/.claude/CLAUDE.md"
 
-if [ -f "$GLOBAL_CLAUDE" ] && grep -q "dstack:start" "$GLOBAL_CLAUDE" 2>/dev/null; then
+if [ -f "$GLOBAL_CLAUDE" ] && grep -q "ds:start" "$GLOBAL_CLAUDE" 2>/dev/null; then
   log "  ✓ designStack already in global CLAUDE.md"
 else
   cat >> "$GLOBAL_CLAUDE" << 'EOF'
@@ -98,6 +126,9 @@ else
 EOF
   log "  ✓ Added designStack to global CLAUDE.md"
 fi
+
+# ── Make bin scripts executable ───────────────────────────────────────────────
+chmod +x "$DESIGNSTACK_DIR/bin/"* 2>/dev/null || true
 
 # ── Done ──────────────────────────────────────────────────────────────────────
 log ""

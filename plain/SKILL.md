@@ -15,6 +15,11 @@ _STAGED=$(git diff --cached --name-only 2>/dev/null | wc -l | tr -d ' ')
 echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "CHANGED_FILES: $_CHANGED"
 echo "STAGED_FILES: $_STAGED"
+_TEL_START=$(date +%s)
+_SESSION_ID="$$-$(date +%s)"
+mkdir -p "$HOME/.dstack/analytics"
+"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
+  '{"skill":"plain","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
 ```
 
 ## What this skill does
@@ -104,6 +109,22 @@ If user says B: ask them to describe what they actually wanted in their own word
 If user says C: explain that specific part in more detail without any jargon.
 
 **Never write a single line of code until the user says A (or equivalent confirmation in their own words).**
+
+## Completion
+
+Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
+
+```bash
+_TEL_END=$(date +%s)
+_TEL_DUR=$(( _TEL_END - _TEL_START ))
+"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
+  '{"skill":"plain","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
+"$HOME/.claude/skills/ds/bin/ds-telemetry-log" \
+  --skill "plain" --duration "$_TEL_DUR" --outcome "OUTCOME" \
+  --session "$_SESSION_ID" 2>/dev/null || true
+```
+
+Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**
 
 ## Step 5 — Risk flags
 

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Usage: ds-timeline-log '{"skill":"look","event":"started","session":"123"}'
+_DATA="${1:-}"
+[ -z "$_DATA" ] && exit 0
+_SLUG=$(basename "$(pwd)" 2>/dev/null || echo "unknown")
+_DIR="$HOME/.dstack/projects/$_SLUG"
+mkdir -p "$_DIR" 2>/dev/null || exit 0
+_TS=$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo "")
+echo "$_DATA" | grep -q '"ts"' || _DATA=$(echo "$_DATA" | sed 's/}$/,"ts":"'"$_TS"'"}/')
+echo "$_DATA" >> "$_DIR/timeline.jsonl"

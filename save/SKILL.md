@@ -19,6 +19,11 @@ echo "CHANGED_FILES: $_CHANGED"
 echo "NEW_FILES: $_NEW"
 echo "LAST_COMMIT: $_LAST_COMMIT"
 echo "BRANCH: $_BRANCH"
+_TEL_START=$(date +%s)
+_SESSION_ID="$$-$(date +%s)"
+mkdir -p "$HOME/.dstack/analytics"
+"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
+  '{"skill":"save","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
 ```
 
 ## What this skill does
@@ -115,3 +120,19 @@ If `design/DESIGN-BIBLE.md` was among the saved files, append to the Memory Log:
 ```
 [date]: Design Bible saved as part of: [the human sentence]
 ```
+
+## Completion
+
+Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
+
+```bash
+_TEL_END=$(date +%s)
+_TEL_DUR=$(( _TEL_END - _TEL_START ))
+"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
+  '{"skill":"save","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
+"$HOME/.claude/skills/ds/bin/ds-telemetry-log" \
+  --skill "save" --duration "$_TEL_DUR" --outcome "OUTCOME" \
+  --session "$_SESSION_ID" 2>/dev/null || true
+```
+
+Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

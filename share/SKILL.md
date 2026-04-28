@@ -27,6 +27,11 @@ echo "NETLIFY_CLI: $_HAS_NETLIFY"
 echo "NODE: $_HAS_NODE"
 echo "PACKAGE: $_PKG"
 echo "BROWSE: ${_B:-NOT_FOUND}"
+_TEL_START=$(date +%s)
+_SESSION_ID="$$-$(date +%s)"
+mkdir -p "$HOME/.dstack/analytics"
+"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
+  '{"skill":"share","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
 ```
 
 ## What this skill does
@@ -245,3 +250,19 @@ If the project has a Design Bible, append to Memory Log:
 ```
 [date]: /share ran. URL: [URL]. Type: [preview/live]. Build: success.
 ```
+
+## Completion
+
+Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
+
+```bash
+_TEL_END=$(date +%s)
+_TEL_DUR=$(( _TEL_END - _TEL_START ))
+"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
+  '{"skill":"share","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
+"$HOME/.claude/skills/ds/bin/ds-telemetry-log" \
+  --skill "share" --duration "$_TEL_DUR" --outcome "OUTCOME" \
+  --session "$_SESSION_ID" 2>/dev/null || true
+```
+
+Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**
