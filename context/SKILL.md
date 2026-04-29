@@ -1,7 +1,11 @@
 ---
 name: ds:context
 version: 0.1.0
-description: Build the Design Bible for this project. Captures brand rules, colors, fonts, spacing, and component patterns into a living file every other designStack skill reads from. Run once per project.
+description: >
+  Builds the Design Bible for a project by capturing brand rules, colors, fonts,
+  spacing, and component patterns into a living file that all other designStack
+  skills read from. Use when starting a new project with designStack, the user
+  wants to capture design rules, set brand guidelines, or runs '/ds:context'.
 license: MIT
 allowed-tools:
   - Bash

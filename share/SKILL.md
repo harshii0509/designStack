@@ -1,7 +1,11 @@
 ---
 name: ds:share
 version: 0.1.0
-description: Get a link to share your project. Preview link for feedback, or make it live for real. Step-by-step in plain language — no deployment experience needed.
+description: >
+  Walks through deploying a shareable preview link or going fully live,
+  step-by-step in plain language with no deployment experience required. Use when
+  the user wants to share their project, get a preview link, deploy for the first
+  time, or runs '/ds:share'.
 license: MIT
 allowed-tools:
   - Bash

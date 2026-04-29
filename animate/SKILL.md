@@ -1,7 +1,11 @@
 ---
 name: ds:animate
 version: 0.1.0
-description: Add motion to your product. Tell me what feels too static — buttons, page transitions, loading states — and I'll add animations that feel natural, not showy. Before/after screenshots included.
+description: >
+  Adds purposeful motion to UI elements — buttons, transitions, loading states —
+  guided by the Design Bible's vibe, with before/after screenshots to verify the
+  result. Use when something feels too static, the user wants to add animations,
+  or runs '/ds:animate'.
 license: MIT
 allowed-tools:
   - Bash

@@ -1,7 +1,10 @@
 ---
 name: ds:start
 version: 0.1.0
-description: First-session setup wizard for designStack. Run once when you first install. Guides designers through building their Design Bible in about 5 minutes.
+description: >
+  First-session setup wizard that guides a designer through building their Design
+  Bible in about 5 minutes. Use when the user first installs designStack, wants to
+  get oriented, or runs '/ds:start'.
 license: MIT
 allowed-tools:
   - Bash

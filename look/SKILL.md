@@ -1,7 +1,11 @@
 ---
 name: ds:look
 version: 0.1.0
-description: Does this look right? Screenshot your site, compare it against your Design Bible rules, and get an annotated visual with plain-English issues labeled. Run after any UI change.
+description: >
+  Screenshots a site, compares it against Design Bible rules, and produces an
+  annotated visual with plain-English issues labeled. Use when the user asks if
+  their site looks right, wants a visual check after a UI change, or runs
+  '/ds:look'.
 license: MIT
 allowed-tools:
   - Bash

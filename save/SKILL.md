@@ -1,7 +1,10 @@
 ---
 name: ds:save
 version: 0.1.0
-description: Save your progress with a human-readable description. Creates a restore point you can always come back to. Run this before any risky change.
+description: >
+  Commits the current project state to git with a plain-English description of
+  what changed, creating a restore point before risky changes. Use when the user
+  wants to save progress, create an undo point, or runs '/ds:save'.
 license: MIT
 allowed-tools:
   - Bash

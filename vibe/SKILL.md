@@ -1,7 +1,11 @@
 ---
 name: ds:vibe
 version: 0.1.0
-description: Set the look and feel of your product from feeling words. Describe what you want it to feel like — "calm like Notion", "bold like Stripe", "warm and playful" — and get three visual directions to choose from.
+description: >
+  Presents three distinct visual directions generated from feeling words, then
+  writes the chosen aesthetic into the Design Bible. Use when the user wants to
+  set or change their product's look and feel, describe a feeling, or runs
+  '/ds:vibe'.
 license: MIT
 allowed-tools:
   - Bash

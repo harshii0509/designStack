@@ -1,7 +1,10 @@
 ---
 name: ds:delight
 version: 0.1.0
-description: Add moments of joy to your product. Find the two moments where users succeed or arrive for the first time — and make those moments feel special. Subtle, intentional, on-brand.
+description: >
+  Identifies and enhances the two highest-impact moments in a product — first-time
+  arrival and first user success — with subtle, on-brand details. Use when the
+  user wants to add personality, emotional moments, or runs '/ds:delight'.
 license: MIT
 allowed-tools:
   - Bash

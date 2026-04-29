@@ -1,7 +1,11 @@
 ---
 name: ds:plain
 version: 0.1.0
-description: Translate any Claude plan into plain English before you say yes. Shows what changes, what gets deleted, what's new, and how risky it is. Always ask before running this skill.
+description: >
+  Translates any pending Claude plan into plain English — what changes, what gets
+  deleted, what's new, and how risky it is — before the user approves. Use when
+  the user is confused by a proposal, wants to understand what Claude is about to
+  do, or runs '/ds:plain'.
 license: MIT
 allowed-tools:
   - Bash

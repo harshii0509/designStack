@@ -1,7 +1,11 @@
 ---
 name: ds:brand
 version: 0.1.0
-description: Is your site still on brand? Scan every page against your Design Bible rules — colors, fonts, spacing — and flag anything that's drifted. Get an annotated screenshot of the problems.
+description: >
+  Scans pages against Design Bible rules — colors, fonts, spacing — and flags
+  anything that has drifted from the established brand, with annotated screenshots.
+  Use when checking brand consistency, things may have drifted over time, or the
+  user runs '/ds:brand'.
 license: MIT
 allowed-tools:
   - Bash

@@ -1,7 +1,10 @@
 ---
 name: ds:unstuck
 version: 0.1.0
-description: Something broke and you don't know why. Get a plain-English diagnosis with an annotated screenshot showing exactly where the problem is — before any code is touched.
+description: >
+  Diagnoses a broken feature with a screenshot and annotated plain-English
+  explanation of the problem — before any code is touched. Use when something
+  stopped working, the user doesn't know why, or runs '/ds:unstuck'.
 license: MIT
 allowed-tools:
   - Bash

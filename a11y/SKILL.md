@@ -1,7 +1,11 @@
 ---
 name: ds:a11y
 version: 0.1.0
-description: Accessibility grade for your site. Get an A–D letter grade plus an annotated screenshot showing exactly where the problems are — in plain English, no jargon. Run this before sharing with clients or launching.
+description: >
+  Grades a site's accessibility from A to D and produces an annotated screenshot
+  showing exactly where each problem is, in plain English. Use when the user wants
+  to check accessibility, prepare to share with clients, run a pre-launch audit,
+  or invokes '/ds:a11y'.
 license: MIT
 allowed-tools:
   - Bash
