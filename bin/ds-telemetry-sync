@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+# ds-telemetry-sync — batch-sends local JSONL events to Supabase
+# Called async from ds-telemetry-log. Exits 0 on any error.
+
+_JSONL="$HOME/.dstack/analytics/skill-usage.jsonl"
+_CURSOR_FILE="$HOME/.dstack/analytics/.last-sync-line"
+_LAST_SYNC="$HOME/.dstack/analytics/.last-sync-time"
+_CONFIG="$HOME/.claude/skills/ds/supabase/config.sh"
+
+# Must have local data
+[ -f "$_JSONL" ] || exit 0
+
+# Check consent tier
+_TEL=$(grep "^telemetry=" "$HOME/.dstack/config" 2>/dev/null | cut -d= -f2 || echo "off")
+# Treat legacy "on" as community
+[ "$_TEL" = "on" ] && _TEL="community"
+[ "$_TEL" = "off" ] && exit 0
+
+# Load Supabase credentials
+[ -f "$_CONFIG" ] || exit 0
+# shellcheck source=/dev/null
+source "$_CONFIG" 2>/dev/null || exit 0
+[ -z "$DS_SUPABASE_URL" ] || [ "$DS_SUPABASE_URL" = "https://YOUR_PROJECT.supabase.co" ] && exit 0
+[ -z "$DS_SUPABASE_ANON_KEY" ] || [ "$DS_SUPABASE_ANON_KEY" = "YOUR_ANON_KEY" ] && exit 0
+
+# Rate limit: once per 5 minutes
+_NOW=$(date +%s 2>/dev/null || echo 0)
+_LAST=$(cat "$_LAST_SYNC" 2>/dev/null || echo 0)
+[ $(( _NOW - _LAST )) -lt 300 ] && exit 0
+echo "$_NOW" > "$_LAST_SYNC"
+
+# Get unsent lines (cursor-based)
+_START=$(cat "$_CURSOR_FILE" 2>/dev/null || echo 0)
+_TOTAL=$(wc -l < "$_JSONL" 2>/dev/null | tr -d ' ' || echo 0)
+[ "$_START" -ge "$_TOTAL" ] && exit 0
+
+# Read up to 100 events from cursor position
+mapfile -t _LINES < <(tail -n +"$(( _START + 1 ))" "$_JSONL" 2>/dev/null | head -100)
+[ "${#_LINES[@]}" -eq 0 ] && exit 0
+
+# Get installation ID (community tier only)
+_INSTALL_ID=""
+if [ "$_TEL" = "community" ]; then
+  _ID_FILE="$HOME/.dstack/installation-id"
+  if [ ! -f "$_ID_FILE" ]; then
+    # Generate UUID v4
+    _UUID=$(python3 -c "import uuid; print(uuid.uuid4())" 2>/dev/null \
+      || cat /proc/sys/kernel/random/uuid 2>/dev/null \
+      || uuidgen 2>/dev/null \
+      || echo "")
+    [ -n "$_UUID" ] && echo "$_UUID" > "$_ID_FILE"
+  fi
+  _INSTALL_ID=$(cat "$_ID_FILE" 2>/dev/null || echo "")
+fi
+
+# Build JSON array
+_JSON="["
+_FIRST=1
+for _LINE in "${_LINES[@]}"; do
+  [ -z "$_LINE" ] && continue
+  # Inject installation_id for community tier if not already present
+  if [ -n "$_INSTALL_ID" ] && ! echo "$_LINE" | grep -q '"installation_id"'; then
+    _LINE="${_LINE%\}},\"installation_id\":\"$_INSTALL_ID\"}"
+  fi
+  # Strip installation_id for anonymous tier
+  if [ "$_TEL" = "anonymous" ]; then
+    _LINE=$(echo "$_LINE" | sed 's/,"installation_id":"[^"]*"//g')
+  fi
+  [ "$_FIRST" -eq 1 ] && _FIRST=0 || _JSON="$_JSON,"
+  _JSON="$_JSON$_LINE"
+done
+_JSON="$_JSON]"
+
+# POST to Supabase
+_RESP=$(curl -s -w "\n%{http_code}" \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "apikey: $DS_SUPABASE_ANON_KEY" \
+  -H "Authorization: Bearer $DS_SUPABASE_ANON_KEY" \
+  --data "$_JSON" \
+  --max-time 10 \
+  "$DS_SUPABASE_URL/functions/v1/telemetry-ingest" 2>/dev/null) || exit 0
+
+_HTTP_CODE=$(echo "$_RESP" | tail -1)
+_BODY=$(echo "$_RESP" | head -1)
+
+# Advance cursor only on success with inserted > 0
+if echo "$_HTTP_CODE" | grep -q "^2"; then
+  _INSERTED=$(echo "$_BODY" | grep -o '"inserted":[0-9]*' | grep -o '[0-9]*' || echo "0")
+  if [ "${_INSERTED:-0}" -gt 0 ]; then
+    echo $(( _START + ${#_LINES[@]} )) > "$_CURSOR_FILE"
+  fi
+fi
+
+exit 0

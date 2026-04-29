@@ -69,24 +69,35 @@ mkdir -p "$HOME/.dstack/analytics" 2>/dev/null || true
 if [ ! -f "$_TEL_FILE" ]; then
   if [ "$_QUIET" = "no" ]; then
     echo ""
-    echo "  designStack can track which skills you use and whether they succeed."
-    echo "  This data stays on your machine — never sent anywhere."
+    echo "  designStack can send anonymous usage data to help improve the tool."
+    echo "  Data sent: which skills you run and whether they succeed."
+    echo "  No code, file paths, or personal data. Never sold or shared."
     echo ""
-    echo "  This helps us understand what's working and improve over time."
+    echo "  A) Share usage data (recommended) — helps us improve, anonymous device ID"
+    echo "  B) Anonymous only — aggregate counts, no device ID"
+    echo "  C) Off — keep everything on this machine"
     echo ""
-    printf "  Allow local analytics? [Y/n]: "
-    read -r _TEL_CHOICE </dev/tty || _TEL_CHOICE="y"
+    printf "  Analytics? [A/b/c]: "
+    read -r _TEL_CHOICE </dev/tty || _TEL_CHOICE="a"
     case "$_TEL_CHOICE" in
-      [nN]*) echo "telemetry=off" > "$_TEL_FILE"
+      [bB]*) echo "telemetry=anonymous" > "$_TEL_FILE"
+             log "  ✓ Analytics: anonymous" ;;
+      [cC]*) echo "telemetry=off"       > "$_TEL_FILE"
              log "  ✓ Analytics: off" ;;
-          *) echo "telemetry=on"  > "$_TEL_FILE"
-             log "  ✓ Analytics: on (local only, ~/.dstack/analytics/)" ;;
+          *) echo "telemetry=community" > "$_TEL_FILE"
+             log "  ✓ Analytics: on (community — anonymous device ID)" ;;
     esac
   else
-    echo "telemetry=on" > "$_TEL_FILE"
+    # Non-interactive / --quiet: default to community
+    echo "telemetry=community" > "$_TEL_FILE"
   fi
 else
-  _CURRENT=$(grep "^telemetry=" "$_TEL_FILE" 2>/dev/null | cut -d= -f2 || echo "on")
+  _CURRENT=$(grep "^telemetry=" "$_TEL_FILE" 2>/dev/null | cut -d= -f2 || echo "community")
+  # Migrate legacy "on" → "community"
+  if [ "$_CURRENT" = "on" ]; then
+    sed -i.bak 's/^telemetry=on$/telemetry=community/' "$_TEL_FILE" 2>/dev/null || true
+    _CURRENT="community"
+  fi
   log "  ✓ Analytics: $_CURRENT (edit ~/.dstack/config to change)"
 fi
 

@@ -1,22 +1,61 @@
 #!/usr/bin/env bash
 # Usage: ds-telemetry-log --skill look --duration 45 --outcome success --session 123
-_SKILL="" _DUR="" _OUTCOME="" _SESSION="" _BROWSE="false"
+# Never exits non-zero — safe to call with 2>/dev/null || true
+
+_SKILL="" _DUR="" _OUTCOME="" _SESSION=""
 while [ $# -gt 0 ]; do
   case $1 in
     --skill)    _SKILL="$2";   shift 2 ;;
     --duration) _DUR="$2";    shift 2 ;;
     --outcome)  _OUTCOME="$2"; shift 2 ;;
     --session)  _SESSION="$2"; shift 2 ;;
-    --browse)   _BROWSE="$2";  shift 2 ;;
     *) shift ;;
   esac
 done
 [ -z "$_SKILL" ] && exit 0
-# Check telemetry preference
-_TEL=$(grep "^telemetry=" "$HOME/.dstack/config" 2>/dev/null | cut -d= -f2 || echo "on")
+
+# Check consent tier (treat legacy "on" as community)
+_TEL=$(grep "^telemetry=" "$HOME/.dstack/config" 2>/dev/null | cut -d= -f2 || echo "off")
+[ "$_TEL" = "on" ] && _TEL="community"
 [ "$_TEL" = "off" ] && exit 0
+
 mkdir -p "$HOME/.dstack/analytics" 2>/dev/null || exit 0
+
+# Collect metadata
 _TS=$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo "")
-printf '{"skill":"%s","duration_s":%s,"outcome":"%s","browse":%s,"session":"%s","ts":"%s"}\n' \
-  "$_SKILL" "${_DUR:-0}" "${_OUTCOME:-unknown}" "$_BROWSE" "$_SESSION" "$_TS" \
-  >> "$HOME/.dstack/analytics/skill-usage.jsonl"
+_OS=$(uname -s 2>/dev/null | tr '[:upper:]' '[:lower:]' || echo "unknown")
+_ARCH=$(uname -m 2>/dev/null || echo "unknown")
+_VER=$(cat "$HOME/.claude/skills/ds/VERSION" 2>/dev/null || echo "0.1.0")
+
+# Installation ID (community tier only, generated once)
+_INSTALL_ID_JSON="null"
+if [ "$_TEL" = "community" ]; then
+  _ID_FILE="$HOME/.dstack/installation-id"
+  if [ ! -f "$_ID_FILE" ]; then
+    _UUID=$(python3 -c "import uuid; print(uuid.uuid4())" 2>/dev/null \
+      || cat /proc/sys/kernel/random/uuid 2>/dev/null \
+      || uuidgen 2>/dev/null \
+      || echo "")
+    [ -n "$_UUID" ] && echo "$_UUID" > "$_ID_FILE"
+  fi
+  _IID=$(cat "$_ID_FILE" 2>/dev/null || echo "")
+  [ -n "$_IID" ] && _INSTALL_ID_JSON="\"$_IID\""
+fi
+
+# Append to local JSONL
+printf '{"v":1,"event_type":"skill_run","skill":"%s","duration_s":%s,"outcome":"%s","session_id":"%s","ds_version":"%s","os":"%s","arch":"%s","ts":"%s","installation_id":%s}\n' \
+  "$_SKILL" \
+  "${_DUR:-0}" \
+  "${_OUTCOME:-unknown}" \
+  "$_SESSION" \
+  "$_VER" \
+  "$_OS" \
+  "$_ARCH" \
+  "$_TS" \
+  "$_INSTALL_ID_JSON" \
+  >> "$HOME/.dstack/analytics/skill-usage.jsonl" 2>/dev/null || true
+
+# Trigger async sync (background, never blocks)
+"$HOME/.claude/skills/ds/bin/ds-telemetry-sync" 2>/dev/null &
+
+exit 0
