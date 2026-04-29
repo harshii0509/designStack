@@ -74,7 +74,7 @@ You're a companion for designers building their own products with Claude Code.
 **Read the preamble output, then:**
 
 If `DESIGN_BIBLE` is `no`:
-> "Welcome to designStack! Before anything else, let's capture your brand rules so every future session starts with full context. This takes about 5 minutes. Want to run `/ds:context` now?"
+> "Welcome to designStack! Before anything else, let's capture your brand rules so every future session starts with full context. This takes about 5 minutes. Want to run `/ds-context` now?"
 
 If `DESIGN_BIBLE` is `yes` (any variant):
 > "designStack is ready. Your Design Bible is loaded. Here's what you can do:"
@@ -84,34 +84,34 @@ If `DESIGN_BIBLE` is `yes` (any variant):
 Show this as a friendly summary — not a technical list:
 
 **When things go sideways:**
-- `/ds:plain` — Claude wrote a plan you can't read? I'll translate it before you say yes
-- `/ds:unstuck` — Something broke and you've been asking "fix it" for too long? I'll diagnose it with a screenshot
-- `/ds:save` — Save exactly where you are so you can always come back
+- `/ds-plain` — Claude wrote a plan you can't read? I'll translate it before you say yes
+- `/ds-unstuck` — Something broke and you've been asking "fix it" for too long? I'll diagnose it with a screenshot
+- `/ds-save` — Save exactly where you are so you can always come back
 
 **To check how it looks:**
-- `/ds:look` — Does this match what you had in your head?
-- `/ds:mobile` — Does it hold up on a phone?
-- `/ds:a11y` — Can everyone use this? (I'll give you a grade with a picture of every issue)
+- `/ds-look` — Does this match what you had in your head?
+- `/ds-mobile` — Does it hold up on a phone?
+- `/ds-a11y` — Can everyone use this? (I'll give you a grade with a picture of every issue)
 
 **To set the direction:**
-- `/ds:vibe` — Tell me how it should feel, I'll generate three directions to pick from
-- `/ds:brand` — Is this still on brand after all those changes?
+- `/ds-vibe` — Tell me how it should feel, I'll generate three directions to pick from
+- `/ds-brand` — Is this still on brand after all those changes?
 
 **To make it great:**
-- `/ds:polish` — Pre-ship checklist, 11 areas, plain English results
-- `/ds:animate` — Add motion that feels natural, not flashy
-- `/ds:delight` — Add joy to the moments that matter most
+- `/ds-polish` — Pre-ship checklist, 11 areas, plain English results
+- `/ds-animate` — Add motion that feels natural, not flashy
+- `/ds-delight` — Add joy to the moments that matter most
 
 **To share your work:**
-- `/ds:share` — I'll get you a link to show someone
+- `/ds-share` — I'll get you a link to show someone
 
 **To see your usage:**
-- `/ds:stats` — How much have you used designStack? Success rates and history.
+- `/ds-stats` — How much have you used designStack? Success rates and history.
 
 ## Where to start
 
-If this is your first time: run `/ds:context` — it takes 5 minutes and makes every other skill smarter.
+If this is your first time: run `/ds-context` — it takes 5 minutes and makes every other skill smarter.
 
-If something just broke: run `/ds:unstuck`.
+If something just broke: run `/ds-unstuck`.
 
-If you have a plan in front of you that you don't understand: run `/ds:plain` right now before saying yes.
+If you have a plan in front of you that you don't understand: run `/ds-plain` right now before saying yes.

@@ -1,11 +1,11 @@
 ---
-name: ds:vibe
+name: ds-vibe
 version: 0.1.0
 description: >
   Presents three distinct visual directions generated from feeling words, then
   writes the chosen aesthetic into the Design Bible. Use when the user wants to
   set or change their product's look and feel, describe a feeling, or runs
-  '/ds:vibe'.
+  '/ds-vibe'.
 license: MIT
 allowed-tools:
   - Bash
@@ -217,15 +217,15 @@ If the user had an existing Design Bible and the new direction changes things si
 > - Font: was [old], now [new]
 > - Radius: was [old], now [new]
 >
-> Anything that was built before will need a pass to match the new direction. Want to run `/ds:look` on your existing pages to see what needs updating?"
+> Anything that was built before will need a pass to match the new direction. Want to run `/ds-look` on your existing pages to see what needs updating?"
 
 ## Step 7 — Next step suggestion
 
 After updating the Bible:
 > "Your Design Bible now has your new look captured. Here's what I'd suggest next:
 >
-> 1. Run `/ds:look` on your main page to see how it compares to the new direction
-> 2. Run `/ds:brand` to scan for anything that's drifted from the new rules
+> 1. Run `/ds-look` on your main page to see how it compares to the new direction
+> 2. Run `/ds-brand` to scan for anything that's drifted from the new rules
 > 3. Or just keep building — every new thing I create will automatically follow the new direction"
 
 ## Completion

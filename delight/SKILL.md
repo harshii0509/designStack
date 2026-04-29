@@ -1,10 +1,10 @@
 ---
-name: ds:delight
+name: ds-delight
 version: 0.1.0
 description: >
   Identifies and enhances the two highest-impact moments in a product — first-time
   arrival and first user success — with subtle, on-brand details. Use when the
-  user wants to add personality, emotional moments, or runs '/ds:delight'.
+  user wants to add personality, emotional moments, or runs '/ds-delight'.
 license: MIT
 allowed-tools:
   - Bash

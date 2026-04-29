@@ -1,10 +1,10 @@
 ---
-name: ds:stats
+name: ds-stats
 version: 0.1.0
 description: >
   Displays designStack usage analytics — which skills have been used, success
   rates, and recent history. Requires analytics to be enabled (opt-in during
-  setup). Use when the user wants to review usage data or runs '/ds:stats'.
+  setup). Use when the user wants to review usage data or runs '/ds-stats'.
 license: MIT
 allowed-tools:
   - Bash
@@ -72,14 +72,14 @@ Present a plain-English summary:
 
 **Most used skills:**
 [For each skill in usage count order:]
-- `/ds:[skill]` — used [N] times
+- `/ds-[skill]` — used [N] times
 
 **Outcomes:**
 - Success: [N] ([X]%)
 - Error/abort: [N] ([Y]%)
 
 **Last 5 sessions:**
-[For each of last 5 entries — show skill name + outcome + timestamp in plain English, e.g. "ran /ds:look · success · 2 days ago"]
+[For each of last 5 entries — show skill name + outcome + timestamp in plain English, e.g. "ran /ds-look · success · 2 days ago"]
 
 **Analytics stored in:** `~/.dstack/analytics/skill-usage.jsonl`
 
@@ -90,6 +90,6 @@ To turn off analytics: edit `~/.dstack/config` and set `telemetry=off`.
 ## Step 4 — Offer next steps
 
 Based on which skills they've used most:
-- If they've used `/ds:look` a lot but never `/ds:brand`: suggest running `/ds:brand` for a full consistency scan
-- If they've never run `/ds:a11y`: mention it for accessibility grading
-- If they've had `error` outcomes on any skill: offer to troubleshoot with `/ds:unstuck`
+- If they've used `/ds-look` a lot but never `/ds-brand`: suggest running `/ds-brand` for a full consistency scan
+- If they've never run `/ds-a11y`: mention it for accessibility grading
+- If they've had `error` outcomes on any skill: offer to troubleshoot with `/ds-unstuck`

@@ -1,11 +1,11 @@
 ---
-name: ds:plain
+name: ds-plain
 version: 0.1.0
 description: >
   Translates any pending Claude plan into plain English — what changes, what gets
   deleted, what's new, and how risky it is — before the user approves. Use when
   the user is confused by a proposal, wants to understand what Claude is about to
-  do, or runs '/ds:plain'.
+  do, or runs '/ds-plain'.
 license: MIT
 allowed-tools:
   - Bash
@@ -74,8 +74,8 @@ What we're building / changing:
 **How big is this change?**
 [Pick one:]
 - Small tweak — quick to do, easy to undo if anything goes wrong
-- Medium change — takes a few minutes, worth running `/ds:save` before starting
-- Big change — about 15 minutes to complete, harder to undo. Run `/ds:save` first.
+- Medium change — takes a few minutes, worth running `/ds-save` before starting
+- Big change — about 15 minutes to complete, harder to undo. Run `/ds-save` first.
 
 ---
 
@@ -139,4 +139,4 @@ Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NE
 
 If the change is "Big", add this note before the confirmation:
 
-> ⚠️ This is a bigger change — harder to undo once it starts. I'd recommend running `/ds:save` first to create a restore point you can come back to if anything goes wrong.
+> ⚠️ This is a bigger change — harder to undo once it starts. I'd recommend running `/ds-save` first to create a restore point you can come back to if anything goes wrong.

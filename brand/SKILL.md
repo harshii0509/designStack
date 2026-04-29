@@ -1,17 +1,17 @@
 ---
-name: ds:brand
+name: ds-brand
 version: 0.1.0
 description: >
   Scans pages against Design Bible rules — colors, fonts, spacing — and flags
   anything that has drifted from the established brand, with annotated screenshots.
   Use when checking brand consistency, things may have drifted over time, or the
-  user runs '/ds:brand'.
+  user runs '/ds-brand'.
 license: MIT
 allowed-tools:
   - Bash
   - Read
   - AskUserQuestion
-compatibility: Requires Design Bible (run /ds:context first). Browse binary enables annotated screenshots; falls back to code scan without it.
+compatibility: Requires Design Bible (run /ds-context first). Browse binary enables annotated screenshots; falls back to code scan without it.
 ---
 
 ## Preamble
@@ -48,14 +48,14 @@ mkdir -p "$HOME/.dstack/analytics"
 
 Check if everything still looks like it belongs to the same product. As you build over time, small things drift — a button becomes the wrong shade, a font switches, padding gets inconsistent. This scan catches all of that and shows you exactly where, so you can decide what to fix.
 
-**Requires a Design Bible.** If none exists, run `/ds:context` first.
+**Requires a Design Bible.** If none exists, run `/ds-context` first.
 
 ## Step 1 — Check for Design Bible
 
 If `DESIGN_BIBLE` is `no`:
 > "I need your Design Bible to run a brand check — it's the set of rules I compare everything against. You haven't set one up for this project yet.
 >
-> Run `/ds:context` first — it takes about 5 minutes to set up. After that, `/ds:brand` will know exactly what to look for."
+> Run `/ds-context` first — it takes about 5 minutes to set up. After that, `/ds-brand` will know exactly what to look for."
 
 Stop here if no Bible.
 

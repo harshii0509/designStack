@@ -1,15 +1,15 @@
 ---
-name: ds:start
+name: ds-start
 version: 0.1.0
 description: >
   First-session setup wizard that guides a designer through building their Design
   Bible in about 5 minutes. Use when the user first installs designStack, wants to
-  get oriented, or runs '/ds:start'.
+  get oriented, or runs '/ds-start'.
 license: MIT
 allowed-tools:
   - Bash
   - AskUserQuestion
-compatibility: Requires git. Runs /ds:context inline — no separate invocation needed.
+compatibility: Requires git. Runs /ds-context inline — no separate invocation needed.
 ---
 
 ## Preamble
@@ -45,7 +45,7 @@ mkdir -p "$HOME/.dstack/analytics"
 
 ## What this skill does
 
-You are the first-session wizard. Your job is to get someone with zero technical knowledge feeling oriented, understood, and excited — in about 5 minutes. You ask 3 gentle questions, run /ds:context inline, and close with a summary that makes them feel like everything is taken care of.
+You are the first-session wizard. Your job is to get someone with zero technical knowledge feeling oriented, understood, and excited — in about 5 minutes. You ask 3 gentle questions, run /ds-context inline, and close with a summary that makes them feel like everything is taken care of.
 
 **Emotional arc:** uncertain → oriented → understood → calm → excited → ready.
 
@@ -59,7 +59,7 @@ You are the first-session wizard. Your job is to get someone with zero technical
 **If `HAS_BIBLE` is `yes` AND `HAS_VIBE` is `yes`:**
 > "Looks like you've already run setup — your Design Bible is ready and your brand rules are in place. You're good to go.
 >
-> Want to refresh anything? Type `/ds:context` to update your brand rules, or try `/ds:look` to see how your product looks right now."
+> Want to refresh anything? Type `/ds-context` to update your brand rules, or try `/ds-look` to see how your product looks right now."
 
 Stop here. Do not re-run the wizard.
 
@@ -102,12 +102,12 @@ After Q2, respond with the vibe words woven into one sentence: "[3 vibe words] �
 
 Narrate: "Perfect, that's all I need."
 
-## Step 4 — Run /ds:context inline
+## Step 4 — Run /ds-context inline
 
 Tell the user:
 > "Building your Design Bible now..."
 
-Read the file at `~/.claude/skills/ds/context/SKILL.md` and follow its instructions exactly, as if the user had typed `/ds:context`. You are running /context inline — the user stays in this conversation.
+Read the file at `~/.claude/skills/ds/context/SKILL.md` and follow its instructions exactly, as if the user had typed `/ds-context`. You are running /context inline — the user stays in this conversation.
 
 Pass what you learned in Step 3 into the /context flow as pre-filled answers:
 - Q3 from /context (who it's for) → use Q1 answer from this wizard
@@ -131,9 +131,9 @@ After /context completes and the Design Bible is written, tell the user:
 > ---
 >
 > **What to try next:**
-> - `/ds:look` — does your product look right? I'll check it against your brand rules.
-> - `/ds:a11y` — is it accessible? I'll grade it A–D and show you every problem.
-> - `/ds:unstuck` — something broke? I'll figure out what it is in plain English.
+> - `/ds-look` — does your product look right? I'll check it against your brand rules.
+> - `/ds-a11y` — is it accessible? I'll grade it A–D and show you every problem.
+> - `/ds-unstuck` — something broke? I'll figure out what it is in plain English.
 >
 > Questions or feedback? We're on GitHub Discussions: https://github.com/harshii0509/designStack/discussions — we read everything."
 
@@ -159,10 +159,10 @@ Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NE
 ## Error handling
 
 **If the user's project has no files at all:**
-> "It looks like this project is empty — there's nothing here yet. That's totally fine. When you've added some files (even a basic HTML page), come back and run `/ds:start` again."
+> "It looks like this project is empty — there's nothing here yet. That's totally fine. When you've added some files (even a basic HTML page), come back and run `/ds-start` again."
 
 **If /context fails for any reason:**
-> "Something went wrong setting up your Design Bible — sorry about that. Try running `/ds:unstuck` and I'll figure out what happened."
+> "Something went wrong setting up your Design Bible — sorry about that. Try running `/ds-unstuck` and I'll figure out what happened."
 
 **If the user interrupts and comes back:**
 Check preamble state. If `HAS_BIBLE` is `yes`, resume from Step 5 (closing). If not, offer to restart from where they left off.

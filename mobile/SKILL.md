@@ -1,11 +1,11 @@
 ---
-name: ds:mobile
+name: ds-mobile
 version: 0.1.0
 description: >
   Captures side-by-side screenshots at phone (375px), tablet (768px), and desktop
   sizes and flags anything that's broken or hard to use on smaller screens. Use
   when the user wants to check mobile responsiveness, preview on phone, or runs
-  '/ds:mobile'.
+  '/ds-mobile'.
 license: MIT
 allowed-tools:
   - Bash

@@ -1,11 +1,11 @@
 ---
-name: ds:animate
+name: ds-animate
 version: 0.1.0
 description: >
   Adds purposeful motion to UI elements — buttons, transitions, loading states —
   guided by the Design Bible's vibe, with before/after screenshots to verify the
   result. Use when something feels too static, the user wants to add animations,
-  or runs '/ds:animate'.
+  or runs '/ds-animate'.
 license: MIT
 allowed-tools:
   - Bash

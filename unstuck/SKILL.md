@@ -1,10 +1,10 @@
 ---
-name: ds:unstuck
+name: ds-unstuck
 version: 0.1.0
 description: >
   Diagnoses a broken feature with a screenshot and annotated plain-English
   explanation of the problem — before any code is touched. Use when something
-  stopped working, the user doesn't know why, or runs '/ds:unstuck'.
+  stopped working, the user doesn't know why, or runs '/ds-unstuck'.
 license: MIT
 allowed-tools:
   - Bash

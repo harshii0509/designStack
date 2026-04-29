@@ -1,10 +1,10 @@
 ---
-name: ds:save
+name: ds-save
 version: 0.1.0
 description: >
   Commits the current project state to git with a plain-English description of
   what changed, creating a restore point before risky changes. Use when the user
-  wants to save progress, create an undo point, or runs '/ds:save'.
+  wants to save progress, create an undo point, or runs '/ds-save'.
 license: MIT
 allowed-tools:
   - Bash
@@ -55,7 +55,7 @@ Tell the user: "Done — saving is now turned on. I'll create your first snapsho
 Then continue.
 
 If no:
-> "OK, I won't set it up right now. Just know that without saving enabled, there's no undo if something goes wrong. You can always run `/ds:save` again later to set it up."
+> "OK, I won't set it up right now. Just know that without saving enabled, there's no undo if something goes wrong. You can always run `/ds-save` again later to set it up."
 Stop here.
 
 ## Step 2 — First-time explanation (if no git history)
@@ -121,7 +121,7 @@ After committing, show:
 > **When:** right now
 > **On branch:** [branch name in plain terms, e.g. "main" or just the branch name]
 >
-> Tip: run `/ds:save` before any big change. That way, if something goes wrong, you can always get back here.
+> Tip: run `/ds-save` before any big change. That way, if something goes wrong, you can always get back here.
 
 ## Step 7 — Update Design Bible if it was changed
 

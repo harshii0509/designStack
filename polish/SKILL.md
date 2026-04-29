@@ -1,10 +1,10 @@
 ---
-name: ds:polish
+name: ds-polish
 version: 0.1.0
 description: >
   Runs 11 quality checks across the full UI — layout, colors, fonts, accessibility,
   mobile — and produces a prioritized fix list before launch. Use when the user
-  wants a final pre-launch review or runs '/ds:polish'.
+  wants a final pre-launch review or runs '/ds-polish'.
 license: MIT
 allowed-tools:
   - Bash

@@ -1,17 +1,17 @@
 ---
-name: ds:look
+name: ds-look
 version: 0.1.0
 description: >
   Screenshots a site, compares it against Design Bible rules, and produces an
   annotated visual with plain-English issues labeled. Use when the user asks if
   their site looks right, wants a visual check after a UI change, or runs
-  '/ds:look'.
+  '/ds-look'.
 license: MIT
 allowed-tools:
   - Bash
   - Read
   - AskUserQuestion
-compatibility: Requires git and Design Bible (run /ds:context first). Visual screenshot requires browse binary; falls back to code analysis without it.
+compatibility: Requires git and Design Bible (run /ds-context first). Visual screenshot requires browse binary; falls back to code analysis without it.
 ---
 
 ## Preamble
@@ -60,7 +60,7 @@ If `DESIGN_BIBLE` is `yes`, read the Bible file fully. Extract:
 - Memory Log (recent changes, known intentional decisions)
 
 If `DESIGN_BIBLE` is `no`:
-> "I don't have your design rules yet, so I can't check for brand drift. I'll still look for layout issues and obvious problems. Want me to set up your Design Bible first? Run `/ds:context` — it takes 5 minutes and makes every future check much smarter."
+> "I don't have your design rules yet, so I can't check for brand drift. I'll still look for layout issues and obvious problems. Want me to set up your Design Bible first? Run `/ds-context` — it takes 5 minutes and makes every future check much smarter."
 
 Continue the check either way.
 
