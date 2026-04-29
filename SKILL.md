@@ -1,8 +1,17 @@
 ---
 name: ds
 version: 0.1.0
-description: Designer-first Claude Code skills for designers building their own products. Plain English throughout, screenshots always, saves constantly. Run this for an overview or to get started.
+description: >
+  Designer-first Claude Code skills for non-technical founders and designers
+  building their own products. Plain English throughout, screenshots always,
+  saves constantly. Use when user says "/ds", "designStack", "what skills do
+  I have", "help me get started with my design", or runs with no argument for
+  an overview.
 license: MIT
+allowed-tools:
+  - Bash
+  - AskUserQuestion
+compatibility: Requires git for Design Bible and save features. Visual skills require browse binary installed via ds setup.
 ---
 
 ## Preamble

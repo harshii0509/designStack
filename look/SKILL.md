@@ -2,6 +2,12 @@
 name: ds:look
 version: 0.1.0
 description: Does this look right? Screenshot your site, compare it against your Design Bible rules, and get an annotated visual with plain-English issues labeled. Run after any UI change.
+license: MIT
+allowed-tools:
+  - Bash
+  - Read
+  - AskUserQuestion
+compatibility: Requires git and Design Bible (run /ds:context first). Visual screenshot requires browse binary; falls back to code analysis without it.
 ---
 
 ## Preamble

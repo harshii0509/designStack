@@ -2,6 +2,13 @@
 name: ds:context
 version: 0.1.0
 description: Build the Design Bible for this project. Captures brand rules, colors, fonts, spacing, and component patterns into a living file every other designStack skill reads from. Run once per project.
+license: MIT
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - AskUserQuestion
+compatibility: Requires git. Auto-detects Tailwind, shadcn, and CSS custom properties. Works without browse.
 ---
 
 ## Preamble

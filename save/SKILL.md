@@ -2,6 +2,12 @@
 name: ds:save
 version: 0.1.0
 description: Save your progress with a human-readable description. Creates a restore point you can always come back to. Run this before any risky change.
+license: MIT
+allowed-tools:
+  - Bash
+  - Write
+  - AskUserQuestion
+compatibility: Requires git. Will offer to initialize git if not present.
 ---
 
 ## Preamble

@@ -2,6 +2,12 @@
 name: ds:a11y
 version: 0.1.0
 description: Accessibility grade for your site. Get an A–D letter grade plus an annotated screenshot showing exactly where the problems are — in plain English, no jargon. Run this before sharing with clients or launching.
+license: MIT
+allowed-tools:
+  - Bash
+  - Read
+  - AskUserQuestion
+compatibility: Requires browse binary for axe-core injection and annotated screenshots. Falls back to code-only audit without it.
 ---
 
 ## Preamble

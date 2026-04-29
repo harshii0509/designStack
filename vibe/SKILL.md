@@ -2,6 +2,13 @@
 name: ds:vibe
 version: 0.1.0
 description: Set the look and feel of your product from feeling words. Describe what you want it to feel like — "calm like Notion", "bold like Stripe", "warm and playful" — and get three visual directions to choose from.
+license: MIT
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - AskUserQuestion
+compatibility: Requires git. Updates Design Bible with chosen visual direction.
 ---
 
 ## Preamble

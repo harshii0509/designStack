@@ -2,6 +2,11 @@
 name: ds:stats
 version: 0.1.0
 description: View your designStack usage analytics — which skills you've used, success rates, and recent history. Requires analytics to be enabled (opt-in during setup).
+license: MIT
+allowed-tools:
+  - Bash
+  - AskUserQuestion
+compatibility: No external dependencies. Reads from ~/.dstack/analytics/skill-usage.jsonl.
 ---
 
 ## Preamble

@@ -2,6 +2,12 @@
 name: ds:unstuck
 version: 0.1.0
 description: Something broke and you don't know why. Get a plain-English diagnosis with an annotated screenshot showing exactly where the problem is — before any code is touched.
+license: MIT
+allowed-tools:
+  - Bash
+  - Read
+  - AskUserQuestion
+compatibility: Requires browse binary for screenshots and console error capture. Falls back to code + error message analysis without it.
 ---
 
 ## Preamble

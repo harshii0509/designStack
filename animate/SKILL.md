@@ -2,6 +2,13 @@
 name: ds:animate
 version: 0.1.0
 description: Add motion to your product. Tell me what feels too static — buttons, page transitions, loading states — and I'll add animations that feel natural, not showy. Before/after screenshots included.
+license: MIT
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - AskUserQuestion
+compatibility: Requires git. Browse binary enables before/after screenshots; optional but recommended.
 ---
 
 ## Preamble

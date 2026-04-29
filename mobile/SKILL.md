@@ -2,6 +2,12 @@
 name: ds:mobile
 version: 0.1.0
 description: Check how your site looks on phones and tablets. Shows three side-by-side screenshots at phone, tablet, and desktop sizes with plain-English flags for anything that's broken or hard to use.
+license: MIT
+allowed-tools:
+  - Bash
+  - Read
+  - AskUserQuestion
+compatibility: Requires browse binary for viewport screenshots. Falls back to code analysis for fixed widths, small tap targets, and overflow issues without it.
 ---
 
 ## Preamble

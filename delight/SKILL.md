@@ -2,6 +2,13 @@
 name: ds:delight
 version: 0.1.0
 description: Add moments of joy to your product. Find the two moments where users succeed or arrive for the first time — and make those moments feel special. Subtle, intentional, on-brand.
+license: MIT
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - AskUserQuestion
+compatibility: Requires git. Browse binary enables before/after screenshots; optional but recommended.
 ---
 
 ## Preamble

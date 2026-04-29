@@ -2,6 +2,11 @@
 name: ds:plain
 version: 0.1.0
 description: Translate any Claude plan into plain English before you say yes. Shows what changes, what gets deleted, what's new, and how risky it is. Always ask before running this skill.
+license: MIT
+allowed-tools:
+  - Bash
+  - AskUserQuestion
+compatibility: No external dependencies. Works in any project.
 ---
 
 ## Preamble
