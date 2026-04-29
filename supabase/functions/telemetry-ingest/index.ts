@@ -21,9 +21,10 @@ serve(async (req) => {
     });
   }
 
+  // Use service role if available, otherwise fall back to anon key with RLS INSERT policy
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY")!,
   );
 
   const valid: Record<string, unknown>[] = [];

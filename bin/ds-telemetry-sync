@@ -34,8 +34,11 @@ _START=$(cat "$_CURSOR_FILE" 2>/dev/null || echo 0)
 _TOTAL=$(wc -l < "$_JSONL" 2>/dev/null | tr -d ' ' || echo 0)
 [ "$_START" -ge "$_TOTAL" ] && exit 0
 
-# Read up to 100 events from cursor position
-mapfile -t _LINES < <(tail -n +"$(( _START + 1 ))" "$_JSONL" 2>/dev/null | head -100)
+# Read up to 100 events from cursor position (bash 3 compatible — no mapfile)
+_LINES=()
+while IFS= read -r _l; do
+  _LINES+=("$_l")
+done < <(tail -n +"$(( _START + 1 ))" "$_JSONL" 2>/dev/null | head -100)
 [ "${#_LINES[@]}" -eq 0 ] && exit 0
 
 # Get installation ID (community tier only)
