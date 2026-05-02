@@ -2,6 +2,18 @@
 
 All notable changes to designStack are documented here. Written for humans, not engineers.
 
+## v0.2.0 — May 2026
+
+**5 new skills shipped.**
+
+- `/ds:vibe` — Set your brand personality in 2 minutes. Tell it how your product should feel, get 3 visual directions to pick from, Design Bible updates automatically.
+- `/ds:brand` — Brand drift scanner. Checks every page against your Design Bible rules — catches color, font, spacing, and radius drift.
+- `/ds:polish` — 11-point pre-launch quality check. Plain English results across layout, readability, color, buttons, mobile, keyboard, load speed, alt text, empty states, and forms.
+- `/ds:animate` — Motion that fits your vibe. Calm brand gets subtle motion, bold brand gets expressive. `prefers-reduced-motion` accessibility built in.
+- `/ds:delight` — Two high-impact moments: the success state (what happens after someone completes something) and the empty/first-time state (what new users see first).
+
+---
+
 ## v0.1.0 — April 2026
 
 First release.
@@ -26,11 +38,8 @@ First release.
 
 ---
 
-## What's coming in v0.2
+## What's coming in v0.3
 
-- `/ds:vibe` — Set your brand personality in 2 minutes
-- `/ds:brand` — Brand drift check across your whole site
-- `/ds:polish` — Final quality pass before launch
-- `/ds:animate` — Add purposeful motion to your UI
-- `/ds:delight` — Moments of joy — micro-interactions and personality touches
 - Native Windows support (no WSL required)
+- `/ds:vibe` design preview improvements — richer HTML preview with real font loading
+- Design Bible diffing — show what changed between sessions

@@ -1,6 +1,6 @@
 ---
 name: ds-animate
-version: 0.1.0
+version: 0.2.0
 description: >
   Adds purposeful motion to UI elements — buttons, transitions, loading states —
   guided by the Design Bible's vibe, with before/after screenshots to verify the

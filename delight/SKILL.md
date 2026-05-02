@@ -1,6 +1,6 @@
 ---
 name: ds-delight
-version: 0.1.0
+version: 0.2.0
 description: >
   Identifies and enhances the two highest-impact moments in a product — first-time
   arrival and first user success — with subtle, on-brand details. Use when the

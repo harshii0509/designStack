@@ -1,6 +1,6 @@
 ---
 name: ds-vibe
-version: 0.1.0
+version: 0.2.0
 description: >
   Presents three distinct visual directions generated from feeling words, then
   writes the chosen aesthetic into the Design Bible. Use when the user wants to

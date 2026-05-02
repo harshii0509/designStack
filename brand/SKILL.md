@@ -1,6 +1,6 @@
 ---
 name: ds-brand
-version: 0.1.0
+version: 0.2.0
 description: >
   Scans pages against Design Bible rules — colors, fonts, spacing — and flags
   anything that has drifted from the established brand, with annotated screenshots.

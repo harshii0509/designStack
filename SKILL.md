@@ -1,6 +1,6 @@
 ---
 name: ds
-version: 0.1.0
+version: 0.2.0
 description: >
   Designer-first Claude Code skills for non-technical founders and designers
   building their own products. Plain English throughout, screenshots always,
@@ -17,7 +17,7 @@ compatibility: Requires git for Design Bible and save features. Visual skills re
 ## Preamble
 
 ```bash
-_DESIGNSTACK_VER="0.1.0"
+_DESIGNSTACK_VER="0.2.0"
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
 # Migrate Bible from dstack/ to design/ (one-time)
 if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then

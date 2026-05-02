@@ -1,2 +1,3 @@
 # Supabase credentials — never commit real keys
 supabase/config.sh
+.gstack/

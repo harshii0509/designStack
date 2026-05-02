@@ -1,6 +1,6 @@
 ---
 name: ds-polish
-version: 0.1.0
+version: 0.2.0
 description: >
   Runs 11 quality checks across the full UI — layout, colors, fonts, accessibility,
   mobile — and produces a prioritized fix list before launch. Use when the user
