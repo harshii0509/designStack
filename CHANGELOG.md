@@ -2,6 +2,18 @@
 
 All notable changes to designStack are documented here. Written for humans, not engineers.
 
+## v0.3.0 — May 2026
+
+**Stay current without thinking about it.**
+
+- **Update prompts** — When you run any `/ds:*` command, designStack quietly checks whether a newer release exists on GitHub (same idea as gstack). If yes, you'll get a short plain-English offer to upgrade.
+- **`/ds:upgrade` and `/ds:update`** — One command pulls the latest `main`, reruns setup, and shows what's new from the changelog.
+- **Your choice** — Upgrade now, turn on always-update (`~/.ds/config.yaml`: `auto_upgrade: true`), snooze (24h → 48h → 7 days for the same version), or turn off checks (`update_check: false`). Set `DS_NO_UPDATE_CHECK=1` to skip checks in automation.
+- **No spam** — Results are cached (about an hour when you're up to date, longer when an upgrade is waiting). Offline or bad network? We assume you're fine and don't nag.
+- **Smarter check** — We only prompt when **GitHub's version is newer** than yours — never the other way around.
+
+---
+
 ## v0.2.0 — May 2026
 
 **5 new skills shipped.**
@@ -38,7 +50,7 @@ First release.
 
 ---
 
-## What's coming in v0.3
+## What's next
 
 - Native Windows support (no WSL required)
 - `/ds:vibe` design preview improvements — richer HTML preview with real font loading

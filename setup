@@ -134,6 +134,7 @@ else
 - `/ds:a11y` — Accessibility grade A–D with every problem marked.
 - `/ds:save` — Save your progress with a human-readable description.
 - `/ds:share` — Deploy and get a shareable link.
+- `/ds:upgrade` or `/ds:update` — Pull the latest designStack and refresh install.
 EOF
   log "  ✓ Added designStack to global CLAUDE.md"
 fi
@@ -163,6 +164,7 @@ log "  │    /ds:mobile    Phone + tablet + desktop side-by-side  │"
 log "  │    /ds:a11y      Accessibility grade with problem map   │"
 log "  │    /ds:save      Save progress with a description       │"
 log "  │    /ds:share     Deploy and get a shareable link        │"
+log "  │    /ds:upgrade   Update designStack to latest release   │"
 log "  │                                                             │"
 log "  │  Questions? https://github.com/harshii0509/designStack/discussions │"
 log "  └─────────────────────────────────────────────────────────────┘"

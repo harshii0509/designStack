@@ -1,6 +1,6 @@
 ---
 name: ds
-version: 0.2.0
+version: 0.3.0
 description: >
   Designer-first Claude Code skills for non-technical founders and designers
   building their own products. Plain English throughout, screenshots always,
@@ -17,7 +17,9 @@ compatibility: Requires git for Design Bible and save features. Visual skills re
 ## Preamble
 
 ```bash
-_DESIGNSTACK_VER="0.2.0"
+_DESIGNSTACK_VER="0.3.0"
+_UPD=$([ -x "$HOME/.claude/skills/ds/bin/ds-update-check" ] && "$HOME/.claude/skills/ds/bin/ds-update-check" 2>/dev/null || true)
+[ -n "$_UPD" ] && echo "$_UPD" || true
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
 # Migrate Bible from dstack/ to design/ (one-time)
 if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
@@ -38,6 +40,8 @@ echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "DESIGN_BIBLE: $_HAS_BIBLE"
 echo "BROWSE: ${_B:-NOT_FOUND}"
 ```
+
+**After the preamble:** If any printed line starts with `UPGRADE_AVAILABLE`, read `~/.claude/skills/ds/upgrade/SKILL.md` and follow its **Inline upgrade flow** before argument routing or welcome. If a line starts with `JUST_UPGRADED`, say briefly you're on the new version (`JUST_UPGRADED` shows old and new), then continue — no upgrade prompt.
 
 ## Argument routing
 
@@ -62,6 +66,8 @@ If this skill was invoked with an argument — look for `ARGUMENTS:` in the skil
 | `animate` | `~/.claude/skills/ds/animate/SKILL.md` |
 | `delight` | `~/.claude/skills/ds/delight/SKILL.md` |
 | `stats` | `~/.claude/skills/ds/stats/SKILL.md` |
+| `upgrade` | `~/.claude/skills/ds/upgrade/SKILL.md` |
+| `update` | `~/.claude/skills/ds/upgrade/SKILL.md` |
 
 If no argument is present, or the argument doesn't match any of the above, continue to the welcome screen below.
 
@@ -107,6 +113,9 @@ Show this as a friendly summary — not a technical list:
 
 **To see your usage:**
 - `/ds-stats` — How much have you used designStack? Success rates and history.
+
+**Keeping designStack current:**
+- `/ds-upgrade` or `/ds-update` — Get the latest skills and fixes (you may also see a prompt when a new version ships).
 
 ## Where to start
 

@@ -15,6 +15,7 @@ When the user's request matches one of these, invoke the skill FIRST — before 
 | "check accessibility", "a11y", "can everyone use this" | `dstack:a11y` |
 | "save my progress", "checkpoint", "commit this" | `dstack:save` |
 | "share this", "deploy", "get a link", "show someone", "go live" | `dstack:share` |
+| "update designStack", "upgrade designStack", "new version of designStack" | `dstack:upgrade` |
 | "set the vibe", "aesthetic direction", "make it look like", "style guide" | `dstack:vibe` |
 | "is this on brand", "brand check", "check consistency" | `dstack:brand` |
 | "polish this", "final check before sharing" | `dstack:polish` |
@@ -32,6 +33,7 @@ When the user's request matches one of these, invoke the skill FIRST — before 
 - `/ds:a11y` — Accessibility audit with letter grade
 - `/ds:save` — Git checkpoint with human-readable message
 - `/ds:share` — Deploy and get a shareable link
+- `/ds:upgrade` or `/ds:update` — Pull the latest designStack release
 - `/ds:vibe` — Set aesthetic direction from feeling words
 - `/ds:brand` — Brand consistency scan
 - `/ds:polish` — Pre-ship quality check (11 dimensions)

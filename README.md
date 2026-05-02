@@ -69,6 +69,12 @@ Installs to `~/.claude/skills/ds/`. Quit and reopen Claude Code, then type `/ds:
 | `/ds:share` | Shareable link in under 2 minutes |
 | `/ds:stats` | Which skills you've used, how often, and whether they worked |
 
+**Keeping designStack up to date**
+
+| Command | What it does |
+|---------|--------------|
+| `/ds:upgrade` or `/ds:update` | Pull the latest release from GitHub (you may also get a heads-up when you run any `/ds:*` command) |
+
 ---
 
 ## Works with
