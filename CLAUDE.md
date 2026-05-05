@@ -54,3 +54,17 @@ All designStack output must be in plain English:
 - Always describe what will be DELETED, not just what's added
 - Use letter grades (A/B/C/D), not numeric scores, for user-facing ratings
 - Every plan must get user confirmation before code is written
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in GitHub Issues on `harshii0509/designStack`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Using default label vocabulary: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context — one `CONTEXT.md` at the repo root + `docs/adr/`. See `docs/agents/domain.md`.

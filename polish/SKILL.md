@@ -16,28 +16,7 @@ compatibility: Requires browse binary for visual checks and axe-core injection. 
 ## Preamble
 
 ```bash
-_DESIGNSTACK_VER="0.1.0"
-_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-# Migrate Bible from dstack/ to design/ (one-time)
-if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
-  mkdir -p "$_ROOT/design"
-  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
-  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
-fi
-_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
-_HAS_BIBLE="no"
-[ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
-[ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"
-_B=""
-[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
-echo "DESIGNSTACK: $_DESIGNSTACK_VER"
-echo "DESIGN_BIBLE: $_HAS_BIBLE"
-echo "BROWSE: ${_B:-NOT_FOUND}"
-_TEL_START=$(date +%s)
-_SESSION_ID="$$-$(date +%s)"
-mkdir -p "$HOME/.dstack/analytics"
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"polish","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/env.sh" "polish"
 ```
 
 ## What this skill does
@@ -65,7 +44,11 @@ For each check, take a screenshot and extract what you need. Describe findings i
 ---
 
 **Check 1 — Does it look right?**
-Take a screenshot. Compare against Design Bible. Are the colors, fonts, and spacing correct?
+```bash
+"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "polish" "before"
+```
+If the URL is not reachable, run `"$HOME/.claude/skills/ds/lib/visual-audit.sh" not_running` and wait.
+If `DESIGN_BIBLE` is `yes`, follow the standard extraction protocol in `lib/bible-reader.md`. Compare against Design Bible. Are the colors, fonts, and spacing correct?
 *Plain English output: "Your colors are on brand." / "The heading font is different from your brand font."*
 
 **Check 2 — Is the layout balanced?**
@@ -136,6 +119,8 @@ Is the submit button obvious?
 
 ## Step 4 — Write the polished report
 
+Follow the jargon rules in `lib/plain-language.md` when writing this report — no technical terms.
+
 ---
 
 **Pre-launch check for [URL]**
@@ -197,13 +182,7 @@ If any issues were fixed that establish new rules, append to Memory Log:
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-_TEL_END=$(date +%s)
-_TEL_DUR=$(( _TEL_END - _TEL_START ))
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"polish","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
-"$HOME/.claude/skills/ds/bin/ds-telemetry-log" \
-  --skill "polish" --duration "$_TEL_DUR" --outcome "OUTCOME" \
-  --session "$_SESSION_ID" 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "polish" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

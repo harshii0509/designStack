@@ -17,28 +17,7 @@ compatibility: Requires browse binary for axe-core injection and annotated scree
 ## Preamble
 
 ```bash
-_DESIGNSTACK_VER="0.1.0"
-_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-# Migrate Bible from dstack/ to design/ (one-time)
-if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
-  mkdir -p "$_ROOT/design"
-  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
-  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
-fi
-_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
-_HAS_BIBLE="no"
-[ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
-[ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"
-_B=""
-[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
-echo "DESIGNSTACK: $_DESIGNSTACK_VER"
-echo "DESIGN_BIBLE: $_HAS_BIBLE"
-echo "BROWSE: ${_B:-NOT_FOUND}"
-_TEL_START=$(date +%s)
-_SESSION_ID="$$-$(date +%s)"
-mkdir -p "$HOME/.dstack/analytics"
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"a11y","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/env.sh" "a11y"
 ```
 
 ## What accessibility means (explain this to the user if they haven't run /a11y before)
@@ -47,7 +26,11 @@ mkdir -p "$HOME/.dstack/analytics"
 >
 > I'll check your site against the main rules and give you a grade from A to D, plus a screenshot showing exactly where each problem is."
 
-## Step 1 — Get the URL
+## Step 1 — Load Design Bible (if present)
+
+If `DESIGN_BIBLE` is `yes`, follow the standard extraction protocol in `lib/bible-reader.md`. Focus on L1 Colors and L4 component rules for contrast checking.
+
+## Step 2 — Get the URL
 
 Ask the user:
 > "What page should I check for accessibility? Give me the URL (e.g. `http://localhost:3000` or your live URL). The home page is a good start, or try your most important page like checkout or signup."
@@ -69,9 +52,19 @@ Do not continue until the user confirms the project is running.
 Show the screenshot to the user:
 > "Here's your page. Let me run the accessibility check now."
 
-## Step 3 — Run the accessibility audit
+## Step 3 — Take screenshot and run accessibility audit
 
 If `BROWSE` is not `NOT_FOUND`:
+
+```bash
+"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "a11y" "before"
+```
+
+If the URL is not reachable, run and show the output of:
+```bash
+"$HOME/.claude/skills/ds/lib/visual-audit.sh" not_running
+```
+Do not continue until the user confirms the project is running.
 
 Inject axe-core (the industry-standard accessibility testing library) and run a full audit:
 
@@ -203,6 +196,8 @@ Each circled area should correspond to a numbered issue in the report below.
 
 ## Step 8 — Write the report
 
+Follow the jargon rules in `lib/plain-language.md` when writing this report — no technical terms.
+
 **First, show the verdict — one line only, with the grade prominently:**
 > **Grade [A/B/C/D] — [URL] — [one sentence: what the grade means in plain English]**
 > e.g. "Grade C — http://localhost:3000 — Three issues would stop blind users from using your navigation."
@@ -316,13 +311,7 @@ If new accessibility rules were established (e.g. "all images must have alt text
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-_TEL_END=$(date +%s)
-_TEL_DUR=$(( _TEL_END - _TEL_START ))
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"a11y","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
-"$HOME/.claude/skills/ds/bin/ds-telemetry-log" \
-  --skill "a11y" --duration "$_TEL_DUR" --outcome "OUTCOME" \
-  --session "$_SESSION_ID" 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "a11y" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

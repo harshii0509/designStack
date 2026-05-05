@@ -18,29 +18,7 @@ compatibility: Requires git. Updates Design Bible with chosen visual direction.
 ## Preamble
 
 ```bash
-_DESIGNSTACK_VER="0.1.0"
-_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-# Migrate Bible from dstack/ to design/ (one-time)
-if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
-  mkdir -p "$_ROOT/design"
-  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
-  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
-fi
-_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
-_HAS_BIBLE="no"
-_BIBLE_SOURCE=""
-[ -f "$_BIBLE" ] && _HAS_BIBLE="yes" && _BIBLE_SOURCE="design/DESIGN-BIBLE.md"
-[ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes" && _BIBLE_SOURCE="DesignBrain.md"
-_B=""
-[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
-echo "DESIGNSTACK: $_DESIGNSTACK_VER"
-echo "DESIGN_BIBLE: $_HAS_BIBLE | source: ${_BIBLE_SOURCE:-none}"
-echo "BROWSE: ${_B:-NOT_FOUND}"
-_TEL_START=$(date +%s)
-_SESSION_ID="$$-$(date +%s)"
-mkdir -p "$HOME/.dstack/analytics"
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"vibe","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/env.sh" "vibe"
 ```
 
 ## What this skill does
@@ -51,7 +29,7 @@ This reads your existing Design Bible first, so I'm suggesting evolution — not
 
 ## Step 1 — Read the existing Design Bible (if it exists)
 
-If `DESIGN_BIBLE` is `yes`, read the full Bible. Note:
+If `DESIGN_BIBLE` is `yes`, follow the standard extraction protocol in `lib/bible-reader.md`. Note:
 - Current vibe words (The feeling section)
 - Current colors (L1)
 - Current fonts (L1)
@@ -95,6 +73,8 @@ Show the screenshot. Extract the core aesthetic principles you observe.
 If browse is not available, reason about the reference from general knowledge (e.g. "Notion uses a clean, minimal aesthetic with neutral grays and Inter font").
 
 ## Step 4 — Generate three distinct directions
+
+Follow the jargon rules in `lib/plain-language.md` when describing each direction — no technical terms.
 
 Based on the user's description and any existing Design Bible context, create three distinct visual directions. Make them genuinely different from each other — not subtle variations.
 
@@ -233,13 +213,7 @@ After updating the Bible:
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-_TEL_END=$(date +%s)
-_TEL_DUR=$(( _TEL_END - _TEL_START ))
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"vibe","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
-"$HOME/.claude/skills/ds/bin/ds-telemetry-log" \
-  --skill "vibe" --duration "$_TEL_DUR" --outcome "OUTCOME" \
-  --session "$_SESSION_ID" 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "vibe" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

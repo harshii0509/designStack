@@ -18,53 +18,22 @@ compatibility: Requires git. Auto-detects Tailwind, shadcn, and CSS custom prope
 ## Preamble
 
 ```bash
-_DESIGNSTACK_VER="0.1.0"
+"$HOME/.claude/skills/ds/lib/env.sh" "context"
+# NPM design system token detection
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-# Migrate Bible from dstack/ to design/ (one-time)
-if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
-  mkdir -p "$_ROOT/design"
-  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
-  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
-fi
-_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
-_HAS_BIBLE="no"
-_BIBLE_SOURCE=""
-[ -f "$_BIBLE" ]              && _HAS_BIBLE="yes"  && _BIBLE_SOURCE="design/DESIGN-BIBLE.md"
-[ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ]  && _HAS_BIBLE="extend" && _BIBLE_SOURCE="DesignBrain.md"
-[ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/ICP-CONTEXT.md" ]  && _HAS_BIBLE="extend" && _BIBLE_SOURCE="ICP-CONTEXT.md"
-[ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DESIGN.md" ]       && _HAS_BIBLE="extend" && _BIBLE_SOURCE="DESIGN.md"
-_B=""
-[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
-# npm design system token detection
-_NPM_TOKENS="none"
 _PKG="$_ROOT/package.json"
 if [ -f "$_PKG" ]; then
-  _HAS_SHADCN="no"
-  _HAS_TAILWIND="no"
-  _HAS_BLEND="no"
+  _HAS_SHADCN="no"; _HAS_TAILWIND="no"; _HAS_BLEND="no"
   [ -f "$_ROOT/components.json" ] && _HAS_SHADCN="yes"
-  [ -f "$_ROOT/tailwind.config.js" ] || [ -f "$_ROOT/tailwind.config.ts" ] && _HAS_TAILWIND="yes"
+  { [ -f "$_ROOT/tailwind.config.js" ] || [ -f "$_ROOT/tailwind.config.ts" ]; } && _HAS_TAILWIND="yes"
   [ -d "$_ROOT/node_modules/@juspay/blend-design-system" ] && _HAS_BLEND="yes"
-  _NPM_TOKENS="${_HAS_SHADCN}|${_HAS_TAILWIND}|${_HAS_BLEND}"
+  echo "NPM_TOKENS: shadcn=${_HAS_SHADCN} | tailwind=${_HAS_TAILWIND} | blend=${_HAS_BLEND}"
 fi
-# project CLAUDE.md for design rules injection
 _CLAUDE_MD="$_ROOT/CLAUDE.md"
-_HAS_CLAUDE_MD="no"
-_HAS_DESIGNSTACK_RULES="no"
+_HAS_CLAUDE_MD="no"; _HAS_DESIGNSTACK_RULES="no"
 [ -f "$_CLAUDE_MD" ] && _HAS_CLAUDE_MD="yes"
 [ -f "$_CLAUDE_MD" ] && grep -q "dstack:design-rules:start" "$_CLAUDE_MD" 2>/dev/null && _HAS_DESIGNSTACK_RULES="yes"
-echo "DESIGNSTACK: $_DESIGNSTACK_VER"
-echo "DESIGN_BIBLE: $_HAS_BIBLE | source: ${_BIBLE_SOURCE:-none}"
-echo "BROWSE: ${_B:-NOT_FOUND}"
-echo "ROOT: $_ROOT"
-echo "BIBLE_PATH: $_BIBLE"
-echo "NPM_TOKENS: shadcn=${_HAS_SHADCN:-no} | tailwind=${_HAS_TAILWIND:-no} | blend=${_HAS_BLEND:-no}"
 echo "CLAUDE_MD: $_HAS_CLAUDE_MD | has_rules: $_HAS_DESIGNSTACK_RULES"
-_TEL_START=$(date +%s)
-_SESSION_ID="$$-$(date +%s)"
-mkdir -p "$HOME/.dstack/analytics"
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"context","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
 ```
 
 ## Guard: not a git repo
@@ -401,6 +370,8 @@ Do not create it. Instead, mention it in the confirmation message:
 
 ## Step 6 — Show confirmation and save
 
+Follow the jargon rules in `lib/plain-language.md` when summarising — no technical terms.
+
 Show the user a plain-English summary — NOT the raw markdown:
 
 > "Your Design Bible is ready. Here's what I know about your product's look:
@@ -428,13 +399,7 @@ If yes, run the /ds-save flow with commit message: "Set up Design Bible with [3 
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-_TEL_END=$(date +%s)
-_TEL_DUR=$(( _TEL_END - _TEL_START ))
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"context","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
-"$HOME/.claude/skills/ds/bin/ds-telemetry-log" \
-  --skill "context" --duration "$_TEL_DUR" --outcome "OUTCOME" \
-  --session "$_SESSION_ID" 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "context" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

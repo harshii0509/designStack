@@ -72,7 +72,7 @@ git ls-files --others --exclude-standard
 git diff --stat
 ```
 
-Translate what changed into one plain English sentence. Examples:
+Translate what changed into one plain English sentence. Follow the jargon rules in `lib/plain-language.md`. Examples:
 
 - "Added the pricing page and updated the navigation to include a link to it"
 - "Changed the button color to match your brand and fixed the header layout on mobile"
@@ -135,13 +135,7 @@ If `design/DESIGN-BIBLE.md` was among the saved files, append to the Memory Log:
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-_TEL_END=$(date +%s)
-_TEL_DUR=$(( _TEL_END - _TEL_START ))
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"save","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
-"$HOME/.claude/skills/ds/bin/ds-telemetry-log" \
-  --skill "save" --duration "$_TEL_DUR" --outcome "OUTCOME" \
-  --session "$_SESSION_ID" 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "save" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

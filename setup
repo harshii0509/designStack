@@ -104,7 +104,7 @@ fi
 # ── Flat mode: create symlinks without /ds: prefix ───────────────────────
 if [ "$_PREFIX" = "flat" ]; then
   _SKILLS_DIR="$HOME/.claude/skills"
-  for skill in start context plain unstuck look mobile a11y save share; do
+  for skill in start context unstuck look mobile a11y save share; do
     _TARGET="$DESIGNSTACK_DIR/$skill/SKILL.md"
     _LINK_DIR="$_SKILLS_DIR/$skill"
     if [ -d "$_TARGET" ] || [ -f "$_TARGET" ]; then
@@ -112,7 +112,7 @@ if [ "$_PREFIX" = "flat" ]; then
       ln -sf "$_TARGET" "$_LINK_DIR/SKILL.md" 2>/dev/null || true
     fi
   done
-  log "  ✓ Flat mode: skills available as /start, /context, /plain, /unstuck, etc."
+  log "  ✓ Flat mode: skills available as /start, /context, /unstuck, etc."
 fi
 
 # ── Add designStack to global CLAUDE.md ────────────────────────────────────────────
@@ -127,7 +127,6 @@ else
 - **designStack** is installed. Use designStack skills for design rules, visual QA, accessibility, and error recovery.
 - `/ds:start` — First session wizard. Run this once per project.
 - `/ds:context` — Refresh your Design Bible when your brand changes.
-- `/ds:plain` — Translate any Claude plan into plain English before you accept it.
 - `/ds:unstuck` — Something broke. Get a plain-English diagnosis.
 - `/ds:look` — Does it look right? Visual check against your brand rules.
 - `/ds:mobile` — Check it on phone, tablet, and desktop.
@@ -139,8 +138,9 @@ EOF
   log "  ✓ Added designStack to global CLAUDE.md"
 fi
 
-# ── Make bin scripts executable ───────────────────────────────────────────────
+# ── Make bin and lib scripts executable ──────────────────────────────────────
 chmod +x "$DESIGNSTACK_DIR/bin/"* 2>/dev/null || true
+chmod +x "$DESIGNSTACK_DIR/lib/"*.sh 2>/dev/null || true
 
 # ── Done ──────────────────────────────────────────────────────────────────────
 log ""
@@ -157,7 +157,6 @@ log "  │                                                             │"
 log "  │  All commands:                                              │"
 log "  │    /ds:start     First-session setup wizard             │"
 log "  │    /ds:context   Refresh your Design Bible              │"
-log "  │    /ds:plain     Translate plans to plain English        │"
 log "  │    /ds:unstuck   Debug broken things                    │"
 log "  │    /ds:look      Visual check against brand rules       │"
 log "  │    /ds:mobile    Phone + tablet + desktop side-by-side  │"

@@ -17,28 +17,7 @@ compatibility: Requires browse binary for viewport screenshots. Falls back to co
 ## Preamble
 
 ```bash
-_DESIGNSTACK_VER="0.1.0"
-_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-# Migrate Bible from dstack/ to design/ (one-time)
-if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
-  mkdir -p "$_ROOT/design"
-  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
-  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
-fi
-_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
-_HAS_BIBLE="no"
-[ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
-[ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"
-_B=""
-[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
-echo "DESIGNSTACK: $_DESIGNSTACK_VER"
-echo "DESIGN_BIBLE: $_HAS_BIBLE"
-echo "BROWSE: ${_B:-NOT_FOUND}"
-_TEL_START=$(date +%s)
-_SESSION_ID="$$-$(date +%s)"
-mkdir -p "$HOME/.dstack/analytics"
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"mobile","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/env.sh" "mobile"
 ```
 
 ## What this skill does
@@ -70,18 +49,15 @@ Do not continue until the user confirms the project is running.
 ```bash
 # Phone (iPhone size)
 $B resize 375 812
-$B goto <URL>
-$B screenshot /tmp/dstack-mobile-375.png
+"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "mobile" "375"
 
 # Tablet (iPad size)
 $B resize 768 1024
-$B goto <URL>
-$B screenshot /tmp/dstack-mobile-768.png
+"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "mobile" "768"
 
 # Desktop
 $B resize 1280 900
-$B goto <URL>
-$B screenshot /tmp/dstack-mobile-1280.png
+"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "mobile" "1280"
 ```
 
 Show all three screenshots to the user:
@@ -130,6 +106,8 @@ Search the codebase for common mobile problems:
 - `overflow: hidden` on body that might hide mobile content
 
 ## Step 6 — Analyze and flag issues
+
+Follow the jargon rules in `lib/plain-language.md` when describing issues — no technical terms.
 
 For each problem found, translate it into plain English. Use this pattern:
 
@@ -215,13 +193,7 @@ If new mobile rules were confirmed, add them to the L4 Component Rules or L1 Spa
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-_TEL_END=$(date +%s)
-_TEL_DUR=$(( _TEL_END - _TEL_START ))
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"mobile","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
-"$HOME/.claude/skills/ds/bin/ds-telemetry-log" \
-  --skill "mobile" --duration "$_TEL_DUR" --outcome "OUTCOME" \
-  --session "$_SESSION_ID" 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "mobile" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

@@ -16,33 +16,7 @@ compatibility: Requires browse binary for screenshots and console error capture.
 ## Preamble
 
 ```bash
-_DESIGNSTACK_VER="0.1.0"
-_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-# Migrate Bible from dstack/ to design/ (one-time)
-if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
-  mkdir -p "$_ROOT/design"
-  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
-  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
-fi
-_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
-_HAS_BIBLE="no"
-[ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
-[ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes"
-_B=""
-[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
-# Last git commit info for undo reference
-_LAST_COMMIT=$(git log -1 --pretty=format:"%h %s" 2>/dev/null || echo "no git history")
-_LAST_COMMIT_TIME=$(git log -1 --pretty=format:"%ar" 2>/dev/null || echo "unknown")
-echo "DESIGNSTACK: $_DESIGNSTACK_VER"
-echo "DESIGN_BIBLE: $_HAS_BIBLE"
-echo "BROWSE: ${_B:-NOT_FOUND}"
-echo "LAST_COMMIT: $_LAST_COMMIT"
-echo "LAST_COMMIT_TIME: $_LAST_COMMIT_TIME"
-_TEL_START=$(date +%s)
-_SESSION_ID="$$-$(date +%s)"
-mkdir -p "$HOME/.dstack/analytics"
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"unstuck","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/env.sh" "unstuck"
 ```
 
 ## What this skill does
@@ -88,6 +62,8 @@ Note any red errors in the console output.
 If `BROWSE` is `NOT_FOUND`: skip screenshots. Work from the error message and code context only.
 
 ## Step 3 — Diagnose in plain English
+
+Follow the jargon rules in `lib/plain-language.md` when diagnosing — no technical terms.
 
 Write ONE sentence that describes exactly what's wrong. No technical jargon. Examples:
 
@@ -163,13 +139,7 @@ Only run `git reset` if they confirm.
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-_TEL_END=$(date +%s)
-_TEL_DUR=$(( _TEL_END - _TEL_START ))
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"unstuck","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
-"$HOME/.claude/skills/ds/bin/ds-telemetry-log" \
-  --skill "unstuck" --duration "$_TEL_DUR" --outcome "OUTCOME" \
-  --session "$_SESSION_ID" 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "unstuck" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

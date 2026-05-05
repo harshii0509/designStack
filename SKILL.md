@@ -17,28 +17,7 @@ compatibility: Requires git for Design Bible and save features. Visual skills re
 ## Preamble
 
 ```bash
-_DESIGNSTACK_VER="0.3.0"
-_UPD=$([ -x "$HOME/.claude/skills/ds/bin/ds-update-check" ] && "$HOME/.claude/skills/ds/bin/ds-update-check" 2>/dev/null || true)
-[ -n "$_UPD" ] && echo "$_UPD" || true
-_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-# Migrate Bible from dstack/ to design/ (one-time)
-if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
-  mkdir -p "$_ROOT/design"
-  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
-  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
-fi
-_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
-_HAS_BIBLE="no"
-[ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
-# Also check for compatible files from @heysolacy
-[ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes (DesignBrain.md)"
-[ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/ICP-CONTEXT.md" ] && _HAS_BIBLE="yes (ICP-CONTEXT.md)"
-[ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DESIGN.md" ] && _HAS_BIBLE="yes (DESIGN.md)"
-_B=""
-[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
-echo "DESIGNSTACK: $_DESIGNSTACK_VER"
-echo "DESIGN_BIBLE: $_HAS_BIBLE"
-echo "BROWSE: ${_B:-NOT_FOUND}"
+"$HOME/.claude/skills/ds/lib/env.sh" "ds"
 ```
 
 **After the preamble:** If any printed line starts with `UPGRADE_AVAILABLE`, read `~/.claude/skills/ds/upgrade/SKILL.md` and follow its **Inline upgrade flow** before argument routing or welcome. If a line starts with `JUST_UPGRADED`, say briefly you're on the new version (`JUST_UPGRADED` shows old and new), then continue — no upgrade prompt.
@@ -53,7 +32,6 @@ If this skill was invoked with an argument — look for `ARGUMENTS:` in the skil
 |----------|------------------------|
 | `start` | `~/.claude/skills/ds/start/SKILL.md` |
 | `context` | `~/.claude/skills/ds/context/SKILL.md` |
-| `plain` | `~/.claude/skills/ds/plain/SKILL.md` |
 | `unstuck` | `~/.claude/skills/ds/unstuck/SKILL.md` |
 | `look` | `~/.claude/skills/ds/look/SKILL.md` |
 | `mobile` | `~/.claude/skills/ds/mobile/SKILL.md` |
@@ -90,7 +68,6 @@ If `DESIGN_BIBLE` is `yes` (any variant):
 Show this as a friendly summary — not a technical list:
 
 **When things go sideways:**
-- `/ds-plain` — Claude wrote a plan you can't read? I'll translate it before you say yes
 - `/ds-unstuck` — Something broke and you've been asking "fix it" for too long? I'll diagnose it with a screenshot
 - `/ds-save` — Save exactly where you are so you can always come back
 
@@ -123,4 +100,4 @@ If this is your first time: run `/ds-context` — it takes 5 minutes and makes e
 
 If something just broke: run `/ds-unstuck`.
 
-If you have a plan in front of you that you don't understand: run `/ds-plain` right now before saying yes.
+If you have a plan in front of you that you don't understand: describe it to me and I'll explain it in plain English before you say yes.

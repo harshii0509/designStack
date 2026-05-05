@@ -15,28 +15,11 @@ compatibility: Requires git. Runs /ds-context inline — no separate invocation 
 ## Preamble
 
 ```bash
-_DESIGNSTACK_VER="0.1.0"
+"$HOME/.claude/skills/ds/lib/env.sh" "start"
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-# Migrate Bible from dstack/ to design/ (one-time)
-if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
-  mkdir -p "$_ROOT/design"
-  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
-  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
-fi
-_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
-_HAS_BIBLE="no"
-[ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
 _HAS_VIBE="no"
 [ -f "$_ROOT/design/.vibe-set" ] && _HAS_VIBE="yes"
-echo "DESIGNSTACK: $_DESIGNSTACK_VER"
-echo "HAS_BIBLE: $_HAS_BIBLE"
 echo "HAS_VIBE: $_HAS_VIBE"
-echo "ROOT: $_ROOT"
-_TEL_START=$(date +%s)
-_SESSION_ID="$$-$(date +%s)"
-mkdir -p "$HOME/.dstack/analytics"
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"start","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
 ```
 
 ## Opening line (always show this, never the raw preamble output)
@@ -118,6 +101,8 @@ The remaining /context questions (fonts, reference) still get asked normally.
 
 ## Step 5 — Closing
 
+Follow the jargon rules in `lib/plain-language.md` when closing — no technical terms.
+
 After /context completes and the Design Bible is written, tell the user:
 
 > "You're all set. Here's what I know about your product:
@@ -145,13 +130,7 @@ After /context completes and the Design Bible is written, tell the user:
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-_TEL_END=$(date +%s)
-_TEL_DUR=$(( _TEL_END - _TEL_START ))
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"start","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
-"$HOME/.claude/skills/ds/bin/ds-telemetry-log" \
-  --skill "start" --duration "$_TEL_DUR" --outcome "OUTCOME" \
-  --session "$_SESSION_ID" 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "start" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

@@ -17,31 +17,7 @@ compatibility: Requires Design Bible (run /ds-context first). Browse binary enab
 ## Preamble
 
 ```bash
-_DESIGNSTACK_VER="0.1.0"
-_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-# Migrate Bible from dstack/ to design/ (one-time)
-if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
-  mkdir -p "$_ROOT/design"
-  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
-  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
-fi
-_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
-_HAS_BIBLE="no"
-_BIBLE_SOURCE=""
-[ -f "$_BIBLE" ] && _HAS_BIBLE="yes" && _BIBLE_SOURCE="design/DESIGN-BIBLE.md"
-[ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes" && _BIBLE_SOURCE="DesignBrain.md"
-_B=""
-[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
-_LAST_COMMIT=$(git log -1 --pretty=format:"%h — %s" 2>/dev/null || echo "no history")
-echo "DESIGNSTACK: $_DESIGNSTACK_VER"
-echo "DESIGN_BIBLE: $_HAS_BIBLE | source: ${_BIBLE_SOURCE:-none}"
-echo "BROWSE: ${_B:-NOT_FOUND}"
-echo "LAST_COMMIT: $_LAST_COMMIT"
-_TEL_START=$(date +%s)
-_SESSION_ID="$$-$(date +%s)"
-mkdir -p "$HOME/.dstack/analytics"
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"brand","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/env.sh" "brand"
 ```
 
 ## What this skill does
@@ -51,6 +27,8 @@ Check if everything still looks like it belongs to the same product. As you buil
 **Requires a Design Bible.** If none exists, run `/ds-context` first.
 
 ## Step 1 — Check for Design Bible
+
+If `DESIGN_BIBLE` is `yes`, follow the standard extraction protocol in `lib/bible-reader.md` when reading the Bible.
 
 If `DESIGN_BIBLE` is `no`:
 > "I need your Design Bible to run a brand check — it's the set of rules I compare everything against. You haven't set one up for this project yet.
@@ -86,8 +64,7 @@ Collect up to 8 unique internal URLs to check.
 For each page URL, run:
 
 ```bash
-$B goto <URL>
-$B screenshot /tmp/dstack-brand-[page-name].png
+"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "brand" "<page-name>"
 
 # Extract computed CSS values for key elements
 $B css body background-color
@@ -151,6 +128,8 @@ For each drifted element found, reference its `@ref` in the annotation. Label ea
 Show the annotated screenshot via Read tool.
 
 ## Step 6 — Write the brand consistency report
+
+Follow the jargon rules in `lib/plain-language.md` when writing this report — no technical terms.
 
 ---
 
@@ -218,13 +197,7 @@ After the run, append:
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-_TEL_END=$(date +%s)
-_TEL_DUR=$(( _TEL_END - _TEL_START ))
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"brand","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
-"$HOME/.claude/skills/ds/bin/ds-telemetry-log" \
-  --skill "brand" --duration "$_TEL_DUR" --outcome "OUTCOME" \
-  --session "$_SESSION_ID" 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "brand" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

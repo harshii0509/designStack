@@ -17,30 +17,7 @@ compatibility: Requires git and Design Bible (run /ds-context first). Visual scr
 ## Preamble
 
 ```bash
-_DESIGNSTACK_VER="0.1.0"
-_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
-# Migrate Bible from dstack/ to design/ (one-time)
-if [ -f "$_ROOT/dstack/DESIGN-BIBLE.md" ] && [ ! -f "$_ROOT/design/DESIGN-BIBLE.md" ]; then
-  mkdir -p "$_ROOT/design"
-  mv "$_ROOT/dstack/DESIGN-BIBLE.md" "$_ROOT/design/DESIGN-BIBLE.md"
-  echo "MIGRATED: Design Bible moved to design/ — same rules, new home."
-fi
-_BIBLE="$_ROOT/design/DESIGN-BIBLE.md"
-_HAS_BIBLE="no"
-[ -f "$_BIBLE" ] && _HAS_BIBLE="yes"
-[ "$_HAS_BIBLE" = "no" ] && [ -f "$_ROOT/DesignBrain.md" ] && _HAS_BIBLE="yes" && _BIBLE="$_ROOT/DesignBrain.md"
-_B=""
-[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
-_LAST_COMMIT=$(git log -1 --pretty=format:"%h — %s" 2>/dev/null || echo "no history yet")
-echo "DESIGNSTACK: $_DESIGNSTACK_VER"
-echo "DESIGN_BIBLE: $_HAS_BIBLE | path: ${_BIBLE}"
-echo "BROWSE: ${_B:-NOT_FOUND}"
-echo "LAST_COMMIT: $_LAST_COMMIT"
-_TEL_START=$(date +%s)
-_SESSION_ID="$$-$(date +%s)"
-mkdir -p "$HOME/.dstack/analytics"
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"look","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/env.sh" "look"
 ```
 
 ## What this skill does
@@ -51,7 +28,7 @@ This skill never changes code — it only looks and reports.
 
 ## Step 1 — Load the Design Bible
 
-If `DESIGN_BIBLE` is `yes`, read the Bible file fully. Extract:
+If `DESIGN_BIBLE` is `yes`, read the Bible file fully. Follow the standard extraction protocol in `lib/bible-reader.md`. Extract:
 - L1 colors (primary, background, text, accent)
 - L1 typography (font families, sizes, weights)
 - L1 spacing scale
@@ -77,14 +54,14 @@ If the user already mentioned a URL in the conversation, use that and confirm:
 If `BROWSE` is not `NOT_FOUND`:
 
 ```bash
-$B goto <URL>
-$B screenshot /tmp/dstack-look-before.png
+"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "look" "before"
 $B text
 ```
 
-**If the URL is not reachable:**
-> "Your project doesn't seem to be running right now. Start it with `npm run dev` (or `npm start`) and then give me the URL — usually http://localhost:3000. I'll wait."
-
+**If the URL is not reachable**, run and show the output of:
+```bash
+"$HOME/.claude/skills/ds/lib/visual-audit.sh" not_running
+```
 Do not continue until the user confirms the project is running.
 
 Also extract CSS values to verify against Design Bible:
@@ -173,6 +150,8 @@ Then ask:
 If the user picks B: jump directly to Step 8 with issue #1 from your top-3 list.
 If the user picks A (or any affirmative): continue with the full report below.
 
+Follow the jargon rules in `lib/plain-language.md` when writing this report — no technical terms.
+
 Format the full report like this — plain English only, no technical terms:
 
 ---
@@ -220,8 +199,7 @@ After showing the report:
 
 After applying any fixes:
 ```bash
-$B goto <URL>
-$B screenshot /tmp/dstack-look-after.png
+"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "look" "after"
 ```
 
 Show both before and after:
@@ -231,10 +209,9 @@ Show both before and after:
 
 ## Step 10 — Update the Design Bible Memory Log
 
-After the run, append to `design/DESIGN-BIBLE.md` Memory Log:
-
-```
-[date]: /look ran on [URL]. Score: [X]/10. Issues found: [short list]. Fixed: [yes/no/partial].
+After the run, update the Memory Log:
+```bash
+"$HOME/.claude/skills/ds/lib/visual-audit.sh" memory_log "$_BIBLE" "look" "<URL>" "<OUTCOME>" "<SHORT_ISSUES>"
 ```
 
 If any drift was found that turned out to be intentional (user said "actually that's on purpose"):
@@ -255,13 +232,7 @@ If during the check you noticed screens or components that appeared on the page 
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-_TEL_END=$(date +%s)
-_TEL_DUR=$(( _TEL_END - _TEL_START ))
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"look","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
-"$HOME/.claude/skills/ds/bin/ds-telemetry-log" \
-  --skill "look" --duration "$_TEL_DUR" --outcome "OUTCOME" \
-  --session "$_SESSION_ID" 2>/dev/null || true
+"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "look" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**
