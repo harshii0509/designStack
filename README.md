@@ -14,6 +14,14 @@ You never explain your brand to Claude again.
 
 Requires [Claude Code](https://claude.ai/code).
 
+**Via npx (recommended):**
+
+```bash
+npx skills@latest add harshii0509/designStack
+```
+
+**Via curl:**
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/harshii0509/designStack/main/install | bash
 ```
@@ -34,7 +42,6 @@ Installs to `~/.claude/skills/ds/`. Quit and reopen Claude Code, then type `/ds:
 
 | Command | What it does |
 |---------|--------------|
-| `/ds:plain` | Claude wrote a plan you can't read — get the plain-English version before you say yes |
 | `/ds:unstuck` | Something broke and "fix it" isn't working — one sentence diagnosis, one fix |
 | `/ds:save` | Save exactly where you are so you can always come back |
 
@@ -74,6 +81,20 @@ Installs to `~/.claude/skills/ds/`. Quit and reopen Claude Code, then type `/ds:
 | Command | What it does |
 |---------|--------------|
 | `/ds:upgrade` or `/ds:update` | Pull the latest release from GitHub (you may also get a heads-up when you run any `/ds:*` command) |
+
+---
+
+## How it's built
+
+Each skill is a `SKILL.md` file — prose instructions the AI reads and follows. Shared behaviour lives in `lib/`:
+
+| File | What it does |
+|------|--------------|
+| `lib/env.sh` | Single preamble all skills run first: detects the Design Bible, browse binary, git root, and fires the upgrade check |
+| `lib/telemetry-end.sh` | Shared completion logging — reads the session file written by `env.sh` |
+| `lib/bible-reader.md` | Standard protocol for extracting vibe, colors, fonts, and recent decisions from the Design Bible |
+| `lib/visual-audit.sh` | Shared screenshot, "not running" message, and Memory Log helpers for the five visual-audit skills |
+| `lib/plain-language.md` | Jargon substitution table — every skill that proposes a plan references this so output is always plain English |
 
 ---
 
