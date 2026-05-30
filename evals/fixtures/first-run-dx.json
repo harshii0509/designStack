@@ -1,0 +1,58 @@
+{
+  "type": "portfolio",
+  "checks": [
+    {
+      "file": "README.md",
+      "must_contain": [
+        "Run `/ds-start`",
+        "## Your first 5 minutes",
+        "designStack-check"
+      ],
+      "must_not_contain": [
+        "Quit and reopen Claude Code, then type `/ds-start` in the chat input."
+      ]
+    },
+    {
+      "file": "SKILL.md",
+      "must_contain": [
+        "The best place to start is `/ds-start`.",
+        "If setup feels wrong: run `~/.claude/skills/ds/bin/designStack-check`.",
+        "## Main paths"
+      ],
+      "must_not_contain": [
+        "Want to run `/ds-context` now?",
+        "**When things go sideways:**",
+        "**To check how it looks:**",
+        "**To set the direction:**",
+        "**To make it great:**"
+      ]
+    },
+    {
+      "file": "setup",
+      "must_contain": [
+        "Analytics choice deferred — you'll see it after /ds-start",
+        "If setup feels off, run:",
+        "Other commands are available after /ds-start"
+      ],
+      "must_not_contain": [
+        "Analytics? [A/b/c]:",
+        "All commands:"
+      ]
+    },
+    {
+      "file": "install",
+      "must_contain": [
+        "Recommended path: install, restart Claude Code if needed, then run /ds-start",
+        "Open Claude Code and type:  /ds-start"
+      ]
+    },
+    {
+      "file": "bin/designStack-check",
+      "must_contain": [
+        "Fix: run /ds-start",
+        "Node.js: not found",
+        "visual skills will use text descriptions"
+      ]
+    }
+  ]
+}

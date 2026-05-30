@@ -7,6 +7,7 @@ description: >
   can reuse. Use when starting a project, capturing brand rules, refreshing a
   Design Bible after brand changes, or running '/ds-context'.
 license: MIT
+disable-model-invocation: true
 allowed-tools:
   - Bash
   - Read

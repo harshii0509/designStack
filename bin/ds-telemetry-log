@@ -17,6 +17,7 @@ done
 # Check consent tier (treat legacy "on" as community)
 _TEL=$(grep "^telemetry=" "$HOME/.dstack/config" 2>/dev/null | cut -d= -f2 || echo "off")
 [ "$_TEL" = "on" ] && _TEL="community"
+[ "$_TEL" = "pending" ] && _TEL="off"
 [ "$_TEL" = "off" ] && exit 0
 
 mkdir -p "$HOME/.dstack/analytics" 2>/dev/null || exit 0

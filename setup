@@ -15,7 +15,12 @@ for arg in "$@"; do
   [ "$arg" = "--flat" ] && _PREFIX="flat"
 done
 
-log() { [ "$_QUIET" = "no" ] && echo "$@"; }
+log() {
+  if [ "$_QUIET" = "no" ]; then
+    echo "$@"
+  fi
+  return 0
+}
 
 # ── OS check ──────────────────────────────────────────────────────────────────
 _OS=$(uname -s 2>/dev/null || echo "unknown")
@@ -74,43 +79,15 @@ else
   log "     Install the browse binary (designStack or gstack) for screenshots."
 fi
 
-# ── Telemetry consent ─────────────────────────────────────────────────────────
+# ── Telemetry note (deferred until first successful setup) ───────────────────
 _TEL_FILE="$HOME/.dstack/config"
 mkdir -p "$HOME/.dstack/analytics" 2>/dev/null || true
-
-if [ ! -f "$_TEL_FILE" ]; then
-  if [ "$_QUIET" = "no" ]; then
-    echo ""
-    echo "  designStack can send anonymous usage data to help improve the tool."
-    echo "  Data sent: which skills you run and whether they succeed."
-    echo "  No code, file paths, or personal data. Never sold or shared."
-    echo ""
-    echo "  A) Share usage data (recommended) — helps us improve, anonymous device ID"
-    echo "  B) Anonymous only — aggregate counts, no device ID"
-    echo "  C) Off — keep everything on this machine"
-    echo ""
-    printf "  Analytics? [A/b/c]: "
-    read -r _TEL_CHOICE </dev/tty || _TEL_CHOICE="a"
-    case "$_TEL_CHOICE" in
-      [bB]*) echo "telemetry=anonymous" > "$_TEL_FILE"
-             log "  ✓ Analytics: anonymous" ;;
-      [cC]*) echo "telemetry=off"       > "$_TEL_FILE"
-             log "  ✓ Analytics: off" ;;
-          *) echo "telemetry=community" > "$_TEL_FILE"
-             log "  ✓ Analytics: on (community — anonymous device ID)" ;;
-    esac
-  else
-    # Non-interactive / --quiet: default to community
-    echo "telemetry=community" > "$_TEL_FILE"
-  fi
-else
+if [ -f "$_TEL_FILE" ]; then
   _CURRENT=$(grep "^telemetry=" "$_TEL_FILE" 2>/dev/null | cut -d= -f2 || echo "community")
-  # Migrate legacy "on" → "community"
-  if [ "$_CURRENT" = "on" ]; then
-    sed -i.bak 's/^telemetry=on$/telemetry=community/' "$_TEL_FILE" 2>/dev/null || true
-    _CURRENT="community"
-  fi
+  [ "$_CURRENT" = "on" ] && _CURRENT="community"
   log "  ✓ Analytics: $_CURRENT (edit ~/.dstack/config to change)"
+else
+  log "  ✓ Analytics choice deferred — you'll see it after /ds-start"
 fi
 
 # ── Hyphen aliases: create canonical /ds-* commands ──────────────────────────
@@ -178,19 +155,15 @@ log "  │  Open Claude Code and type:                                 │"
 log "  │                                                             │"
 log "  │    /ds-start                                            │"
 log "  │                                                             │"
-log "  │  That's it. The wizard takes 5 minutes and sets everything  │"
-log "  │  up. Every other skill works automatically after that.      │"
+log "  │  That's the one command to start with. It sets up your     │"
+log "  │  Design Bible for this project and gives you a clear next  │"
+log "  │  step.                                                     │"
 log "  │                                                             │"
-log "  │  All commands:                                              │"
-log "  │    /ds-start     First-session setup wizard             │"
-log "  │    /ds-context   Refresh your Design Bible              │"
-log "  │    /ds-unstuck   Debug broken things                    │"
-log "  │    /ds-look      Visual check against brand rules       │"
-log "  │    /ds-mobile    Phone + tablet + desktop side-by-side  │"
-log "  │    /ds-a11y      Accessibility grade with problem map   │"
-log "  │    /ds-save      Save progress with a description       │"
-log "  │    /ds-share     Deploy and get a shareable link        │"
-log "  │    /ds-upgrade   Update designStack to latest release   │"
+log "  │  If setup feels off, run:                                   │"
+log "  │    ~/.claude/skills/ds/bin/designStack-check               │"
+log "  │                                                             │"
+log "  │  Other commands are available after /ds-start, including   │"
+log "  │  /ds-look, /ds-unstuck, /ds-share, and /ds-vibe.           │"
 log "  │                                                             │"
 log "  │  Questions? https://github.com/harshii0509/designStack/discussions │"
 log "  └─────────────────────────────────────────────────────────────┘"

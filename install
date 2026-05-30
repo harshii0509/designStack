@@ -8,6 +8,8 @@ DESIGNSTACK_DIR="$HOME/.claude/skills/ds"
 echo ""
 echo "  Installing designStack..."
 echo ""
+echo "  Recommended path: install, restart Claude Code if needed, then run /ds-start"
+echo ""
 
 # ── Check Claude Code ─────────────────────────────────────────────────────────
 if ! command -v claude >/dev/null 2>&1; then
@@ -67,6 +69,7 @@ echo "  │                                                   │"
 echo "  │  1. Restart Claude Code (skills load at startup)  │"
 echo "  │  2. Open Claude Code and type:  /ds-start         │"
 echo "  │                                                   │"
-echo "  │  Takes 5 minutes. Run once per project.           │"
+echo "  │  That sets up your Design Bible for this project  │"
+echo "  │  and gives you a clear next step.                 │"
 echo "  └───────────────────────────────────────────────────┘"
 echo ""

@@ -60,8 +60,7 @@ run_count_check "No legacy dot-ds state references" "$LEGACY_STATE_PATTERN" --gl
 run_count_check "No single-path browse detection in shared skill entrypoints" "\\.claude/skills/ds/browse/dist/browse" \
   "$ROOT/share/SKILL.md" "$ROOT/lib/visual-audit.sh" "$ROOT/bin/designStack-check"
 run_count_check "No global install path assumptions in portable runtime files" "~/.claude/skills/ds" \
-  "$ROOT/SKILL.md" \
-  "$ROOT/start/SKILL.md" "$ROOT/context/SKILL.md" "$ROOT/share/SKILL.md" \
+  "$ROOT/context/SKILL.md" "$ROOT/share/SKILL.md" \
   "$ROOT/save/SKILL.md" "$ROOT/look/SKILL.md" "$ROOT/mobile/SKILL.md" \
   "$ROOT/a11y/SKILL.md" "$ROOT/unstuck/SKILL.md" "$ROOT/vibe/SKILL.md" \
   "$ROOT/brand/SKILL.md" "$ROOT/polish/SKILL.md" "$ROOT/animate/SKILL.md" \
@@ -80,6 +79,22 @@ run_presence_check "Save skill uses shared env preamble" "lib/env\\.sh\" \"save\
   "$ROOT/save/SKILL.md"
 run_presence_check "OpenAI agent metadata exists" "display_name|short_description|default_prompt" \
   "$ROOT/agents/openai.yaml"
+run_presence_check "README points first-run users to /ds-start" "/ds-start" \
+  "$ROOT/README.md"
+run_presence_check "Root bundle points first-run users to /ds-start" "If this is your first time: run .*/ds-start" \
+  "$ROOT/SKILL.md"
+run_presence_check "Install script points users to /ds-start" "/ds-start" \
+  "$ROOT/install"
+run_presence_check "Setup output points users to /ds-start" "/ds-start" \
+  "$ROOT/setup"
+run_count_check "No first-run /ds-context CTA in public onboarding surfaces" "first time: run .*/ds-context|Want to run .*/ds-context now" \
+  "$ROOT/README.md" "$ROOT/SKILL.md" "$ROOT/install" "$ROOT/setup"
+run_presence_check "Health check is surfaced in public docs" "designStack-check" \
+  "$ROOT/README.md" "$ROOT/SKILL.md" "$ROOT/setup"
+run_python_check "Windows guide exists" \
+  "import pathlib; assert (pathlib.Path('$ROOT') / 'docs/windows.md').exists()"
+run_presence_check "Side-effect skills are manual invocation only" "disable-model-invocation: true" \
+  "$ROOT/start/SKILL.md" "$ROOT/context/SKILL.md" "$ROOT/save/SKILL.md" "$ROOT/share/SKILL.md" "$ROOT/upgrade/SKILL.md"
 run_python_check "skills.sh.json is valid JSON" \
   "import json, pathlib; json.loads(pathlib.Path('$ROOT/skills.sh.json').read_text())"
 run_python_check "skills.sh curated groups map to public skills only" \

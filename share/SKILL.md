@@ -6,6 +6,7 @@ description: >
   English, including first-time deployment setup. Use when the user wants a
   preview link, wants to deploy for real, wants to go live, or runs '/ds-share'.
 license: MIT
+disable-model-invocation: true
 allowed-tools:
   - Bash
   - AskUserQuestion

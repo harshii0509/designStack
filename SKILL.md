@@ -8,6 +8,7 @@ description: >
   skills do I have", "help me get started with my design", or runs with no
   argument for an overview.
 license: MIT
+argument-hint: "[start|look|unstuck|share|vibe|context|upgrade]"
 allowed-tools:
   - Bash
   - AskUserQuestion
@@ -58,46 +59,63 @@ You're a companion for designers building their own products with Claude Code.
 **Read the preamble output, then:**
 
 If `DESIGN_BIBLE` is `no`:
-> "Welcome to designStack! Before anything else, let's capture your brand rules so every future session starts with full context. This takes about 5 minutes. Want to run `/ds-context` now?"
+> "Welcome to designStack! The best place to start is `/ds-start`.
+>
+> It takes about 5 minutes, sets up your Design Bible for this project, and gives you a clear next step. Want to run `/ds-start` now?
+>
+> If setup already feels off, you can also run the built-in health check:
+> `~/.claude/skills/ds/bin/designStack-check`"
 
 If `DESIGN_BIBLE` is `yes` and `BROWSE` is `NOT_FOUND`:
-> "Your Design Bible is loaded. Screenshot checks aren't installed yet, so visual skills will describe issues in plain English for now. Here's what you can do:"
+> "Your Design Bible is loaded. Screenshot checks aren't installed yet, so visual skills will describe issues in plain English for now. Here are the main ways I can help:"
 
 If `DESIGN_BIBLE` is `yes` and `BROWSE` is not `NOT_FOUND`:
-> "Your Design Bible is loaded. Screenshot checks are ready. Here's what you can do:"
+> "Your Design Bible is loaded. Screenshot checks are ready. Here are the main ways I can help:"
 
-## What designStack can do for you
+## Main paths
 
-Show this as a friendly summary — not a technical list:
+Show this as a friendly summary with no more than 4 primary choices:
 
-**When things go sideways:**
-- `/ds-unstuck` — Something broke and you've been asking "fix it" for too long? I'll diagnose it with a screenshot
-- `/ds-save` — Save exactly where you are so you can always come back
+- `/ds-look` — Check one page or screen against your brand rules
+- `/ds-unstuck` — Something broke? I'll diagnose it in plain English before any code changes
+- `/ds-share` — Get a preview link or walk through going live
+- `/ds-vibe` — Explore or refine the design direction when the product doesn't feel right
 
-**To check how it looks:**
+If `BROWSE` is `NOT_FOUND`, add one sentence:
+> "Visual checks still work — they'll just describe issues in plain English instead of showing screenshots."
+
+If the user asks for everything designStack can do, then show the full catalog below.
+
+## Full command list
+
+**Onboarding and maintenance:**
+- `/ds-start` — First-session setup wizard for this project
+- `/ds-context` — Refresh your Design Bible after your brand changes
+- `/ds-upgrade` or `/ds-update` — Get the latest skills and fixes (you may also see a prompt when a new version ships).
+
+**Checking and debugging:**
 - `/ds-look` — Does this one screen match what you had in your head?
 - `/ds-mobile` — Does it hold up on a phone?
-- `/ds-a11y` — Can everyone use this? (I'll give you a grade with a picture of every issue)
+- `/ds-a11y` — Can everyone use this?
+- `/ds-unstuck` — Something broke and you've been asking "fix it" for too long?
+- `/ds-save` — Save exactly where you are so you can always come back
 
-**To set the direction:**
-- `/ds-vibe` — Tell me how it should feel, I'll generate three directions to pick from
+**Direction and polish:**
+- `/ds-vibe` — Tell me how it should feel
 - `/ds-brand` — Scan multiple pages for drift from your brand rules
-
-**To make it great:**
 - `/ds-polish` — Final release check before you share
 - `/ds-animate` — Add motion to interactions that feel too static
 - `/ds-delight` — Improve the first-success and empty moments that feel flat
 
-**To share your work:**
+**Sharing:**
 - `/ds-share` — I'll get you a link to show someone
-
-**Keeping designStack current:**
-- `/ds-upgrade` or `/ds-update` — Get the latest skills and fixes (you may also see a prompt when a new version ships).
 
 ## Where to start
 
-If this is your first time: run `/ds-context` — it takes 5 minutes and makes every other skill smarter.
+If this is your first time: run `/ds-start` — it sets up your Design Bible and gives you a clear next step.
 
 If something just broke: run `/ds-unstuck`.
+
+If setup feels wrong: run `~/.claude/skills/ds/bin/designStack-check`.
 
 If you have a plan in front of you that you don't understand: describe it to me and I'll explain it in plain English before you say yes.

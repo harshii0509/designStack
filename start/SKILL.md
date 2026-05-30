@@ -6,6 +6,7 @@ description: >
   quick questions, and runs the Design Bible setup flow inline. Use when the
   user is new to designStack, wants first-run setup, or runs '/ds-start'.
 license: MIT
+disable-model-invocation: true
 allowed-tools:
   - Bash
   - AskUserQuestion
@@ -103,6 +104,31 @@ The remaining `/ds-context` questions (fonts, reference) still get asked normall
 
 Follow the jargon rules in `lib/plain-language.md` when closing — no technical terms.
 
+If `~/.dstack/config` does not exist yet, ask this at the very end, after the Design Bible is complete:
+
+> "One last thing: designStack can share anonymous usage data to help improve the tool.
+>
+> A) Share usage data — helps improve designStack, anonymous device ID
+> B) Anonymous only — aggregate counts, no device ID
+> C) Off — keep everything on this machine"
+
+If they choose A, run:
+```bash
+mkdir -p "$HOME/.dstack" && echo "telemetry=community" > "$HOME/.dstack/config"
+```
+
+If they choose B, run:
+```bash
+mkdir -p "$HOME/.dstack" && echo "telemetry=anonymous" > "$HOME/.dstack/config"
+```
+
+If they choose C, run:
+```bash
+mkdir -p "$HOME/.dstack" && echo "telemetry=off" > "$HOME/.dstack/config"
+```
+
+Then tell them briefly they can change it later by editing `~/.dstack/config`.
+
 After `/ds-context` completes and the Design Bible is written, tell the user:
 
 > "You're all set. Here's what I know about your product:
@@ -119,6 +145,7 @@ After `/ds-context` completes and the Design Bible is written, tell the user:
 > - `/ds-look` — does your product look right? I'll check it against your brand rules.
 > - `/ds-a11y` — is it accessible? I'll grade it A–D and show you every problem.
 > - `/ds-unstuck` — something broke? I'll figure out what it is in plain English.
+> - If setup ever feels off, run `~/.claude/skills/ds/bin/designStack-check`.
 >
 > Questions or feedback? We're on GitHub Discussions: https://github.com/harshii0509/designStack/discussions — we read everything."
 

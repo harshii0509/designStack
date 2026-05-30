@@ -11,6 +11,7 @@ if [ "$("$DESIGNSTACK_DIR/lib/env.sh" --browse-path 2>/dev/null || echo "NOT_FOU
   echo "✓ Browse: found — visual features enabled"
 else
   echo "⚠ Browse: not found — visual skills will use text descriptions"
+  echo "  Fix: install the browse binary if you want screenshots; text-only checks still work"
 fi
 
 # Claude Code
@@ -18,6 +19,7 @@ if command -v claude >/dev/null 2>&1; then
   echo "✓ Claude Code: found"
 else
   echo "✗ Claude Code: not found"
+  echo "  Fix: install Claude Code from https://claude.ai/code"
 fi
 
 # Git
@@ -25,6 +27,7 @@ if command -v git >/dev/null 2>&1; then
   echo "✓ Git: found"
 else
   echo "✗ Git: not found — /ds-save won't work"
+  echo "  Fix: install git, then rerun this check"
 fi
 
 # Design Bible (project-specific, check CWD)
@@ -37,7 +40,15 @@ elif [ -f "$ROOT/DESIGN.md" ]; then
   echo "✓ Design Bible: DESIGN.md found (will extend)"
 else
   echo "⚠ Design Bible: not set up for this project"
-  echo "  Fix: run /ds-context"
+  echo "  Fix: run /ds-start"
+fi
+
+# Node.js
+if command -v node >/dev/null 2>&1; then
+  echo "✓ Node.js: found"
+else
+  echo "⚠ Node.js: not found — /ds-share may need it for deployment setup"
+  echo "  Fix: install Node.js before using /ds-share"
 fi
 
 echo ""

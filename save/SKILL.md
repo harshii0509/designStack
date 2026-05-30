@@ -6,6 +6,7 @@ description: >
   what changed, creating a restore point before risky changes. Use when the user
   wants to save progress, create an undo point, checkpoint work, or runs '/ds-save'.
 license: MIT
+disable-model-invocation: true
 allowed-tools:
   - Bash
   - Write

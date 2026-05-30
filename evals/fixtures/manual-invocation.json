@@ -1,0 +1,36 @@
+{
+  "type": "portfolio",
+  "checks": [
+    {
+      "file": "start/SKILL.md",
+      "must_contain": [
+        "disable-model-invocation: true",
+        "One last thing: designStack can share anonymous usage data"
+      ]
+    },
+    {
+      "file": "context/SKILL.md",
+      "must_contain": [
+        "disable-model-invocation: true"
+      ]
+    },
+    {
+      "file": "save/SKILL.md",
+      "must_contain": [
+        "disable-model-invocation: true"
+      ]
+    },
+    {
+      "file": "share/SKILL.md",
+      "must_contain": [
+        "disable-model-invocation: true"
+      ]
+    },
+    {
+      "file": "upgrade/SKILL.md",
+      "must_contain": [
+        "disable-model-invocation: true"
+      ]
+    }
+  ]
+}

@@ -14,25 +14,38 @@ You never explain your brand to Claude again.
 
 Requires [Claude Code](https://claude.ai/code).
 
-**Via npx (recommended):**
+**1. Install with npx (recommended):**
 
 ```bash
 npx skills@latest add harshii0509/designStack
 ```
 
-**Via curl:**
+**2. Restart Claude Code if it was already open**
+
+**3. Run `/ds-start`**
+
+That one command sets up your Design Bible for the current project and gives you a clear next step.
+
+**Advanced / manual install:**
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/harshii0509/designStack/main/install | bash
 ```
 
-Installs to `~/.claude/skills/ds/`. Quit and reopen Claude Code, then type `/ds-start` in the chat input.
+Installs to `~/.claude/skills/ds/`. If Claude Code was already open, quit and reopen it before running `/ds-start`.
 
 ---
 
-## How it works
+## Your first 5 minutes
 
-`/ds-start` asks a few questions and writes `design/DESIGN-BIBLE.md` — your brand's colors, fonts, spacing, and rules in one file. Every skill reads from it automatically. No re-explaining. No starting over.
+Run `/ds-start`.
+
+It asks a few questions and writes `design/DESIGN-BIBLE.md` — your brand's colors, fonts, spacing, and rules in one file. Every skill reads from it automatically.
+
+By the end of `/ds-start`, you should have:
+- a Design Bible in your project
+- a clear sense of what designStack knows about your product
+- one obvious next move, like `/ds-look` or `/ds-unstuck`
 
 ---
 
@@ -106,6 +119,19 @@ Claude Code (primary) · Cursor (via `.cursor/rules/`) · Codex CLI (via `AGENTS
 ## Questions
 
 [GitHub Discussions](https://github.com/harshii0509/designStack/discussions) — we read everything.
+
+## Troubleshooting
+
+If setup feels off, run the built-in health check:
+
+```bash
+~/.claude/skills/ds/bin/designStack-check
+```
+
+Three common fixes:
+- Claude Code missing: install it from [claude.ai/code](https://claude.ai/code)
+- No Design Bible in this repo: run `/ds-start`
+- Visual screenshots unavailable: install the browse binary, or keep using text-only checks for now
 
 ## Contributing
 

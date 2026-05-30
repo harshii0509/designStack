@@ -7,6 +7,7 @@ description: |
   "update designStack", "/ds-upgrade", or "/ds-update".
   Triggers: /ds-upgrade, /ds-update, update designStack.
 license: MIT
+disable-model-invocation: true
 allowed-tools:
   - Bash
   - AskUserQuestion
