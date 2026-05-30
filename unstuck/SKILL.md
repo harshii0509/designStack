@@ -2,9 +2,9 @@
 name: ds-unstuck
 version: 0.1.0
 description: >
-  Diagnoses a broken feature with a screenshot and annotated plain-English
-  explanation of the problem — before any code is touched. Use when something
-  stopped working, the user doesn't know why, or runs '/ds-unstuck'.
+  Diagnoses one broken feature or page in plain English before any code is
+  touched, using screenshots when available. Use when something stopped working,
+  the user does not know why, or runs '/ds-unstuck'.
 license: MIT
 allowed-tools:
   - Bash
@@ -16,12 +16,12 @@ compatibility: Requires browse binary for screenshots and console error capture.
 ## Preamble
 
 ```bash
-"$HOME/.claude/skills/ds/lib/env.sh" "unstuck"
+"../lib/env.sh" "unstuck"
 ```
 
 ## What this skill does
 
-Something stopped working. You're going to diagnose it visually, explain it in plain English, then propose exactly one fix — and wait for approval before touching anything.
+Something stopped working. You're going to diagnose it visually, explain it in plain English, then propose exactly one fix — and wait for approval before any code is touched.
 
 This skill never writes code until the user says yes.
 
@@ -139,7 +139,7 @@ Only run `git reset` if they confirm.
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "unstuck" "OUTCOME"
+"../lib/telemetry-end.sh" "unstuck" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

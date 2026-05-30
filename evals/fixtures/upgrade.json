@@ -1,0 +1,1 @@
+{"name":"upgrade","skill":"upgrade","prompt":"update designStack to the latest version","context":{},"checks":[{"file":"upgrade/SKILL.md","must_contain":["/ds-upgrade","/ds-update","update designStack"],"must_not_contain":["first user success"]}]}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "designStack"
+  short_description: "Designer-first skill bundle for founders building products"
+  default_prompt: "Use /ds or $ds to help a designer or non-technical founder capture a Design Bible, review screens, and ship changes in plain English."

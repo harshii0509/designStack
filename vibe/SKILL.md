@@ -2,10 +2,10 @@
 name: ds-vibe
 version: 0.2.0
 description: >
-  Presents three distinct visual directions generated from feeling words, then
-  writes the chosen aesthetic into the Design Bible. Use when the user wants to
-  set or change their product's look and feel, describe a feeling, or runs
-  '/ds-vibe'.
+  Generates three distinct visual directions from feeling words or references,
+  then writes the chosen direction into the Design Bible. Use when the user wants
+  to choose or revise an aesthetic direction, describe how the product should
+  feel, or runs '/ds-vibe'.
 license: MIT
 allowed-tools:
   - Bash
@@ -18,7 +18,7 @@ compatibility: Requires git. Updates Design Bible with chosen visual direction.
 ## Preamble
 
 ```bash
-"$HOME/.claude/skills/ds/lib/env.sh" "vibe"
+"../lib/env.sh" "vibe"
 ```
 
 ## What this skill does
@@ -26,6 +26,8 @@ compatibility: Requires git. Updates Design Bible with chosen visual direction.
 You describe the feeling you want — in plain English, no design knowledge needed. I'll give you three completely different visual directions to compare. You pick one, and I'll set up your design rules to match that direction so everything you build from now on follows the same aesthetic.
 
 This reads your existing Design Bible first, so I'm suggesting evolution — not replacement.
+
+This skill chooses direction. If the user already knows the direction and wants to audit a screen, route them to `/ds-look`.
 
 ## Step 1 — Read the existing Design Bible (if it exists)
 
@@ -188,7 +190,7 @@ If it exists, update these sections with the confirmed direction's values:
 
 Append to Memory Log:
 ```
-[date]: /vibe run. Chose direction: [Direction name — e.g. "Clean & Focused"]. Vibe words: [X, Y, Z]. Design Bible updated with new L1 values.
+[date]: /ds-vibe run. Chose direction: [Direction name — e.g. "Clean & Focused"]. Vibe words: [X, Y, Z]. Design Bible updated with new L1 values.
 ```
 
 If the user had an existing Design Bible and the new direction changes things significantly, flag what changed:
@@ -213,7 +215,7 @@ After updating the Bible:
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "vibe" "OUTCOME"
+"../lib/telemetry-end.sh" "vibe" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

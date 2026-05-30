@@ -2,10 +2,10 @@
 name: ds-a11y
 version: 0.1.0
 description: >
-  Grades a site's accessibility from A to D and produces an annotated screenshot
-  showing exactly where each problem is, in plain English. Use when the user wants
-  to check accessibility, prepare to share with clients, run a pre-launch audit,
-  or invokes '/ds-a11y'.
+  Audits one page for accessibility, grades it from A to D, and explains the
+  blocking issues in plain English with annotations when visual tools are
+  available. Use when the user wants an accessibility check on a specific page,
+  needs a grade before sharing, or runs '/ds-a11y'.
 license: MIT
 allowed-tools:
   - Bash
@@ -17,14 +17,16 @@ compatibility: Requires browse binary for axe-core injection and annotated scree
 ## Preamble
 
 ```bash
-"$HOME/.claude/skills/ds/lib/env.sh" "a11y"
+"../lib/env.sh" "a11y"
 ```
 
-## What accessibility means (explain this to the user if they haven't run /a11y before)
+## What accessibility means (explain this to the user if they haven't run `/ds-a11y` before)
 
 > "Accessibility means your website works for everyone — including people who are blind and use a screen reader to hear the page, people with low vision who need high contrast text, people who are color-blind, and people who use a keyboard instead of a mouse. Many countries also have legal requirements around this.
 >
 > I'll check your site against the main rules and give you a grade from A to D, plus a screenshot showing exactly where each problem is."
+
+This is a one-page accessibility audit. If the user wants a broader launch review, route them to `/ds-polish` instead.
 
 ## Step 1 — Load Design Bible (if present)
 
@@ -57,12 +59,12 @@ Show the screenshot to the user:
 If `BROWSE` is not `NOT_FOUND`:
 
 ```bash
-"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "a11y" "before"
+"../lib/visual-audit.sh" screenshot "<URL>" "a11y" "before"
 ```
 
 If the URL is not reachable, run and show the output of:
 ```bash
-"$HOME/.claude/skills/ds/lib/visual-audit.sh" not_running
+"../lib/visual-audit.sh" not_running
 ```
 Do not continue until the user confirms the project is running.
 
@@ -131,39 +133,7 @@ Check the codebase for:
 
 ## Step 5 — Translate violations to plain English
 
-For each violation found, translate the axe rule ID to plain English using this table:
-
-| axe rule ID | Severity | Plain English explanation |
-|---|---|---|
-| `color-contrast` | Medium | "This text is hard to read — the color doesn't stand out enough from the background" |
-| `image-alt` | Critical | "This image has no description, so blind users won't know what it shows" |
-| `label` | Critical | "This input field doesn't say what it's asking for — screen readers can't announce it" |
-| `button-name` | Critical | "This button has no readable label — blind users won't know what it does" |
-| `heading-order` | Moderate | "Your headings are out of order — screen readers expect them to go H1, H2, H3 in sequence" |
-| `html-has-lang` | Serious | "Your page doesn't specify what language it's in — screen readers won't know how to pronounce it" |
-| `document-title` | Serious | "Your page has no title — blind users and browser tabs will show nothing" |
-| `link-name` | Serious | "This link just says 'click here' or has no text — screen readers can't tell what it leads to" |
-| `region` | Moderate | "Your page content isn't organized into landmarks — screen readers can't skip to the main content" |
-| `landmark-one-main` | Moderate | "Your page is missing a 'main content' area label — screen readers expect one" |
-| `aria-required-attr` | Critical | "An interactive element is missing a required accessibility attribute" |
-| `aria-valid-attr-value` | Critical | "An accessibility attribute has an invalid value" |
-| `form-field-multiple-labels` | Moderate | "This input field has two conflicting labels — screen readers won't know which to use" |
-| `select-name` | Critical | "This dropdown menu has no label — screen readers can't describe it" |
-| `frame-title` | Serious | "An embedded frame has no title — screen readers can't describe its contents" |
-| `scrollable-region-focusable` | Serious | "This scrollable area can't be reached with a keyboard — only mouse users can scroll it" |
-| `target-size` | Minor | "This button is too small to tap comfortably on a phone (needs at least 44×44px)" |
-| `focus-visible` | Serious | "When someone navigates with Tab, they can't see where they are on the page" |
-| `keyboard` | Critical | "This element can't be reached or used with a keyboard at all" |
-| `bypass` | Moderate | "Keyboard users have no way to skip over the navigation to get to the main content" |
-| `meta-viewport` | Critical | "Your page is blocking users from zooming in — this breaks accessibility for low-vision users" |
-| `tabindex` | Serious | "The keyboard tab order on your page jumps around in a confusing way" |
-| `duplicate-id` | Moderate | "Two elements share the same ID — this confuses screen readers" |
-| `definition-list` | Minor | "A list is not structured correctly for screen readers" |
-| `list` | Minor | "A list element is used incorrectly — screen readers will announce it wrong" |
-| `td-headers-attr` | Serious | "A table cell doesn't say which column or row header it belongs to" |
-| `th-has-data-cells` | Serious | "A table header doesn't have any associated data cells" |
-
-For any axe rule not in this table, translate the `description` field from axe directly, removing all technical jargon.
+Read `references/axe-translation.md` and use its mapping table to translate axe rule IDs into plain English. For any rule not listed there, translate the axe `description` directly, removing jargon.
 
 ## Step 6 — Calculate the grade
 
@@ -295,7 +265,7 @@ Show the new grade and compare:
 
 Append to `design/DESIGN-BIBLE.md` Memory Log:
 ```
-[date]: /a11y ran on [URL]. Grade: [A/B/C/D]. Issues: [count by severity]. Fixed: [yes/no/partial]. Remaining: [count].
+[date]: /ds-a11y ran on [URL]. Grade: [A/B/C/D]. Issues: [count by severity]. Fixed: [yes/no/partial]. Remaining: [count].
 ```
 
 If new accessibility rules were established (e.g. "all images must have alt text"), add them to the L4 Component Rules section:
@@ -311,7 +281,7 @@ If new accessibility rules were established (e.g. "all images must have alt text
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "a11y" "OUTCOME"
+"../lib/telemetry-end.sh" "a11y" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

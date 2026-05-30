@@ -2,9 +2,9 @@
 name: ds-stats
 version: 0.1.0
 description: >
-  Displays designStack usage analytics — which skills have been used, success
-  rates, and recent history. Requires analytics to be enabled (opt-in during
-  setup). Use when the user wants to review usage data or runs '/ds-stats'.
+  Shows local designStack usage analytics such as run counts, recent history, and
+  success rates. Requires analytics to be enabled. Use when the user explicitly
+  asks for usage analytics or runs '/ds-stats'.
 license: MIT
 allowed-tools:
   - Bash
@@ -18,7 +18,7 @@ compatibility: No external dependencies. Reads from ~/.dstack/analytics/skill-us
 _DESIGNSTACK_VER="0.1.0"
 _ANALYTICS="$HOME/.dstack/analytics/skill-usage.jsonl"
 _TEL_CONFIG="$HOME/.dstack/config"
-_TEL=$(grep "^telemetry=" "$_TEL_CONFIG" 2>/dev/null | cut -d= -f2 || echo "on")
+_TEL=$(grep "^telemetry=" "$_TEL_CONFIG" 2>/dev/null | cut -d= -f2 || echo "community")
 _HAS_DATA="no"
 [ -f "$_ANALYTICS" ] && [ -s "$_ANALYTICS" ] && _HAS_DATA="yes"
 _TOTAL=$(wc -l < "$_ANALYTICS" 2>/dev/null | tr -d ' ' || echo "0")
@@ -36,7 +36,7 @@ Show how you've used designStack — which skills you run most, how many succeed
 ## Step 1 — Check telemetry status
 
 If `TELEMETRY` is `off`:
-> "Analytics is turned off — no data has been collected. To enable it, edit `~/.dstack/config` and change `telemetry=off` to `telemetry=on`. Future skill runs will be tracked from that point."
+> "Analytics is turned off — no data has been collected. To enable it, edit `~/.dstack/config` and change `telemetry=off` to `telemetry=community`. Future skill runs will be tracked from that point."
 
 Stop here if telemetry is off.
 

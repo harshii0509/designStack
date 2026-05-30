@@ -12,6 +12,6 @@ Command to run: `! ~/.claude/skills/ds/setup`
 Wait for setup to complete.
 
 Step 3 — Done:
-Tell the user: "Restart Claude Code so it picks up the new skills, then open your project folder and type /ds:start"
+Tell the user: "Restart Claude Code so it picks up the new skills, then open your project folder and type /ds-start"
 
 Optionally ask if they want the designStack routing block added to the current project's CLAUDE.md. If yes, append the block from the setup script output to ./CLAUDE.md (create if missing).

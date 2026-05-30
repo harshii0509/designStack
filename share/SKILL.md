@@ -2,10 +2,9 @@
 name: ds-share
 version: 0.1.0
 description: >
-  Walks through deploying a shareable preview link or going fully live,
-  step-by-step in plain language with no deployment experience required. Use when
-  the user wants to share their project, get a preview link, deploy for the first
-  time, or runs '/ds-share'.
+  Creates a shareable preview link or walks a user through going live in plain
+  English, including first-time deployment setup. Use when the user wants a
+  preview link, wants to deploy for real, wants to go live, or runs '/ds-share'.
 license: MIT
 allowed-tools:
   - Bash
@@ -16,31 +15,16 @@ compatibility: Requires git and Node.js. Supports Vercel and Netlify CLIs; guide
 ## Preamble
 
 ```bash
-_DESIGNSTACK_VER="0.1.0"
-_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo "NOT_A_GIT_REPO")
-_BRANCH=$(git branch --show-current 2>/dev/null || echo "unknown")
-_LAST_COMMIT=$(git log -1 --pretty=format:"%h — %s" 2>/dev/null || echo "no commits yet")
+"../lib/env.sh" "share"
 _HAS_VERCEL=$(command -v vercel 2>/dev/null && echo "yes" || echo "no")
 _HAS_NETLIFY=$(command -v netlify 2>/dev/null && echo "yes" || echo "no")
 _HAS_NODE=$(command -v node 2>/dev/null && echo "yes" || echo "no")
 _PKG=""
-[ -f "$_ROOT/package.json" ] && _PKG=$(node -e "const p=require('$_ROOT/package.json'); console.log(p.scripts?.build ? 'has-build' : 'no-build'); console.log(p.dependencies?.next ? 'next' : p.dependencies?.['react-scripts'] ? 'cra' : p.devDependencies?.vite ? 'vite' : p.devDependencies?.['@sveltejs/kit'] ? 'svelte' : 'unknown')" 2>/dev/null || echo "")
-_B=""
-[ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] && _B="$HOME/.claude/skills/ds/browse/dist/browse"
-echo "DESIGNSTACK: $_DESIGNSTACK_VER"
-echo "GIT_ROOT: $_ROOT"
-echo "BRANCH: $_BRANCH"
-echo "LAST_COMMIT: $_LAST_COMMIT"
+[ -f "$(git rev-parse --show-toplevel 2>/dev/null || echo .)/package.json" ] && _PKG=$(node -e "const root=process.argv[1]; const p=require(root + '/package.json'); console.log(p.scripts?.build ? 'has-build' : 'no-build'); console.log(p.dependencies?.next ? 'next' : p.dependencies?.['react-scripts'] ? 'cra' : p.devDependencies?.vite ? 'vite' : p.devDependencies?.['@sveltejs/kit'] ? 'svelte' : 'unknown')" "$(git rev-parse --show-toplevel 2>/dev/null || echo .)" 2>/dev/null || echo "")
 echo "VERCEL_CLI: $_HAS_VERCEL"
 echo "NETLIFY_CLI: $_HAS_NETLIFY"
 echo "NODE: $_HAS_NODE"
 echo "PACKAGE: $_PKG"
-echo "BROWSE: ${_B:-NOT_FOUND}"
-_TEL_START=$(date +%s)
-_SESSION_ID="$$-$(date +%s)"
-mkdir -p "$HOME/.dstack/analytics"
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"share","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
 ```
 
 ## What this skill does
@@ -51,7 +35,13 @@ Two paths:
 - **Preview** — a temporary link just for feedback. Anyone with the link can see it. Not your real domain. Takes ~2 minutes.
 - **Go live** — your real site on your real domain. Takes longer, we'll walk through it together.
 
+Read `references/deploy-playbook.md` before choosing framework-specific build expectations, Vercel/Netlify deployment details, or custom-domain follow-up steps.
+
 ## Step 1 — Choose a path
+
+If the user's request already clearly says **preview**, skip the choice prompt and go straight to **Step 2A — Preview link path**.
+
+If the user's request already clearly says **go live**, skip the choice prompt and go straight to **Step 2B — Go live path**.
 
 Ask:
 > "What are you trying to do?
@@ -68,7 +58,7 @@ Then route to A or B accordingly.
 
 ### Check git status first
 
-If `GIT_ROOT` is `NOT_A_GIT_REPO` or `LAST_COMMIT` is `no commits yet`:
+If `GIT_ROOT` is `.` or `LAST_COMMIT` is `no history yet`:
 > "Before I can create a preview link, your project needs at least one save. Let me set that up."
 Then guide through git init + first commit (same flow as `/ds-save`).
 
@@ -98,8 +88,7 @@ Parse the output for the preview URL. Show it to the user:
 
 If browse available, take a screenshot to confirm it loaded:
 ```bash
-$B goto <preview URL>
-$B screenshot /tmp/dstack-share-preview.png
+"../lib/visual-audit.sh" screenshot "<preview URL>" "share" "preview"
 ```
 Show the screenshot: "Here's what it looks like live:"
 
@@ -259,7 +248,7 @@ After any successful deployment:
 
 If the project has a Design Bible, append to Memory Log:
 ```
-[date]: /share ran. URL: [URL]. Type: [preview/live]. Build: success.
+[date]: /ds-share ran. URL: [URL]. Type: [preview/live]. Build: success.
 ```
 
 ## Completion

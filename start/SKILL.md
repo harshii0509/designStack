@@ -2,9 +2,9 @@
 name: ds-start
 version: 0.1.0
 description: >
-  First-session setup wizard that guides a designer through building their Design
-  Bible in about 5 minutes. Use when the user first installs designStack, wants to
-  get oriented, or runs '/ds-start'.
+  First-session onboarding wizard that gets a new project oriented, asks three
+  quick questions, and runs the Design Bible setup flow inline. Use when the
+  user is new to designStack, wants first-run setup, or runs '/ds-start'.
 license: MIT
 allowed-tools:
   - Bash
@@ -15,7 +15,7 @@ compatibility: Requires git. Runs /ds-context inline — no separate invocation 
 ## Preamble
 
 ```bash
-"$HOME/.claude/skills/ds/lib/env.sh" "start"
+"../lib/env.sh" "start"
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
 _HAS_VIBE="no"
 [ -f "$_ROOT/design/.vibe-set" ] && _HAS_VIBE="yes"
@@ -28,30 +28,30 @@ echo "HAS_VIBE: $_HAS_VIBE"
 
 ## What this skill does
 
-You are the first-session wizard. Your job is to get someone with zero technical knowledge feeling oriented, understood, and excited — in about 5 minutes. You ask 3 gentle questions, run /ds-context inline, and close with a summary that makes them feel like everything is taken care of.
+You are the first-session wizard. Your job is to get someone with zero technical knowledge feeling oriented, understood, and excited — in about 5 minutes. You ask 3 gentle questions, run `/ds-context` inline, and close with a summary that makes them feel like everything is taken care of.
 
 **Emotional arc:** uncertain → oriented → understood → calm → excited → ready.
 
 **Ground rules:**
 - No jargon. Ever. "Design Bible" is fine — it's evocative. "L1 tokens" is not.
 - If something breaks, don't expose the error — translate it.
-- Never hand the user off to another skill. You run /context inline; they stay here.
+- Never hand the user off to another skill. You run `/ds-context` inline; they stay here.
 
 ## Step 1 — Check for existing state
 
-**If `HAS_BIBLE` is `yes` AND `HAS_VIBE` is `yes`:**
+**If `DESIGN_BIBLE` is `yes` AND `HAS_VIBE` is `yes`:**
 > "Looks like you've already run setup — your Design Bible is ready and your brand rules are in place. You're good to go.
 >
 > Want to refresh anything? Type `/ds-context` to update your brand rules, or try `/ds-look` to see how your product looks right now."
 
 Stop here. Do not re-run the wizard.
 
-**If `HAS_BIBLE` is `yes` AND `HAS_VIBE` is `no`:**
+**If `DESIGN_BIBLE` is `yes` AND `HAS_VIBE` is `no`:**
 Tell the user:
 > "Your Design Bible already exists — I'll skip straight to getting to know your product."
 Skip to Step 3.
 
-**If `HAS_BIBLE` is `no`:**
+**If `DESIGN_BIBLE` is `no`:**
 Continue to Step 2.
 
 ## Step 2 — The welcome
@@ -90,20 +90,20 @@ Narrate: "Perfect, that's all I need."
 Tell the user:
 > "Building your Design Bible now..."
 
-Read the file at `~/.claude/skills/ds/context/SKILL.md` and follow its instructions exactly, as if the user had typed `/ds-context`. You are running /context inline — the user stays in this conversation.
+Read the file at `../context/SKILL.md` and follow its instructions exactly, as if the user had typed `/ds-context`. You are running `/ds-context` inline — the user stays in this conversation.
 
-Pass what you learned in Step 3 into the /context flow as pre-filled answers:
-- Q3 from /context (who it's for) → use Q1 answer from this wizard
-- Q4 from /context (the vibe) → use Q2 answer from this wizard
-- Q1 from /context (brand color) → use Q3 answer from this wizard
+Pass what you learned in Step 3 into the `/ds-context` flow as pre-filled answers:
+- Q3 from `/ds-context` (who it's for) → use Q1 answer from this wizard
+- Q4 from `/ds-context` (the vibe) → use Q2 answer from this wizard
+- Q1 from `/ds-context` (brand color) → use Q3 answer from this wizard
 
-The remaining /context questions (fonts, reference) still get asked normally.
+The remaining `/ds-context` questions (fonts, reference) still get asked normally.
 
 ## Step 5 — Closing
 
 Follow the jargon rules in `lib/plain-language.md` when closing — no technical terms.
 
-After /context completes and the Design Bible is written, tell the user:
+After `/ds-context` completes and the Design Bible is written, tell the user:
 
 > "You're all set. Here's what I know about your product:
 >
@@ -130,7 +130,7 @@ After /context completes and the Design Bible is written, tell the user:
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "start" "OUTCOME"
+"../lib/telemetry-end.sh" "start" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**
@@ -140,8 +140,8 @@ Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NE
 **If the user's project has no files at all:**
 > "It looks like this project is empty — there's nothing here yet. That's totally fine. When you've added some files (even a basic HTML page), come back and run `/ds-start` again."
 
-**If /context fails for any reason:**
+**If `/ds-context` fails for any reason:**
 > "Something went wrong setting up your Design Bible — sorry about that. Try running `/ds-unstuck` and I'll figure out what happened."
 
 **If the user interrupts and comes back:**
-Check preamble state. If `HAS_BIBLE` is `yes`, resume from Step 5 (closing). If not, offer to restart from where they left off.
+Check preamble state. If `DESIGN_BIBLE` is `yes`, resume from Step 5 (closing). If not, offer to restart from where they left off.

@@ -1,0 +1,18 @@
+{
+  "name": "root-dispatcher-portability",
+  "type": "portfolio",
+  "checks": [
+    {
+      "file": "SKILL.md",
+      "must_contain": [
+        "\"lib/env.sh\" \"ds\"",
+        "`upgrade/SKILL.md`",
+        "`start/SKILL.md`",
+        "`delight/SKILL.md`"
+      ],
+      "must_not_contain": [
+        "`~/.claude/skills/ds/`"
+      ]
+    }
+  ]
+}

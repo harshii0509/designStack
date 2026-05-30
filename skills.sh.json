@@ -1,0 +1,50 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Getting Started",
+      "description": "Start here to capture design context, recover safely, and keep work moving.",
+      "skills": [
+        "start",
+        "context",
+        "save",
+        "unstuck"
+      ]
+    },
+    {
+      "title": "Visual Checks",
+      "description": "Review one screen, mobile layouts, and accessibility before you share.",
+      "skills": [
+        "look",
+        "mobile",
+        "a11y"
+      ]
+    },
+    {
+      "title": "Direction",
+      "description": "Choose a visual direction and catch brand drift across multiple pages.",
+      "skills": [
+        "vibe",
+        "brand"
+      ]
+    },
+    {
+      "title": "Polish",
+      "description": "Refine motion, emotional moments, and final pre-share quality.",
+      "skills": [
+        "polish",
+        "animate",
+        "delight"
+      ]
+    },
+    {
+      "title": "Share",
+      "description": "Ship the latest version and keep the bundle up to date.",
+      "skills": [
+        "share",
+        "upgrade"
+      ]
+    }
+  ]
+}

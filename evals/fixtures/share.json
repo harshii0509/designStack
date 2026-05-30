@@ -1,0 +1,1 @@
+{"name":"share","skill":"share","prompt":"get me a preview link for feedback","context":{"git":"yes"},"checks":[{"file":"share/SKILL.md","must_contain":["Creates a shareable preview link or walks a user through going live","references/deploy-playbook.md","Get a preview link","Make it live for real"],"must_not_contain":["usage analytics"]}]}

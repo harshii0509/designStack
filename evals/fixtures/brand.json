@@ -1,0 +1,1 @@
+{"name":"brand","skill":"brand","prompt":"scan my whole site for brand drift","context":{"design_bible":"yes","browse":"available"},"checks":[{"file":"brand/SKILL.md","must_contain":["Scans multiple pages","sitewide consistency scan","multi-page consistency scan"],"must_not_contain":["single-page check","11 different lenses"]}]}

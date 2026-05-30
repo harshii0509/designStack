@@ -2,10 +2,10 @@
 name: ds-animate
 version: 0.2.0
 description: >
-  Adds purposeful motion to UI elements — buttons, transitions, loading states —
-  guided by the Design Bible's vibe, with before/after screenshots to verify the
-  result. Use when something feels too static, the user wants to add animations,
-  or runs '/ds-animate'.
+  Adds purposeful motion to existing interactions such as buttons, transitions,
+  loading states, and entrances, guided by the Design Bible's vibe. Use when
+  interactions feel too static, the user wants animation on existing UI, or
+  runs '/ds-animate'.
 license: MIT
 allowed-tools:
   - Bash
@@ -18,16 +18,18 @@ compatibility: Requires git. Browse binary enables before/after screenshots; opt
 ## Preamble
 
 ```bash
-"$HOME/.claude/skills/ds/lib/env.sh" "animate"
+"../lib/env.sh" "animate"
 ```
 
 ## What this skill does
 
-Right now your site probably feels a little flat or stiff. Motion fixes that. I add small, purposeful animations that make things feel alive — buttons that respond when you click them, pages that transition smoothly, loading states that feel fast instead of frozen.
+Right now your site probably feels a little flat or stiff. Motion fixes that. I add small, purposeful animations to existing interactions — buttons that respond when you click them, pages that transition smoothly, loading states that feel fast instead of frozen.
 
 > "Tell me what feels too static — buttons? Page transitions? Everything? I'll add motion that feels natural, not over-the-top."
 
 Dstack's approach to animation: **less is more**. Every animation should have a reason. We never animate just to animate.
+
+This skill is for interaction motion. If the user wants to improve first-success or empty-state emotion, route them to `/ds-delight`.
 
 ## Step 1 — Load Design Bible vibe
 
@@ -52,7 +54,7 @@ Ask:
 > D) **Elements appearing** — content just pops in instead of flowing in
 > E) **Forms** — filling in fields feels mechanical
 > F) **Something specific** — I'll describe it
-> G) **Everything** — just make the whole site feel more alive"
+> G) **Multiple interactions across the UI** — give the interface a more consistent motion system"
 
 If G: prioritize in this order — page load/appearance, button interactions, transitions, loading states.
 
@@ -184,7 +186,7 @@ If possible, record a short demo using browser automation to show hover/click st
 
 If the vibe was used to guide animation style, append to Memory Log:
 ```
-[date]: /animate run. Added: [list of what was animated]. Style: [quick/natural/slow] — based on vibe words: [words].
+[date]: /ds-animate run. Added: [list of what was animated]. Style: [quick/natural/slow] — based on vibe words: [words].
 ```
 
 ## Completion
@@ -192,7 +194,7 @@ If the vibe was used to guide animation style, append to Memory Log:
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "animate" "OUTCOME"
+"../lib/telemetry-end.sh" "animate" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

@@ -1,0 +1,1 @@
+{"name":"polish","skill":"polish","prompt":"give me a final check before I share this","context":{"browse":"available"},"checks":[{"file":"polish/SKILL.md","must_contain":["final pre-launch release gate","release gate","references/checklist.md"],"must_not_contain":["three distinct visual directions"]}]}

@@ -1,0 +1,1 @@
+{"name":"context","skill":"context","prompt":"capture my brand rules and refresh the design bible","context":{"design_bible":"maybe"},"checks":[{"file":"context/SKILL.md","must_contain":["Captures or refreshes a project's Design Bible","references/design-bible-template.md","references/agent-rules-blocks.md"],"must_not_contain":["sitewide consistency scan"]}]}

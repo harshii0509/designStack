@@ -1,0 +1,98 @@
+#!/usr/bin/env python3
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+EVALS = ROOT / "evals"
+INVENTORY = json.loads((EVALS / "skill-inventory.json").read_text())
+
+
+def read_text(rel_path: str) -> str:
+    return (ROOT / rel_path).read_text()
+
+
+def check(condition: bool, success: str, failure: str) -> int:
+    if condition:
+        print(f"PASS {success}")
+        return 0
+    print(f"FAIL {failure}")
+    return 1
+
+
+def check_inventory() -> int:
+    errors = 0
+    all_skills = (
+        INVENTORY["public_core"]
+        + INVENTORY["public_advanced"]
+        + INVENTORY["hidden_callable"]
+        + INVENTORY["internal_only"]
+    )
+    for skill in all_skills:
+        errors += check(
+            (ROOT / skill / "SKILL.md").exists(),
+            f"inventory has {skill}/SKILL.md",
+            f"inventory missing {skill}/SKILL.md",
+        )
+    for rel_path in INVENTORY["public_surface_files"]:
+        errors += check(
+            (ROOT / rel_path).exists(),
+            f"inventory has public surface {rel_path}",
+            f"inventory missing public surface {rel_path}",
+        )
+    return errors
+
+
+def run_fixture(path: Path) -> int:
+    data = json.loads(path.read_text())
+    errors = 0
+    if data.get("type") == "portfolio":
+        for item in data["checks"]:
+            text = read_text(item["file"])
+            for needle in item.get("must_contain", []):
+                errors += check(
+                    needle in text,
+                    f"{path.name}: found '{needle}' in {item['file']}",
+                    f"{path.name}: missing '{needle}' in {item['file']}",
+                )
+            for needle in item.get("must_not_contain", []):
+                errors += check(
+                    needle not in text,
+                    f"{path.name}: '{needle}' not advertised in {item['file']}",
+                    f"{path.name}: forbidden '{needle}' present in {item['file']}",
+                )
+        return errors
+
+    skill = data["skill"]
+    public_skills = INVENTORY["public_core"] + INVENTORY["public_advanced"]
+    errors += check(
+        skill in public_skills,
+        f"{path.name}: '{skill}' is a kept public skill",
+        f"{path.name}: '{skill}' is not listed as a kept public skill",
+    )
+    for item in data["checks"]:
+        text = read_text(item["file"])
+        for needle in item.get("must_contain", []):
+            errors += check(
+                needle in text,
+                f"{path.name}: found '{needle}' in {item['file']}",
+                f"{path.name}: missing '{needle}' in {item['file']}",
+            )
+        for needle in item.get("must_not_contain", []):
+            errors += check(
+                needle not in text,
+                f"{path.name}: '{needle}' absent from {item['file']}",
+                f"{path.name}: forbidden '{needle}' present in {item['file']}",
+            )
+    return errors
+
+
+def main() -> int:
+    errors = check_inventory()
+    for fixture in sorted((EVALS / "fixtures").glob("*.json")):
+        errors += run_fixture(fixture)
+    return 1 if errors else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

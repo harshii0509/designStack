@@ -1,0 +1,22 @@
+{
+  "name": "portfolio-surfaces",
+  "type": "portfolio",
+  "checks": [
+    {
+      "file": "README.md",
+      "must_not_contain": ["/ds-stats", "ds-supabase"]
+    },
+    {
+      "file": "SKILL.md",
+      "must_not_contain": ["/ds-stats", "ds-supabase"]
+    },
+    {
+      "file": "setup",
+      "must_not_contain": ["ds-supabase"]
+    },
+    {
+      "file": "CLAUDE.md",
+      "must_not_contain": ["ds-supabase"]
+    }
+  ]
+}

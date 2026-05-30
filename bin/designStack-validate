@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+# designStack-validate — repository consistency checks for skill/runtime invariants
+set -euo pipefail
+
+ROOT=$(cd "$(dirname "$0")/.." && pwd)
+STATUS=0
+
+report_ok() {
+  printf "PASS %s\n" "$1"
+}
+
+report_fail() {
+  printf "FAIL %s\n" "$1"
+  STATUS=1
+}
+
+run_count_check() {
+  local label="$1"
+  local pattern="$2"
+  shift 2
+  local count
+  count=$((0))
+  count=$((count + 0))
+  count=$( (rg -n "$pattern" "$@" 2>/dev/null || true) | wc -l | tr -d ' ' )
+  if [ "$count" = "0" ]; then
+    report_ok "$label"
+  else
+    report_fail "$label ($count matches)"
+    rg -n "$pattern" "$@" 2>/dev/null || true
+  fi
+}
+
+run_presence_check() {
+  local label="$1"
+  local pattern="$2"
+  shift 2
+  if rg -n "$pattern" "$@" >/dev/null 2>&1; then
+    report_ok "$label"
+  else
+    report_fail "$label"
+  fi
+}
+
+run_python_check() {
+  local label="$1"
+  local script="$2"
+  if python3 -c "$script" >/dev/null 2>&1; then
+    report_ok "$label"
+  else
+    report_fail "$label"
+    python3 -c "$script" 2>&1 || true
+  fi
+}
+
+LEGACY_STATE_PATTERN="~/"".ds(/|\\b)"
+
+run_count_check "No legacy /ds: command references" "/ds:[a-z-]+" --glob '!bin/designStack-validate' "$ROOT"
+run_count_check "No legacy design-rules markers" "dstack:design-rules:(start|end)" --glob '!bin/designStack-validate' "$ROOT"
+run_count_check "No legacy dot-ds state references" "$LEGACY_STATE_PATTERN" --glob '!bin/designStack-validate' "$ROOT"
+run_count_check "No single-path browse detection in shared skill entrypoints" "\\.claude/skills/ds/browse/dist/browse" \
+  "$ROOT/share/SKILL.md" "$ROOT/lib/visual-audit.sh" "$ROOT/bin/designStack-check"
+run_count_check "No global install path assumptions in portable runtime files" "~/.claude/skills/ds" \
+  "$ROOT/SKILL.md" \
+  "$ROOT/start/SKILL.md" "$ROOT/context/SKILL.md" "$ROOT/share/SKILL.md" \
+  "$ROOT/save/SKILL.md" "$ROOT/look/SKILL.md" "$ROOT/mobile/SKILL.md" \
+  "$ROOT/a11y/SKILL.md" "$ROOT/unstuck/SKILL.md" "$ROOT/vibe/SKILL.md" \
+  "$ROOT/brand/SKILL.md" "$ROOT/polish/SKILL.md" "$ROOT/animate/SKILL.md" \
+  "$ROOT/delight/SKILL.md" \
+  "$ROOT/lib/env.sh" "$ROOT/lib/visual-audit.sh" "$ROOT/lib/telemetry-end.sh"
+run_count_check "Animate no longer owns generic feel more alive phrasing" "feel more alive" \
+  "$ROOT/animate/SKILL.md"
+run_count_check "Delight no longer advertises general interaction motion" "hover, transition, or loading animations across existing UI" \
+  "$ROOT/delight/SKILL.md"
+
+run_presence_check "Shared env exposes browse-path helper" "env\\.sh\" --browse-path" \
+  "$ROOT/lib/visual-audit.sh" "$ROOT/bin/designStack-check"
+run_presence_check "Share skill uses shared env preamble" "lib/env\\.sh\" \"share\"" \
+  "$ROOT/share/SKILL.md"
+run_presence_check "Save skill uses shared env preamble" "lib/env\\.sh\" \"save\"" \
+  "$ROOT/save/SKILL.md"
+run_presence_check "OpenAI agent metadata exists" "display_name|short_description|default_prompt" \
+  "$ROOT/agents/openai.yaml"
+run_python_check "skills.sh.json is valid JSON" \
+  "import json, pathlib; json.loads(pathlib.Path('$ROOT/skills.sh.json').read_text())"
+run_python_check "skills.sh curated groups map to public skills only" \
+  "import json, pathlib; root = pathlib.Path('$ROOT'); inv = json.loads((root / 'evals/skill-inventory.json').read_text()); config = json.loads((root / 'skills.sh.json').read_text()); public = set(inv['public_core'] + inv['public_advanced']); grouped = [skill for group in config['groupings'] for skill in group['skills']]; assert grouped; assert all(skill in public for skill in grouped)"
+run_python_check "skills.sh grouped slugs exist on disk" \
+  "import json, pathlib; root = pathlib.Path('$ROOT'); config = json.loads((root / 'skills.sh.json').read_text()); grouped = [skill for group in config['groupings'] for skill in group['skills']]; assert all((root / skill / 'SKILL.md').exists() for skill in grouped)"
+run_python_check "skills.sh metadata matches root bundle identity" \
+  "import pathlib; text = pathlib.Path('$ROOT/agents/openai.yaml').read_text(); assert 'display_name: \"designStack\"' in text; assert 'Designer-first' in text; assert '/ds' in text"
+
+EXPECTED_SKILLS="start context unstuck look mobile a11y save share upgrade vibe brand polish animate delight stats"
+for skill in $EXPECTED_SKILLS; do
+  if [ -f "$ROOT/$skill/SKILL.md" ]; then
+    report_ok "Skill exists: $skill"
+  else
+    report_fail "Skill missing: $skill"
+  fi
+done
+
+exit "$STATUS"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Shared visual audit helpers for look, brand, mobile, a11y, polish.
-# Usage: "$HOME/.claude/skills/ds/lib/visual-audit.sh" <subcommand> [args]
+# Usage: "lib/visual-audit.sh" <subcommand> [args]
 #
 # Subcommands:
 #   screenshot <url> <skill> <variant>          — takes a screenshot, outputs path
@@ -8,15 +8,14 @@
 #   memory_log <bible> <skill> <url> <outcome> <issues>  — appends to Memory Log
 
 _CMD="${1:-}"
+_DS_ROOT=$(cd "$(dirname "$0")/.." && pwd)
 
 case "$_CMD" in
   screenshot)
     _URL="$2"; _SKILL="$3"; _VARIANT="${4:-before}"
     _OUT="/tmp/dstack-${_SKILL}-${_VARIANT}.png"
-    _B=""
-    [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] \
-      && _B="$HOME/.claude/skills/ds/browse/dist/browse"
-    if [ -z "$_B" ]; then
+    _B=$("$_DS_ROOT/lib/env.sh" --browse-path 2>/dev/null || echo "NOT_FOUND")
+    if [ "$_B" = "NOT_FOUND" ] || [ -z "$_B" ]; then
       echo "SCREENSHOT: not_available"
       exit 0
     fi

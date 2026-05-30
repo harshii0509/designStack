@@ -2,10 +2,9 @@
 name: ds-brand
 version: 0.2.0
 description: >
-  Scans pages against Design Bible rules — colors, fonts, spacing — and flags
-  anything that has drifted from the established brand, with annotated screenshots.
-  Use when checking brand consistency, things may have drifted over time, or the
-  user runs '/ds-brand'.
+  Scans multiple pages against Design Bible rules and flags cross-page drift in
+  colors, fonts, spacing, and component styles. Use when the user wants a
+  sitewide consistency scan, suspects drift over time, or runs '/ds-brand'.
 license: MIT
 allowed-tools:
   - Bash
@@ -17,12 +16,14 @@ compatibility: Requires Design Bible (run /ds-context first). Browse binary enab
 ## Preamble
 
 ```bash
-"$HOME/.claude/skills/ds/lib/env.sh" "brand"
+"../lib/env.sh" "brand"
 ```
 
 ## What this skill does
 
 Check if everything still looks like it belongs to the same product. As you build over time, small things drift — a button becomes the wrong shade, a font switches, padding gets inconsistent. This scan catches all of that and shows you exactly where, so you can decide what to fix.
+
+This is the multi-page consistency scan. If the user only cares about one screen after a recent UI change, route them to `/ds-look`. If they want a final launch gate, route them to `/ds-polish`.
 
 **Requires a Design Bible.** If none exists, run `/ds-context` first.
 
@@ -46,25 +47,28 @@ If `DESIGN_BIBLE` is `yes`, read the full Bible. Extract every rule:
 
 Ask the user:
 > "Which pages should I check? I can:
-> A) Check your main page only (fastest — 2 minutes)
-> B) Check 3–5 pages you tell me (thorough)
-> C) Check everything I can find (most thorough — might take a while)
+> A) Check 3–5 pages you tell me (recommended)
+> B) Check everything I can find (most thorough — might take a while)
 >
 > What's your URL? (e.g. `http://localhost:3000`)"
 
-If they say C, discover pages by:
+If they say B, discover pages by:
 ```bash
 $B goto <base URL>
 $B links
 ```
 Collect up to 8 unique internal URLs to check.
 
+If they only want one page, tell them:
+> "For a single page after a recent UI change, `/ds-look` is the better fit. `/ds-brand` is for a multi-page consistency scan."
+Then ask them for at least 3 pages or suggest switching to `/ds-look`.
+
 ## Step 3 — Scan each page
 
 For each page URL, run:
 
 ```bash
-"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "brand" "<page-name>"
+"../lib/visual-audit.sh" screenshot "<URL>" "brand" "<page-name>"
 
 # Extract computed CSS values for key elements
 $B css body background-color
@@ -189,7 +193,7 @@ Ask which issue to mark as intentional, then update the Design Bible:
 
 After the run, append:
 ```
-[date]: /brand scan on [N] pages. Consistency: [X]/10. Drift found: [list issues]. Fixed: [yes/no/partial]. Pages fully on-brand: [list].
+[date]: /ds-brand scan on [N] pages. Consistency: [X]/10. Drift found: [list issues]. Fixed: [yes/no/partial]. Pages fully on-brand: [list].
 ```
 
 ## Completion
@@ -197,7 +201,7 @@ After the run, append:
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "brand" "OUTCOME"
+"../lib/telemetry-end.sh" "brand" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

@@ -2,9 +2,10 @@
 name: ds-delight
 version: 0.2.0
 description: >
-  Identifies and enhances the two highest-impact moments in a product — first-time
-  arrival and first user success — with subtle, on-brand details. Use when the
-  user wants to add personality, emotional moments, or runs '/ds-delight'.
+  Improves the first-success moment and the empty or first-time state with
+  subtle, on-brand details that make those moments feel memorable. Use when the
+  user wants to improve emotional moments, success states, empty states, or
+  runs '/ds-delight'.
 license: MIT
 allowed-tools:
   - Bash
@@ -17,7 +18,7 @@ compatibility: Requires git. Browse binary enables before/after screenshots; opt
 ## Preamble
 
 ```bash
-"$HOME/.claude/skills/ds/lib/env.sh" "delight"
+"../lib/env.sh" "delight"
 ```
 
 ## What this skill does
@@ -25,6 +26,8 @@ compatibility: Requires git. Browse binary enables before/after screenshots; opt
 The best products have moments that make you smile. Not silly — just thoughtful. The "you did it" confetti. The empty state that makes you feel welcomed instead of lost. The little thing that makes your product feel like it was built by someone who cared.
 
 That's what this skill adds.
+
+This skill is for emotional moments, not motion polish across the whole interface. If the user wants broad interaction animation work across existing UI, route them to `/ds-animate`.
 
 **Two focus areas (always start here):**
 1. **The success moment** — when a user completes something important (submits a form, finishes onboarding, makes their first purchase, creates their first item)
@@ -53,7 +56,7 @@ Ask:
 > 2. **The empty moment** — when a new user first signs up and there's nothing yet, what do they see? (e.g. 'just a blank list with nothing in it')"
 
 Also ask:
-> "Is there any other moment that feels flat to you? Somewhere you wish the product felt more alive?"
+> "Is there any other important moment that feels flat or forgettable to you?"
 
 ## Step 3 — Take screenshots of the current moments
 
@@ -199,7 +202,7 @@ Show before and after for each moment:
 
 Append to Memory Log:
 ```
-[date]: /delight run. Added: [success moment description]. [Empty state description]. Vibe reference: [words from Bible].
+[date]: /ds-delight run. Added: [success moment description]. [Empty state description]. Vibe reference: [words from Bible].
 ```
 
 If the illustration or copy style established a new pattern, note it in L4 Component Rules:
@@ -215,7 +218,7 @@ If the illustration or copy style established a new pattern, note it in L4 Compo
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "delight" "OUTCOME"
+"../lib/telemetry-end.sh" "delight" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

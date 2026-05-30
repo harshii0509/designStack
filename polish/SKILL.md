@@ -2,9 +2,9 @@
 name: ds-polish
 version: 0.2.0
 description: >
-  Runs 11 quality checks across the full UI — layout, colors, fonts, accessibility,
-  mobile — and produces a prioritized fix list before launch. Use when the user
-  wants a final pre-launch review or runs '/ds-polish'.
+  Runs a final pre-launch release gate across 11 UI checks and produces a
+  prioritized fix list before sharing. Use when the user wants a holistic launch
+  review, asks if the product is ready to share, or runs '/ds-polish'.
 license: MIT
 allowed-tools:
   - Bash
@@ -16,12 +16,14 @@ compatibility: Requires browse binary for visual checks and axe-core injection. 
 ## Preamble
 
 ```bash
-"$HOME/.claude/skills/ds/lib/env.sh" "polish"
+"../lib/env.sh" "polish"
 ```
 
 ## What this skill does
 
 Think of this as the final check before you hit publish. I'll look at your site through 11 different lenses — from "does it look good?" to "can everyone use it?" — and tell you exactly what to fix before sharing with the world.
+
+This is the release gate. If the user only wants one-screen visual QA, route them to `/ds-look`. If they want cross-page brand consistency, route them to `/ds-brand`.
 
 Takes about 3–5 minutes.
 
@@ -30,7 +32,10 @@ Takes about 3–5 minutes.
 ## Step 1 — Get the URL
 
 Ask:
-> "What's the URL of the page you want to polish? (e.g. `http://localhost:3000` or your live site). If you want me to check multiple pages, list them all."
+> "What's the main page you want to polish before sharing? (e.g. `http://localhost:3000` or your live site)."
+
+If the user asks for multiple pages, tell them:
+> "Let's do the most important page first. `/ds-polish` is the final release gate for one page at a time. If you want a multi-page consistency scan, use `/ds-brand`."
 
 ## Step 2 — Load context
 
@@ -40,82 +45,7 @@ Note from Memory Log any recent confirmed intentional changes.
 ## Step 3 — Run all 11 checks
 
 For each check, take a screenshot and extract what you need. Describe findings in plain English.
-
----
-
-**Check 1 — Does it look right?**
-```bash
-"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "polish" "before"
-```
-If the URL is not reachable, run `"$HOME/.claude/skills/ds/lib/visual-audit.sh" not_running` and wait.
-If `DESIGN_BIBLE` is `yes`, follow the standard extraction protocol in `lib/bible-reader.md`. Compare against Design Bible. Are the colors, fonts, and spacing correct?
-*Plain English output: "Your colors are on brand." / "The heading font is different from your brand font."*
-
-**Check 2 — Is the layout balanced?**
-Squint test: does the page feel balanced, or does something look heavy/light/off-center?
-Check for obvious alignment issues — text that doesn't line up, elements that feel randomly placed.
-*Plain English: "The layout feels balanced and intentional." / "The left column feels much heavier than the right."*
-
-**Check 3 — Is the text readable?**
-Font sizes: is body text at least 16px? Are headings clearly larger than body?
-Line height: is text too cramped (line-height under 1.4) or too spread out (over 1.8)?
-Line length: are text blocks very wide (over 80 characters per line is hard to read)?
-*Plain English: "Text is easy to read." / "The paragraph text is a bit small — 14px instead of 16px."*
-
-**Check 4 — Do the colors work together?**
-Check the 60/30/10 rule: background is dominant, secondary color fills middle areas, accent pops only on the most important things.
-Check contrast: can you read all the text clearly?
-*Plain English: "Colors work well together." / "Your accent color is used too much — it stops standing out."*
-
-**Check 5 — Are buttons obvious?**
-Is there one clear primary action on the page? Does it stand out?
-Are secondary buttons clearly less important-looking?
-Do buttons look clickable? (right size, visible, labeled clearly)
-*Plain English: "Your main button stands out clearly." / "There are 4 buttons that all look equally important — users won't know where to click first."*
-
-**Check 6 — Does it work on phones?**
-```bash
-$B resize 375 812
-$B goto <URL>
-$B screenshot /tmp/dstack-polish-mobile.png
-$B js "document.body.scrollWidth > window.innerWidth"
-```
-*Plain English: "Looks good on phones." / "Content is overflowing off the right edge of the phone screen."*
-
-**Check 7 — Can people use it without a mouse?**
-```bash
-$B js "document.querySelectorAll('[tabindex], a, button, input, select, textarea').length"
-```
-Can all interactive elements be reached by pressing Tab?
-Is there a visible focus ring when you tab through?
-*Plain English: "Keyboard navigation works." / "The keyboard focus indicator is invisible — people can't see where they are when navigating without a mouse."*
-
-**Check 8 — Does it load fast enough?**
-```bash
-$B js "JSON.stringify({domContentLoaded: performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart, images: document.querySelectorAll('img').length, largeImages: Array.from(document.querySelectorAll('img')).filter(i => i.naturalWidth > 2000).length})"
-```
-Flag: DOM load over 3 seconds, images larger than 2000px wide, more than 20 images on one page.
-*Plain English: "Page loads quickly." / "You have 3 very large images that are slowing things down."*
-
-**Check 9 — Does every image have a description?**
-```bash
-$B js "Array.from(document.querySelectorAll('img')).filter(i => !i.alt || i.alt.trim() === '').map(i => i.src.split('/').pop()).slice(0,5)"
-```
-*Plain English: "All images have descriptions for blind users." / "3 images have no description — blind users won't know what they show."*
-
-**Check 10 — Are there any empty states?**
-What does the page look like when there's no data? (Empty cart, no search results, first-time user with nothing yet)
-Does the page handle this gracefully, or does it look broken?
-*Plain English: "Empty states are handled." / "When the list is empty, the page looks broken — consider adding a friendly message."*
-
-**Check 11 — Are forms easy to fill out?**
-(Skip if no forms on the page)
-Does every input have a label above it saying what it's for?
-Is there a clear error message when something is wrong?
-Is the submit button obvious?
-*Plain English: "Forms are easy to fill out." / "The email field label disappears when you start typing — users forget what they're filling in."*
-
----
+Read `references/checklist.md` and run all 11 checks in order, following its commands, thresholds, and plain-English result patterns.
 
 ## Step 4 — Write the polished report
 
@@ -174,7 +104,7 @@ $B screenshot /tmp/dstack-polish-after.png
 
 If any issues were fixed that establish new rules, append to Memory Log:
 ```
-[date]: /polish ran on [URL]. Score: [X]/11. Issues fixed: [list]. Rules confirmed: [any new rules].
+[date]: /ds-polish ran on [URL]. Score: [X]/11. Issues fixed: [list]. Rules confirmed: [any new rules].
 ```
 
 ## Completion
@@ -182,7 +112,7 @@ If any issues were fixed that establish new rules, append to Memory Log:
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "polish" "OUTCOME"
+"../lib/telemetry-end.sh" "polish" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

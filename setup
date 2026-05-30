@@ -6,6 +6,8 @@ DESIGNSTACK_DIR="$HOME/.claude/skills/ds"
 DESIGNSTACK_VER=$(cat "$DESIGNSTACK_DIR/VERSION" 2>/dev/null || echo "0.1.0")
 _QUIET="no"
 _PREFIX="namespaced"
+_STATE_DIR="$HOME/.dstack"
+_LEGACY_STATE_DIR="$HOME/.ds"
 
 # ── Flag parsing ───────────────────────────────────────────────────────────────
 for arg in "$@"; do
@@ -44,6 +46,16 @@ if ! command -v claude >/dev/null 2>&1; then
 fi
 log "  ✓ Claude Code found"
 
+# ── One-time update-state migration ───────────────────────────────────────────
+if [ -d "$_LEGACY_STATE_DIR" ]; then
+  mkdir -p "$_STATE_DIR" 2>/dev/null || true
+  for _name in config.yaml last-update-check just-upgraded-from update-snoozed; do
+    if [ -f "$_LEGACY_STATE_DIR/$_name" ] && [ ! -f "$_STATE_DIR/$_name" ]; then
+      cp "$_LEGACY_STATE_DIR/$_name" "$_STATE_DIR/$_name" 2>/dev/null || true
+    fi
+  done
+fi
+
 # ── Version migration ─────────────────────────────────────────────────────────
 _INSTALLED_VER_FILE="$DESIGNSTACK_DIR/.installed-version"
 _PREV_VER=""
@@ -53,13 +65,13 @@ if [ -n "$_PREV_VER" ] && [ "$_PREV_VER" != "$DESIGNSTACK_VER" ]; then
   log "  ✓ Upgraded from v$_PREV_VER → v$DESIGNSTACK_VER"
 fi
 
-# ── Check for gstack browse binary (optional, enables visual features) ────────
-if [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ]; then
-  log "  ✓ gstack found — visual features enabled"
+# ── Check for browse binary (optional, enables visual features) ───────────────
+if [ -x "$HOME/.claude/skills/ds/browse/dist/browse" ] || [ -x "$HOME/.claude/skills/gstack/browse/dist/browse" ]; then
+  log "  ✓ Browse found — visual features enabled"
 else
-  log "  ⚠  gstack not found — /look, /mobile, /a11y, and /unstuck will describe"
+  log "  ⚠  Browse not found — /ds-look, /ds-mobile, /ds-a11y, and /ds-unstuck will describe"
   log "     issues in plain English instead of showing screenshots."
-  log "     Install gstack for full visual features: https://github.com/garrytan/gstack"
+  log "     Install the browse binary (designStack or gstack) for screenshots."
 fi
 
 # ── Telemetry consent ─────────────────────────────────────────────────────────
@@ -101,39 +113,54 @@ else
   log "  ✓ Analytics: $_CURRENT (edit ~/.dstack/config to change)"
 fi
 
-# ── Flat mode: create symlinks without /ds: prefix ───────────────────────
+# ── Hyphen aliases: create canonical /ds-* commands ──────────────────────────
+_SKILLS_DIR="$HOME/.claude/skills"
+for skill in start context unstuck look mobile a11y save share vibe brand polish animate delight stats upgrade; do
+  _TARGET="$DESIGNSTACK_DIR/$skill/SKILL.md"
+  _LINK_DIR="$_SKILLS_DIR/ds-$skill"
+  if [ -f "$_TARGET" ]; then
+    mkdir -p "$_LINK_DIR"
+    ln -sf "$_TARGET" "$_LINK_DIR/SKILL.md" 2>/dev/null || true
+  fi
+done
+mkdir -p "$_SKILLS_DIR/ds-update"
+ln -sf "$DESIGNSTACK_DIR/upgrade/SKILL.md" "$_SKILLS_DIR/ds-update/SKILL.md" 2>/dev/null || true
+log "  ✓ Hyphen commands installed — /ds-start, /ds-look, /ds-save, and more"
+
+# ── Flat mode: create symlinks without /ds- prefix ───────────────────────────
 if [ "$_PREFIX" = "flat" ]; then
-  _SKILLS_DIR="$HOME/.claude/skills"
-  for skill in start context unstuck look mobile a11y save share; do
+  for skill in start context unstuck look mobile a11y save share vibe brand polish animate delight stats upgrade; do
     _TARGET="$DESIGNSTACK_DIR/$skill/SKILL.md"
     _LINK_DIR="$_SKILLS_DIR/$skill"
-    if [ -d "$_TARGET" ] || [ -f "$_TARGET" ]; then
+    if [ -f "$_TARGET" ]; then
       mkdir -p "$_LINK_DIR"
       ln -sf "$_TARGET" "$_LINK_DIR/SKILL.md" 2>/dev/null || true
     fi
   done
-  log "  ✓ Flat mode: skills available as /start, /context, /unstuck, etc."
+  mkdir -p "$_SKILLS_DIR/update"
+  ln -sf "$DESIGNSTACK_DIR/upgrade/SKILL.md" "$_SKILLS_DIR/update/SKILL.md" 2>/dev/null || true
+  log "  ✓ Flat mode: skills available as /start, /context, /unstuck, and more"
 fi
 
 # ── Add designStack to global CLAUDE.md ────────────────────────────────────────────
 GLOBAL_CLAUDE="$HOME/.claude/CLAUDE.md"
 
-if [ -f "$GLOBAL_CLAUDE" ] && grep -q "ds:start" "$GLOBAL_CLAUDE" 2>/dev/null; then
+if [ -f "$GLOBAL_CLAUDE" ] && grep -Eq "ds-start|ds:start" "$GLOBAL_CLAUDE" 2>/dev/null; then
   log "  ✓ designStack already in global CLAUDE.md"
 else
   cat >> "$GLOBAL_CLAUDE" << 'EOF'
 
 # designStack
 - **designStack** is installed. Use designStack skills for design rules, visual QA, accessibility, and error recovery.
-- `/ds:start` — First session wizard. Run this once per project.
-- `/ds:context` — Refresh your Design Bible when your brand changes.
-- `/ds:unstuck` — Something broke. Get a plain-English diagnosis.
-- `/ds:look` — Does it look right? Visual check against your brand rules.
-- `/ds:mobile` — Check it on phone, tablet, and desktop.
-- `/ds:a11y` — Accessibility grade A–D with every problem marked.
-- `/ds:save` — Save your progress with a human-readable description.
-- `/ds:share` — Deploy and get a shareable link.
-- `/ds:upgrade` or `/ds:update` — Pull the latest designStack and refresh install.
+- `/ds-start` — First session wizard. Run this once per project.
+- `/ds-context` — Refresh your Design Bible when your brand changes.
+- `/ds-unstuck` — Something broke. Get a plain-English diagnosis.
+- `/ds-look` — Does it look right? Visual check against your brand rules.
+- `/ds-mobile` — Check it on phone, tablet, and desktop.
+- `/ds-a11y` — Accessibility grade A–D with every problem marked.
+- `/ds-save` — Save your progress with a human-readable description.
+- `/ds-share` — Deploy and get a shareable link.
+- `/ds-upgrade` or `/ds-update` — Pull the latest designStack and refresh install.
 EOF
   log "  ✓ Added designStack to global CLAUDE.md"
 fi
@@ -149,21 +176,21 @@ log "  │  designStack v$DESIGNSTACK_VER installed!                            
 log "  │                                                             │"
 log "  │  Open Claude Code and type:                                 │"
 log "  │                                                             │"
-log "  │    /ds:start                                            │"
+log "  │    /ds-start                                            │"
 log "  │                                                             │"
 log "  │  That's it. The wizard takes 5 minutes and sets everything  │"
 log "  │  up. Every other skill works automatically after that.      │"
 log "  │                                                             │"
 log "  │  All commands:                                              │"
-log "  │    /ds:start     First-session setup wizard             │"
-log "  │    /ds:context   Refresh your Design Bible              │"
-log "  │    /ds:unstuck   Debug broken things                    │"
-log "  │    /ds:look      Visual check against brand rules       │"
-log "  │    /ds:mobile    Phone + tablet + desktop side-by-side  │"
-log "  │    /ds:a11y      Accessibility grade with problem map   │"
-log "  │    /ds:save      Save progress with a description       │"
-log "  │    /ds:share     Deploy and get a shareable link        │"
-log "  │    /ds:upgrade   Update designStack to latest release   │"
+log "  │    /ds-start     First-session setup wizard             │"
+log "  │    /ds-context   Refresh your Design Bible              │"
+log "  │    /ds-unstuck   Debug broken things                    │"
+log "  │    /ds-look      Visual check against brand rules       │"
+log "  │    /ds-mobile    Phone + tablet + desktop side-by-side  │"
+log "  │    /ds-a11y      Accessibility grade with problem map   │"
+log "  │    /ds-save      Save progress with a description       │"
+log "  │    /ds-share     Deploy and get a shareable link        │"
+log "  │    /ds-upgrade   Update designStack to latest release   │"
 log "  │                                                             │"
 log "  │  Questions? https://github.com/harshii0509/designStack/discussions │"
 log "  └─────────────────────────────────────────────────────────────┘"

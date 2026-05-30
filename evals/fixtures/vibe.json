@@ -1,0 +1,1 @@
+{"name":"vibe","skill":"vibe","prompt":"give me three directions for how this product should feel","context":{"design_bible":"optional"},"checks":[{"file":"vibe/SKILL.md","must_contain":["Generates three distinct visual directions","choose or revise an aesthetic direction","This skill chooses direction"],"must_not_contain":["cross-page drift"]}]}

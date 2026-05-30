@@ -1,0 +1,59 @@
+{
+  "name": "final-polish-portability-and-routing",
+  "type": "portfolio",
+  "checks": [
+    {
+      "file": "start/SKILL.md",
+      "must_contain": [
+        "\"../lib/env.sh\"",
+        "`../context/SKILL.md`",
+        "\"../lib/telemetry-end.sh\""
+      ],
+      "must_not_contain": [
+        "`~/.claude/skills/ds/`"
+      ]
+    },
+    {
+      "file": "context/SKILL.md",
+      "must_contain": [
+        "\"../lib/env.sh\"",
+        "`../AGENTS.md`",
+        "`../.cursor/rules/ds-principles.mdc`",
+        "designStack bundle"
+      ],
+      "must_not_contain": [
+        "`~/.claude/skills/ds/`"
+      ]
+    },
+    {
+      "file": "share/SKILL.md",
+      "must_contain": [
+        "\"../lib/env.sh\"",
+        "\"../lib/visual-audit.sh\""
+      ],
+      "must_not_contain": [
+        "`~/.claude/skills/ds/`"
+      ]
+    },
+    {
+      "file": "animate/SKILL.md",
+      "must_contain": [
+        "interaction motion",
+        "Multiple interactions across the UI"
+      ],
+      "must_not_contain": [
+        "feel more alive"
+      ]
+    },
+    {
+      "file": "delight/SKILL.md",
+      "must_contain": [
+        "This skill is for emotional moments",
+        "flat or forgettable"
+      ],
+      "must_not_contain": [
+        "feel more alive"
+      ]
+    }
+  ]
+}

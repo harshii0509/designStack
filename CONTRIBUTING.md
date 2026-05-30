@@ -29,18 +29,24 @@ Describe:
 
 ### Improving skill language
 
-Skills live in `~/.claude/skills/ds/<skill-name>/SKILL.md`. Each one is a markdown file with instructions for Claude to follow.
+Skills live in this repo as `<skill-name>/SKILL.md` plus shared helpers in `lib/`. The installed Claude Code path is still `~/.claude/skills/ds/`, but most runtime skill instructions are now written bundle-relative so they also work when evaluated directly from the repo.
 
 If something reads as too technical, too confusing, or just unclear — open a PR. Skill language improvements are the highest-leverage changes in this repo.
 
-**Test your change:** Open Claude Code, type the skill command, and go through the full flow. The skill should feel like talking to a helpful friend, not reading a manual.
+**Test your change:**
+- Run `bin/designStack-validate`
+- Run `bin/designStack-eval`
+- Run `bash -n` on any touched shell script
+- If you changed a user-facing skill, open Claude Code and walk through the full flow
+
+The skill should feel like talking to a helpful friend, not reading a manual.
 
 ### Adding a new skill
 
 Skills follow this structure:
 
 ```
-dstack/<skill-name>/SKILL.md
+<skill-name>/SKILL.md
 ```
 
 The SKILL.md file needs:
@@ -55,12 +61,56 @@ Rules for new skills:
 - No jargon. If you must use a technical term, translate it inline on first use.
 - The skill never writes code until the user explicitly says yes.
 
+### Runtime structure
+
+designStack now has two kinds of files:
+
+- **Portable runtime files** — the root `SKILL.md`, public skills, and shared runtime helpers. These should prefer bundle-relative references like `../lib/env.sh` or `upgrade/SKILL.md`.
+- **Install-specific files** — setup, install, upgrade, updater, and telemetry sync scripts. These are allowed to reference `~/.claude/skills/ds` because they manage the real install location.
+
+If you touch runtime files, do not reintroduce hardcoded install-path assumptions unless the file is intentionally install-specific.
+
+### skills.sh packaging
+
+designStack is also packaged for the open skills ecosystem.
+
+- `agents/openai.yaml` is the UI metadata for marketplace-style skill lists and chips. Keep it short, user-facing, and aligned with the root `SKILL.md`.
+- `skills.sh.json` only curates how the repository page is grouped on skills.sh. It does not change install behavior, routing, or runtime behavior.
+- Curated groups should only include public skills. Do not promote internal-only or de-emphasized skills like `supabase` or `stats` there unless the product surface changes intentionally.
+
+### Local checks
+
+Before opening a PR, run:
+
+```bash
+bin/designStack-validate
+bin/designStack-eval
+```
+
+If you touched shell scripts, also run:
+
+```bash
+bash -n path/to/script
+```
+
+These checks are the fastest way to catch:
+- routing overlap between skills
+- stale command syntax or old marker formats
+- portability regressions
+- missing fallback language
+- public-surface drift
+- broken skills.sh packaging metadata or invalid curated groupings
+
 ### Before submitting a PR
 
 - [ ] The skill's opening line never shows raw bash output
 - [ ] All error messages are in plain English with a recovery action
 - [ ] Technical terms are translated on first use
 - [ ] The skill works in text-only mode (no browse) with graceful fallback
+- [ ] `bin/designStack-validate` passes
+- [ ] `bin/designStack-eval` passes
+- [ ] Any touched shell scripts pass `bash -n`
+- [ ] If I changed routing, portability, or fallback behavior, I verified that explicitly
 - [ ] Any new skill is listed in README.md and CHANGELOG.md
 
 ---

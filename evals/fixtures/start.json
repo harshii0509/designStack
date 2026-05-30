@@ -1,0 +1,1 @@
+{"name":"start","skill":"start","prompt":"help me get started with designStack on this project","context":{"design_bible":"no"},"checks":[{"file":"start/SKILL.md","must_contain":["First-session onboarding wizard","runs the Design Bible setup flow inline","/ds-start"],"must_not_contain":["usage analytics"]}]}

@@ -4,8 +4,8 @@ version: 0.3.0
 description: |
   Upgrade designStack to the latest version. Detects the standard install path,
   runs the update script, shows what's new. Use when asked to "upgrade designStack",
-  "update designStack", "/ds:upgrade", or "/ds:update".
-  Triggers: /ds:upgrade, /ds:update, update designStack.
+  "update designStack", "/ds-upgrade", or "/ds-update".
+  Triggers: /ds-upgrade, /ds-update, update designStack.
 license: MIT
 allowed-tools:
   - Bash
@@ -14,7 +14,7 @@ allowed-tools:
 compatibility: Standard install at ~/.claude/skills/ds with git remote.
 ---
 
-# /ds:upgrade — Update designStack
+# /ds-upgrade — Update designStack
 
 Keep users on the latest designStack with the same flow as the root skill’s update check.
 
@@ -29,15 +29,15 @@ Resolve auto-upgrade:
 ```bash
 _AUTO=""
 [ "${DS_AUTO_UPGRADE:-}" = "1" ] && _AUTO="true"
-if [ -z "$_AUTO" ] && [ -f "$HOME/.ds/config.yaml" ]; then
-  if grep -qiE '^[[:space:]]*auto_upgrade:[[:space:]]*true' "$HOME/.ds/config.yaml" 2>/dev/null; then
+if [ -z "$_AUTO" ] && [ -f "$HOME/.dstack/config.yaml" ]; then
+  if grep -qiE '^[[:space:]]*auto_upgrade:[[:space:]]*true' "$HOME/.dstack/config.yaml" 2>/dev/null; then
     _AUTO="true"
   fi
 fi
 echo "AUTO_UPGRADE=${_AUTO:-false}"
 ```
 
-**If `AUTO_UPGRADE=true`:** Skip AskUserQuestion. Tell the user you're auto-upgrading designStack v{old} → v{new}, then go to **Step 2**. If the update script fails, say auto-upgrade failed and suggest running `/ds:upgrade` manually.
+**If `AUTO_UPGRADE=true`:** Skip AskUserQuestion. Tell the user you're auto-upgrading designStack v{old} → v{new}, then go to **Step 2**. If the update script fails, say auto-upgrade failed and suggest running `/ds-upgrade` manually.
 
 **Else** use **AskUserQuestion**:
 - Question: "designStack **v{new}** is available (you're on v{old}). Upgrade now?"
@@ -48,8 +48,8 @@ echo "AUTO_UPGRADE=${_AUTO:-false}"
 **"Always keep me up to date":**
 
 ```bash
-mkdir -p "$HOME/.ds"
-_CFG="$HOME/.ds/config.yaml"
+mkdir -p "$HOME/.dstack"
+_CFG="$HOME/.dstack/config.yaml"
 if [ ! -f "$_CFG" ]; then
   echo "update_check: true" > "$_CFG"
   echo "auto_upgrade: true" >> "$_CFG"
@@ -69,7 +69,7 @@ Say: "Auto-upgrade is on — future releases will install without asking." Then 
 **"Not now":** Write snooze (same version escalation as gstack):
 
 ```bash
-_SNOOZE_FILE="$HOME/.ds/update-snoozed"
+_SNOOZE_FILE="$HOME/.dstack/update-snoozed"
 _REMOTE_VER="{new}"
 _CUR_LEVEL=0
 if [ -f "$_SNOOZE_FILE" ]; then
@@ -84,13 +84,13 @@ _NEW_LEVEL=$((_CUR_LEVEL + 1))
 echo "$_REMOTE_VER $_NEW_LEVEL $(date +%s)" > "$_SNOOZE_FILE"
 ```
 
-Tell the user the next reminder timing: level 1 → 24h, 2 → 48h, 3+ → 7 days. Tip: they can set `auto_upgrade: true` in `~/.ds/config.yaml`. **Continue** with the skill the user originally invoked — do not upgrade.
+Tell the user the next reminder timing: level 1 → 24h, 2 → 48h, 3+ → 7 days. Tip: they can set `auto_upgrade: true` in `~/.dstack/config.yaml`. **Continue** with the skill the user originally invoked — do not upgrade.
 
 **"Never ask again":**
 
 ```bash
-mkdir -p "$HOME/.ds"
-_CFG="$HOME/.ds/config.yaml"
+mkdir -p "$HOME/.dstack"
+_CFG="$HOME/.dstack/config.yaml"
 if [ ! -f "$_CFG" ]; then
   echo "update_check: false" > "$_CFG"
 else
@@ -104,7 +104,7 @@ else
 fi
 ```
 
-Say: "Update checks are off. To turn them back on, set `update_check: true` in `~/.ds/config.yaml` or remove that line." **Continue** with the original skill.
+Say: "Update checks are off. To turn them back on, set `update_check: true` in `~/.dstack/config.yaml` or remove that line." **Continue** with the original skill.
 
 ### Step 2: Install directory
 
@@ -138,20 +138,20 @@ Capture output for the user.
 ### Step 4: Post-upgrade marker and cache
 
 ```bash
-mkdir -p "$HOME/.ds"
-echo "$OLD_VERSION" > "$HOME/.ds/just-upgraded-from"
-rm -f "$HOME/.ds/last-update-check" "$HOME/.ds/update-snoozed"
+mkdir -p "$HOME/.dstack"
+echo "$OLD_VERSION" > "$HOME/.dstack/just-upgraded-from"
+rm -f "$HOME/.dstack/last-update-check" "$HOME/.dstack/update-snoozed"
 ```
 
 ### Step 5: Summarize
 
 Read `$INSTALL_DIR/CHANGELOG.md` if it exists. Summarize **5–7 bullets** of user-facing changes between **v{old}** and the new **VERSION** (read `VERSION` again after update). Keep tone friendly and non-technical.
 
-Then **continue** with whatever the user was doing (the original `/ds:*` command).
+Then **continue** with whatever the user was doing (the original `/ds-*` command).
 
 ---
 
-## Standalone `/ds:upgrade` or `/ds:update`
+## Standalone `/ds-upgrade` or `/ds-update`
 
 1. Force a fresh check:
 

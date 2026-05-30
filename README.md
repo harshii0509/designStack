@@ -26,13 +26,13 @@ npx skills@latest add harshii0509/designStack
 curl -fsSL https://raw.githubusercontent.com/harshii0509/designStack/main/install | bash
 ```
 
-Installs to `~/.claude/skills/ds/`. Quit and reopen Claude Code, then type `/ds:start` in the chat input.
+Installs to `~/.claude/skills/ds/`. Quit and reopen Claude Code, then type `/ds-start` in the chat input.
 
 ---
 
 ## How it works
 
-`/ds:start` asks a few questions and writes `design/DESIGN-BIBLE.md` — your brand's colors, fonts, spacing, and rules in one file. Every skill reads from it automatically. No re-explaining. No starting over.
+`/ds-start` asks a few questions and writes `design/DESIGN-BIBLE.md` — your brand's colors, fonts, spacing, and rules in one file. Every skill reads from it automatically. No re-explaining. No starting over.
 
 ---
 
@@ -42,45 +42,44 @@ Installs to `~/.claude/skills/ds/`. Quit and reopen Claude Code, then type `/ds:
 
 | Command | What it does |
 |---------|--------------|
-| `/ds:unstuck` | Something broke and "fix it" isn't working — one sentence diagnosis, one fix |
-| `/ds:save` | Save exactly where you are so you can always come back |
+| `/ds-unstuck` | Something broke and "fix it" isn't working — one sentence diagnosis, one fix |
+| `/ds-save` | Save exactly where you are so you can always come back |
 
 **When checking how it looks**
 
 | Command | What it does |
 |---------|--------------|
-| `/ds:look` | Does this match what you had in your head? Scored against your Design Bible |
-| `/ds:mobile` | Phone, tablet, desktop — side by side |
-| `/ds:a11y` | Accessibility grade A–D, every issue labeled |
+| `/ds-look` | Does this match what you had in your head? Scored against your Design Bible |
+| `/ds-mobile` | Phone, tablet, desktop — side by side |
+| `/ds-a11y` | Accessibility grade A–D, every issue labeled |
 
 **When setting the direction**
 
 | Command | What it does |
 |---------|--------------|
-| `/ds:vibe` | Tell me how it should feel — get 3 visual directions to pick from |
-| `/ds:brand` | Is this still on brand after all those changes? Full-site scan |
-| `/ds:context` | Refresh your Design Bible when your brand evolves |
+| `/ds-vibe` | Tell me how it should feel — get 3 visual directions to pick from |
+| `/ds-brand` | Scan multiple pages for drift from your brand rules |
+| `/ds-context` | Refresh your Design Bible when your brand evolves |
 
 **When making it great**
 
 | Command | What it does |
 |---------|--------------|
-| `/ds:polish` | Pre-ship check across 11 areas, results in plain English |
-| `/ds:animate` | Add motion that feels natural, not flashy |
-| `/ds:delight` | Add joy to the moments that matter most |
+| `/ds-polish` | Final pre-ship release gate across 11 checks |
+| `/ds-animate` | Add motion to interactions that feel too static |
+| `/ds-delight` | Improve the first-success and empty moments that feel flat |
 
 **When sharing your work**
 
 | Command | What it does |
 |---------|--------------|
-| `/ds:share` | Shareable link in under 2 minutes |
-| `/ds:stats` | Which skills you've used, how often, and whether they worked |
+| `/ds-share` | Shareable link in under 2 minutes |
 
 **Keeping designStack up to date**
 
 | Command | What it does |
 |---------|--------------|
-| `/ds:upgrade` or `/ds:update` | Pull the latest release from GitHub (you may also get a heads-up when you run any `/ds:*` command) |
+| `/ds-upgrade` or `/ds-update` | Pull the latest release from GitHub (you may also get a heads-up when you run any `/ds-*` command) |
 
 ---
 
@@ -107,6 +106,10 @@ Claude Code (primary) · Cursor (via `.cursor/rules/`) · Codex CLI (via `AGENTS
 ## Questions
 
 [GitHub Discussions](https://github.com/harshii0509/designStack/discussions) — we read everything.
+
+## Contributing
+
+Working on designStack itself? Start with [CONTRIBUTING.md](./CONTRIBUTING.md). The baseline local checks are `bin/designStack-validate` and `bin/designStack-eval`.
 
 ---
 

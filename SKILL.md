@@ -2,25 +2,25 @@
 name: ds
 version: 0.3.0
 description: >
-  Designer-first Claude Code skills for non-technical founders and designers
-  building their own products. Plain English throughout, screenshots always,
-  saves constantly. Use when user says "/ds", "designStack", "what skills do
-  I have", "help me get started with my design", or runs with no argument for
-  an overview.
+  Designer-first skill bundle for non-technical founders and designers building
+  their own products. Helps capture a Design Bible, review screens, and ship
+  changes in plain English. Use when the user says "/ds", "designStack", "what
+  skills do I have", "help me get started with my design", or runs with no
+  argument for an overview.
 license: MIT
 allowed-tools:
   - Bash
   - AskUserQuestion
-compatibility: Requires git for Design Bible and save features. Visual skills require browse binary installed via ds setup.
+compatibility: Requires git for Design Bible and save features. Visual skills use screenshots when a supported browse binary is installed.
 ---
 
 ## Preamble
 
 ```bash
-"$HOME/.claude/skills/ds/lib/env.sh" "ds"
+"lib/env.sh" "ds"
 ```
 
-**After the preamble:** If any printed line starts with `UPGRADE_AVAILABLE`, read `~/.claude/skills/ds/upgrade/SKILL.md` and follow its **Inline upgrade flow** before argument routing or welcome. If a line starts with `JUST_UPGRADED`, say briefly you're on the new version (`JUST_UPGRADED` shows old and new), then continue — no upgrade prompt.
+**After the preamble:** If any printed line starts with `UPGRADE_AVAILABLE`, read `upgrade/SKILL.md` and follow its **Inline upgrade flow** before argument routing or welcome. If a line starts with `JUST_UPGRADED`, say briefly you're on the new version (`JUST_UPGRADED` shows old and new), then continue — no upgrade prompt.
 
 ## Argument routing
 
@@ -30,22 +30,22 @@ If this skill was invoked with an argument — look for `ARGUMENTS:` in the skil
 
 | Argument | File to read and follow |
 |----------|------------------------|
-| `start` | `~/.claude/skills/ds/start/SKILL.md` |
-| `context` | `~/.claude/skills/ds/context/SKILL.md` |
-| `unstuck` | `~/.claude/skills/ds/unstuck/SKILL.md` |
-| `look` | `~/.claude/skills/ds/look/SKILL.md` |
-| `mobile` | `~/.claude/skills/ds/mobile/SKILL.md` |
-| `a11y` | `~/.claude/skills/ds/a11y/SKILL.md` |
-| `save` | `~/.claude/skills/ds/save/SKILL.md` |
-| `share` | `~/.claude/skills/ds/share/SKILL.md` |
-| `vibe` | `~/.claude/skills/ds/vibe/SKILL.md` |
-| `brand` | `~/.claude/skills/ds/brand/SKILL.md` |
-| `polish` | `~/.claude/skills/ds/polish/SKILL.md` |
-| `animate` | `~/.claude/skills/ds/animate/SKILL.md` |
-| `delight` | `~/.claude/skills/ds/delight/SKILL.md` |
-| `stats` | `~/.claude/skills/ds/stats/SKILL.md` |
-| `upgrade` | `~/.claude/skills/ds/upgrade/SKILL.md` |
-| `update` | `~/.claude/skills/ds/upgrade/SKILL.md` |
+| `start` | `start/SKILL.md` |
+| `context` | `context/SKILL.md` |
+| `unstuck` | `unstuck/SKILL.md` |
+| `look` | `look/SKILL.md` |
+| `mobile` | `mobile/SKILL.md` |
+| `a11y` | `a11y/SKILL.md` |
+| `save` | `save/SKILL.md` |
+| `share` | `share/SKILL.md` |
+| `vibe` | `vibe/SKILL.md` |
+| `brand` | `brand/SKILL.md` |
+| `polish` | `polish/SKILL.md` |
+| `animate` | `animate/SKILL.md` |
+| `delight` | `delight/SKILL.md` |
+| `stats` | `stats/SKILL.md` |
+| `upgrade` | `upgrade/SKILL.md` |
+| `update` | `upgrade/SKILL.md` |
 
 If no argument is present, or the argument doesn't match any of the above, continue to the welcome screen below.
 
@@ -60,8 +60,11 @@ You're a companion for designers building their own products with Claude Code.
 If `DESIGN_BIBLE` is `no`:
 > "Welcome to designStack! Before anything else, let's capture your brand rules so every future session starts with full context. This takes about 5 minutes. Want to run `/ds-context` now?"
 
-If `DESIGN_BIBLE` is `yes` (any variant):
-> "designStack is ready. Your Design Bible is loaded. Here's what you can do:"
+If `DESIGN_BIBLE` is `yes` and `BROWSE` is `NOT_FOUND`:
+> "Your Design Bible is loaded. Screenshot checks aren't installed yet, so visual skills will describe issues in plain English for now. Here's what you can do:"
+
+If `DESIGN_BIBLE` is `yes` and `BROWSE` is not `NOT_FOUND`:
+> "Your Design Bible is loaded. Screenshot checks are ready. Here's what you can do:"
 
 ## What designStack can do for you
 
@@ -72,24 +75,21 @@ Show this as a friendly summary — not a technical list:
 - `/ds-save` — Save exactly where you are so you can always come back
 
 **To check how it looks:**
-- `/ds-look` — Does this match what you had in your head?
+- `/ds-look` — Does this one screen match what you had in your head?
 - `/ds-mobile` — Does it hold up on a phone?
 - `/ds-a11y` — Can everyone use this? (I'll give you a grade with a picture of every issue)
 
 **To set the direction:**
 - `/ds-vibe` — Tell me how it should feel, I'll generate three directions to pick from
-- `/ds-brand` — Is this still on brand after all those changes?
+- `/ds-brand` — Scan multiple pages for drift from your brand rules
 
 **To make it great:**
-- `/ds-polish` — Pre-ship checklist, 11 areas, plain English results
-- `/ds-animate` — Add motion that feels natural, not flashy
-- `/ds-delight` — Add joy to the moments that matter most
+- `/ds-polish` — Final release check before you share
+- `/ds-animate` — Add motion to interactions that feel too static
+- `/ds-delight` — Improve the first-success and empty moments that feel flat
 
 **To share your work:**
 - `/ds-share` — I'll get you a link to show someone
-
-**To see your usage:**
-- `/ds-stats` — How much have you used designStack? Success rates and history.
 
 **Keeping designStack current:**
 - `/ds-upgrade` or `/ds-update` — Get the latest skills and fixes (you may also see a prompt when a new version ships).

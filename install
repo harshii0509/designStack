@@ -39,7 +39,7 @@ echo "  ✓ git found"
 if [ -d "$DESIGNSTACK_DIR" ]; then
   echo "  ✓ designStack already installed at $DESIGNSTACK_DIR"
   echo ""
-  echo "  To update: open Claude Code and type /ds:update"
+  echo "  To update: open Claude Code and type /ds-update"
   echo "  To reinstall: rm -rf $DESIGNSTACK_DIR and run this installer again"
   echo ""
   exit 0
@@ -65,7 +65,7 @@ echo "  ┌───────────────────────
 echo "  │  Next steps:                                      │"
 echo "  │                                                   │"
 echo "  │  1. Restart Claude Code (skills load at startup)  │"
-echo "  │  2. Open Claude Code and type:  /ds:start         │"
+echo "  │  2. Open Claude Code and type:  /ds-start         │"
 echo "  │                                                   │"
 echo "  │  Takes 5 minutes. Run once per project.           │"
 echo "  └───────────────────────────────────────────────────┘"

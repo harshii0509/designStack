@@ -10,13 +10,15 @@
 #
 # Env overrides:
 #   DS_DIR                  — designStack root (default: parent of bin/)
-#   DS_STATE_DIR            — state dir (default: ~/.ds)
+#   DS_STATE_DIR            — state dir (default: ~/.dstack)
 #   DS_REMOTE_VERSION_URL   — remote VERSION URL
 #   DS_NO_UPDATE_CHECK=1    — disable all checks
 set -euo pipefail
 
 DS_DIR="${DS_DIR:-$(cd "$(dirname "$0")/.." && pwd)}"
-STATE_DIR="${DS_STATE_DIR:-$HOME/.ds}"
+DEFAULT_STATE_DIR="$HOME/.dstack"
+LEGACY_STATE_DIR="$HOME/.ds"
+STATE_DIR="${DS_STATE_DIR:-$DEFAULT_STATE_DIR}"
 CACHE_FILE="$STATE_DIR/last-update-check"
 MARKER_FILE="$STATE_DIR/just-upgraded-from"
 SNOOZE_FILE="$STATE_DIR/update-snoozed"
@@ -27,7 +29,17 @@ if [ "${DS_NO_UPDATE_CHECK:-0}" = "1" ]; then
   exit 0
 fi
 
-# Optional ~/.ds/config.yaml: update_check: false
+# One-time update-state migration: legacy state dir → ~/.dstack/
+if [ -z "${DS_STATE_DIR:-}" ] && [ -d "$LEGACY_STATE_DIR" ]; then
+  mkdir -p "$STATE_DIR"
+  for name in config.yaml last-update-check just-upgraded-from update-snoozed; do
+    if [ -f "$LEGACY_STATE_DIR/$name" ] && [ ! -f "$STATE_DIR/$name" ]; then
+      cp "$LEGACY_STATE_DIR/$name" "$STATE_DIR/$name"
+    fi
+  done
+fi
+
+# Optional ~/.dstack/config.yaml: update_check: false
 _CONFIG="$STATE_DIR/config.yaml"
 if [ -f "$_CONFIG" ] && grep -qiE '^[[:space:]]*update_check:[[:space:]]*false' "$_CONFIG" 2>/dev/null; then
   exit 0

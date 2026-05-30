@@ -1,0 +1,36 @@
+{
+  "name": "marketplace-packaging",
+  "type": "portfolio",
+  "checks": [
+    {
+      "file": "agents/openai.yaml",
+      "must_contain": [
+        "display_name: \"designStack\"",
+        "Designer-first skill bundle",
+        "/ds or $ds"
+      ]
+    },
+    {
+      "file": "skills.sh.json",
+      "must_contain": [
+        "\"title\": \"Getting Started\"",
+        "\"title\": \"Visual Checks\"",
+        "\"title\": \"Direction\"",
+        "\"title\": \"Polish\"",
+        "\"title\": \"Share\""
+      ],
+      "must_not_contain": [
+        "\"supabase\"",
+        "\"stats\""
+      ]
+    },
+    {
+      "file": "CONTRIBUTING.md",
+      "must_contain": [
+        "agents/openai.yaml",
+        "skills.sh.json",
+        "open skills ecosystem"
+      ]
+    }
+  ]
+}

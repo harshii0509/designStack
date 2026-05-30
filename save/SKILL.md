@@ -4,7 +4,7 @@ version: 0.1.0
 description: >
   Commits the current project state to git with a plain-English description of
   what changed, creating a restore point before risky changes. Use when the user
-  wants to save progress, create an undo point, or runs '/ds-save'.
+  wants to save progress, create an undo point, checkpoint work, or runs '/ds-save'.
 license: MIT
 allowed-tools:
   - Bash
@@ -16,23 +16,13 @@ compatibility: Requires git. Will offer to initialize git if not present.
 ## Preamble
 
 ```bash
-_DESIGNSTACK_VER="0.1.0"
+"../lib/env.sh" "save"
 _ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo "NOT_A_GIT_REPO")
 _CHANGED=$(git diff --name-only 2>/dev/null | wc -l | tr -d ' ')
 _NEW=$(git ls-files --others --exclude-standard 2>/dev/null | wc -l | tr -d ' ')
-_LAST_COMMIT=$(git log -1 --pretty=format:"%h — %s" 2>/dev/null || echo "no history yet")
-_BRANCH=$(git branch --show-current 2>/dev/null || echo "unknown")
-echo "DESIGNSTACK: $_DESIGNSTACK_VER"
 echo "ROOT: $_ROOT"
 echo "CHANGED_FILES: $_CHANGED"
 echo "NEW_FILES: $_NEW"
-echo "LAST_COMMIT: $_LAST_COMMIT"
-echo "BRANCH: $_BRANCH"
-_TEL_START=$(date +%s)
-_SESSION_ID="$$-$(date +%s)"
-mkdir -p "$HOME/.dstack/analytics"
-"$HOME/.claude/skills/ds/bin/ds-timeline-log" \
-  '{"skill":"save","event":"started","session":"'"$_SESSION_ID"'"}' 2>/dev/null || true
 ```
 
 ## What this skill does
@@ -41,7 +31,7 @@ Save where you are right now. Like hitting Save in a game — you can always com
 
 ## Step 1 — Check git is set up
 
-If `ROOT` is `NOT_A_GIT_REPO`:
+If `GIT_ROOT` is `.` or `ROOT` is `NOT_A_GIT_REPO`:
 > "This project doesn't have saving turned on yet — which means if something breaks, there's no way to get back to where you are now. I can set it up in a few seconds. Want me to?"
 
 If yes, run:
@@ -135,7 +125,7 @@ If `design/DESIGN-BIBLE.md` was among the saved files, append to the Memory Log:
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "save" "OUTCOME"
+"../lib/telemetry-end.sh" "save" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

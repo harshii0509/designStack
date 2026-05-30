@@ -1,0 +1,1 @@
+{"name":"look","skill":"look","prompt":"does this screen look off after my last UI change?","context":{"design_bible":"yes","browse":"available"},"checks":[{"file":"look/SKILL.md","must_contain":["Reviews one page or screen","single-page check","references/report-format.md","I can't take a screenshot"],"must_not_contain":["cross-page drift","11 different lenses"]}]}

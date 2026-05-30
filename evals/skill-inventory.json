@@ -1,0 +1,33 @@
+{
+  "public_core": [
+    "start",
+    "context",
+    "save",
+    "unstuck",
+    "look",
+    "mobile",
+    "a11y",
+    "share",
+    "upgrade"
+  ],
+  "public_advanced": [
+    "vibe",
+    "brand",
+    "polish",
+    "animate",
+    "delight"
+  ],
+  "hidden_callable": [
+    "stats"
+  ],
+  "internal_only": [
+    "supabase"
+  ],
+  "public_surface_files": [
+    "README.md",
+    "SKILL.md",
+    "install",
+    "setup",
+    "CLAUDE.md"
+  ]
+}

@@ -2,10 +2,10 @@
 name: ds-look
 version: 0.1.0
 description: >
-  Screenshots a site, compares it against Design Bible rules, and produces an
-  annotated visual with plain-English issues labeled. Use when the user asks if
-  their site looks right, wants a visual check after a UI change, or runs
-  '/ds-look'.
+  Reviews one page or screen against Design Bible rules after a UI change and
+  produces a plain-English visual QA report with annotations when available. Use
+  when the user asks if one screen looks right, wants page-level visual QA, or
+  runs '/ds-look'.
 license: MIT
 allowed-tools:
   - Bash
@@ -17,7 +17,7 @@ compatibility: Requires git and Design Bible (run /ds-context first). Visual scr
 ## Preamble
 
 ```bash
-"$HOME/.claude/skills/ds/lib/env.sh" "look"
+"../lib/env.sh" "look"
 ```
 
 ## What this skill does
@@ -25,6 +25,8 @@ compatibility: Requires git and Design Bible (run /ds-context first). Visual scr
 Check if your site actually looks like it should. You point me at a page, I take a screenshot, compare it against your Design Bible (colors, fonts, spacing, brand rules), and give you a plain-English report with an annotated image showing exactly where things are off.
 
 This skill never changes code — it only looks and reports.
+
+This is the single-page check. If the user wants a scan across many pages, route them to `/ds-brand`. If they want a final pre-launch checklist, route them to `/ds-polish`.
 
 ## Step 1 — Load the Design Bible
 
@@ -37,7 +39,7 @@ If `DESIGN_BIBLE` is `yes`, read the Bible file fully. Follow the standard extra
 - Memory Log (recent changes, known intentional decisions)
 
 If `DESIGN_BIBLE` is `no`:
-> "I don't have your design rules yet, so I can't check for brand drift. I'll still look for layout issues and obvious problems. Want me to set up your Design Bible first? Run `/ds-context` — it takes 5 minutes and makes every future check much smarter."
+> "I don't have your design rules yet, so I can't compare this page against your brand rules. I'll still look for layout issues and obvious problems. Want me to set up your Design Bible first? Run `/ds-context` — it takes 5 minutes and makes every future check much smarter."
 
 Continue the check either way.
 
@@ -54,13 +56,13 @@ If the user already mentioned a URL in the conversation, use that and confirm:
 If `BROWSE` is not `NOT_FOUND`:
 
 ```bash
-"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "look" "before"
+"../lib/visual-audit.sh" screenshot "<URL>" "look" "before"
 $B text
 ```
 
 **If the URL is not reachable**, run and show the output of:
 ```bash
-"$HOME/.claude/skills/ds/lib/visual-audit.sh" not_running
+"../lib/visual-audit.sh" not_running
 ```
 Do not continue until the user confirms the project is running.
 
@@ -102,7 +104,7 @@ Compare what you extracted (CSS values, screenshot visual) against the Design Bi
 - Is the background color correct? Compare extracted `body background-color` to L1 Background color.
 - Is the text color on brand? Compare to L1 Text color.
 - Are buttons using the right accent color? Compare to L1 Accent / CTA.
-- Are there any colors that appear on screen but aren't in the Design Bible palette? (Possible drift)
+- Are there any colors that appear on screen but aren't in the Design Bible palette? (Possible page-level mismatch)
 
 ### Typography check
 - Is the body font correct? Compare `body font-family` to L1 Body font.
@@ -151,6 +153,7 @@ If the user picks B: jump directly to Step 8 with issue #1 from your top-3 list.
 If the user picks A (or any affirmative): continue with the full report below.
 
 Follow the jargon rules in `lib/plain-language.md` when writing this report — no technical terms.
+Read `references/report-format.md` for the scoring pattern and report shape before writing the final output.
 
 Format the full report like this — plain English only, no technical terms:
 
@@ -184,9 +187,9 @@ Examples:
 
 ---
 
-**Design Bible drift summary:**
+**Design Bible page summary:**
 - Intentional changes since last save: [from Memory Log]
-- Unintentional drift found: [list what was found but isn't in the Memory Log]
+- Unintentional mismatches found on this page: [list what was found but isn't in the Memory Log]
 
 ---
 
@@ -199,7 +202,7 @@ After showing the report:
 
 After applying any fixes:
 ```bash
-"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "look" "after"
+"../lib/visual-audit.sh" screenshot "<URL>" "look" "after"
 ```
 
 Show both before and after:
@@ -211,7 +214,7 @@ Show both before and after:
 
 After the run, update the Memory Log:
 ```bash
-"$HOME/.claude/skills/ds/lib/visual-audit.sh" memory_log "$_BIBLE" "look" "<URL>" "<OUTCOME>" "<SHORT_ISSUES>"
+"../lib/visual-audit.sh" memory_log "$_BIBLE" "look" "<URL>" "<OUTCOME>" "<SHORT_ISSUES>"
 ```
 
 If any drift was found that turned out to be intentional (user said "actually that's on purpose"):
@@ -232,7 +235,7 @@ If during the check you noticed screens or components that appeared on the page 
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "look" "OUTCOME"
+"../lib/telemetry-end.sh" "look" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

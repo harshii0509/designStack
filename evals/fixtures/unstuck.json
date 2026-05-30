@@ -1,0 +1,1 @@
+{"name":"unstuck","skill":"unstuck","prompt":"this page is broken and I don't know why","context":{"browse":"available"},"checks":[{"file":"unstuck/SKILL.md","must_contain":["Diagnoses one broken feature or page","before any code is touched"],"must_not_contain":["three distinct visual directions"]}]}

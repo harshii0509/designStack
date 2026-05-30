@@ -1,0 +1,122 @@
+{
+  "name": "portable-runtime-surface",
+  "type": "portfolio",
+  "checks": [
+    {
+      "file": "save/SKILL.md",
+      "must_contain": [
+        "\"../lib/env.sh\"",
+        "\"../lib/telemetry-end.sh\""
+      ],
+      "must_not_contain": [
+        "`~/.claude/skills/ds/`"
+      ]
+    },
+    {
+      "file": "look/SKILL.md",
+      "must_contain": [
+        "\"../lib/env.sh\"",
+        "\"../lib/visual-audit.sh\"",
+        "\"../lib/telemetry-end.sh\""
+      ],
+      "must_not_contain": [
+        "`~/.claude/skills/ds/`"
+      ]
+    },
+    {
+      "file": "mobile/SKILL.md",
+      "must_contain": [
+        "\"../lib/env.sh\"",
+        "\"../lib/visual-audit.sh\"",
+        "\"../lib/telemetry-end.sh\""
+      ],
+      "must_not_contain": [
+        "`~/.claude/skills/ds/`"
+      ]
+    },
+    {
+      "file": "a11y/SKILL.md",
+      "must_contain": [
+        "\"../lib/env.sh\"",
+        "\"../lib/visual-audit.sh\"",
+        "\"../lib/telemetry-end.sh\""
+      ],
+      "must_not_contain": [
+        "`~/.claude/skills/ds/`"
+      ]
+    },
+    {
+      "file": "unstuck/SKILL.md",
+      "must_contain": [
+        "\"../lib/env.sh\"",
+        "\"../lib/telemetry-end.sh\""
+      ],
+      "must_not_contain": [
+        "`~/.claude/skills/ds/`"
+      ]
+    },
+    {
+      "file": "vibe/SKILL.md",
+      "must_contain": [
+        "\"../lib/env.sh\"",
+        "\"../lib/telemetry-end.sh\""
+      ],
+      "must_not_contain": [
+        "`~/.claude/skills/ds/`"
+      ]
+    },
+    {
+      "file": "brand/SKILL.md",
+      "must_contain": [
+        "\"../lib/env.sh\"",
+        "\"../lib/visual-audit.sh\"",
+        "\"../lib/telemetry-end.sh\""
+      ],
+      "must_not_contain": [
+        "`~/.claude/skills/ds/`"
+      ]
+    },
+    {
+      "file": "polish/SKILL.md",
+      "must_contain": [
+        "\"../lib/env.sh\"",
+        "\"../lib/telemetry-end.sh\""
+      ],
+      "must_not_contain": [
+        "`~/.claude/skills/ds/`"
+      ]
+    },
+    {
+      "file": "animate/SKILL.md",
+      "must_contain": [
+        "\"../lib/env.sh\"",
+        "\"../lib/telemetry-end.sh\""
+      ],
+      "must_not_contain": [
+        "`~/.claude/skills/ds/`"
+      ]
+    },
+    {
+      "file": "delight/SKILL.md",
+      "must_contain": [
+        "\"../lib/env.sh\"",
+        "\"../lib/telemetry-end.sh\""
+      ],
+      "must_not_contain": [
+        "`~/.claude/skills/ds/`"
+      ]
+    },
+    {
+      "file": "lib/telemetry-end.sh",
+      "must_contain": [
+        "_DS_ROOT=$(cd \"$(dirname \"$0\")/..\" && pwd)",
+        "\"$_DS_ROOT/bin/ds-timeline-log\"",
+        "\"$_DS_ROOT/bin/ds-telemetry-log\""
+      ],
+      "must_not_contain": [
+        "\"$HOME/.claude/skills/ds/bin/ds-timeline-log\"",
+        "\"$HOME/.claude/skills/ds/bin/ds-telemetry-log\""
+      ]
+    }
+  ]
+}

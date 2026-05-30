@@ -4,8 +4,8 @@ version: 0.1.0
 description: >
   Captures side-by-side screenshots at phone (375px), tablet (768px), and desktop
   sizes and flags anything that's broken or hard to use on smaller screens. Use
-  when the user wants to check mobile responsiveness, preview on phone, or runs
-  '/ds-mobile'.
+  when the user wants to check mobile responsiveness on one page, preview on
+  phone, or runs '/ds-mobile'.
 license: MIT
 allowed-tools:
   - Bash
@@ -17,7 +17,7 @@ compatibility: Requires browse binary for viewport screenshots. Falls back to co
 ## Preamble
 
 ```bash
-"$HOME/.claude/skills/ds/lib/env.sh" "mobile"
+"../lib/env.sh" "mobile"
 ```
 
 ## What this skill does
@@ -49,15 +49,15 @@ Do not continue until the user confirms the project is running.
 ```bash
 # Phone (iPhone size)
 $B resize 375 812
-"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "mobile" "375"
+"../lib/visual-audit.sh" screenshot "<URL>" "mobile" "375"
 
 # Tablet (iPad size)
 $B resize 768 1024
-"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "mobile" "768"
+"../lib/visual-audit.sh" screenshot "<URL>" "mobile" "768"
 
 # Desktop
 $B resize 1280 900
-"$HOME/.claude/skills/ds/lib/visual-audit.sh" screenshot "<URL>" "mobile" "1280"
+"../lib/visual-audit.sh" screenshot "<URL>" "mobile" "1280"
 ```
 
 Show all three screenshots to the user:
@@ -193,7 +193,7 @@ If new mobile rules were confirmed, add them to the L4 Component Rules or L1 Spa
 Always run this bash before ending, regardless of outcome. Replace `OUTCOME` with: `success`, `error`, or `abort`.
 
 ```bash
-"$HOME/.claude/skills/ds/lib/telemetry-end.sh" "mobile" "OUTCOME"
+"../lib/telemetry-end.sh" "mobile" "OUTCOME"
 ```
 
 Report completion status: **DONE** / **DONE_WITH_CONCERNS** / **BLOCKED** / **NEEDS_CONTEXT**

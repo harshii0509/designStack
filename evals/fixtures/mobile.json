@@ -1,0 +1,1 @@
+{"name":"mobile","skill":"mobile","prompt":"check this page on phone and tablet","context":{"browse":"available"},"checks":[{"file":"mobile/SKILL.md","must_contain":["phone (375px), tablet (768px), and desktop","I can't take screenshots without the visual browser"],"must_not_contain":["first user success"]}]}

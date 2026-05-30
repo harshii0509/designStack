@@ -1,0 +1,50 @@
+{
+  "name": "start-context-share-handoff",
+  "type": "portfolio",
+  "checks": [
+    {
+      "file": "start/SKILL.md",
+      "must_contain": [
+        "`DESIGN_BIBLE` is `yes`",
+        "run `/ds-context` inline",
+        "`../context/SKILL.md`",
+        "\"../lib/env.sh\""
+      ],
+      "must_not_contain": [
+        "`HAS_BIBLE` is `yes`",
+        "`HAS_BIBLE` is `no`",
+        "`~/.claude/skills/ds/`"
+      ]
+    },
+    {
+      "file": "context/SKILL.md",
+      "must_contain": [
+        "`GIT_ROOT` is `.`",
+        "`BIBLE_PATH` is not",
+        "`GIT_ROOT/design/DESIGN-BIBLE.md`",
+        "`../AGENTS.md`",
+        "`../.cursor/rules/ds-design-context.mdc`",
+        "\"../lib/env.sh\""
+      ],
+      "must_not_contain": [
+        "`DESIGN_BIBLE` is `extend`",
+        "If `ROOT` is `.`",
+        "`~/.claude/skills/ds/`"
+      ]
+    },
+    {
+      "file": "share/SKILL.md",
+      "must_contain": [
+        "If the user's request already clearly says **preview**",
+        "`GIT_ROOT` is `.` or `LAST_COMMIT` is `no history yet`",
+        "\"../lib/env.sh\"",
+        "\"../lib/visual-audit.sh\""
+      ],
+      "must_not_contain": [
+        "`GIT_ROOT` is `NOT_A_GIT_REPO`",
+        "`LAST_COMMIT` is `no commits yet`",
+        "`~/.claude/skills/ds/`"
+      ]
+    }
+  ]
+}

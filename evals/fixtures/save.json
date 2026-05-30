@@ -1,0 +1,1 @@
+{"name":"save","skill":"save","prompt":"save my progress before we change anything risky","context":{"git":"maybe"},"checks":[{"file":"save/SKILL.md","must_contain":["restore point before risky changes","/ds-save"],"must_not_contain":["deploy for real"]}]}

@@ -1,0 +1,37 @@
+{
+  "name": "overlap-boundaries",
+  "type": "portfolio",
+  "checks": [
+    {
+      "file": "brand/SKILL.md",
+      "must_contain": [
+        "For a single page after a recent UI change, `/ds-look` is the better fit.",
+        "at least 3 pages or suggest switching to `/ds-look`"
+      ],
+      "must_not_contain": [
+        "A) Check your main page only"
+      ]
+    },
+    {
+      "file": "polish/SKILL.md",
+      "must_contain": [
+        "What's the main page you want to polish before sharing?",
+        "one page at a time"
+      ],
+      "must_not_contain": [
+        "If you want me to check multiple pages, list them all."
+      ]
+    },
+    {
+      "file": "look/SKILL.md",
+      "must_contain": [
+        "single-page check",
+        "page-level mismatch",
+        "Design Bible page summary"
+      ],
+      "must_not_contain": [
+        "I can't check for brand drift"
+      ]
+    }
+  ]
+}
